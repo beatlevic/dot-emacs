@@ -1,0 +1,13 @@
+*.dat
+*~
+abbrev_defs
+loaddefs.el*
+backups/*
+auto-save-list
+custom.el
+*elc
+.svn
+.DS_Store
+session*
+tramp
+\#*
