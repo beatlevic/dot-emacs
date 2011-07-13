@@ -115,8 +115,8 @@
 
 ;; Cosmetics
 
-(set-face-background 'vertical-border "white")
-(set-face-foreground 'vertical-border "white")
+;(set-face-background 'vertical-border "white")
+;(set-face-foreground 'vertical-border "white")
 
 (eval-after-load 'diff-mode
   '(progn

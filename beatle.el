@@ -43,6 +43,62 @@
 ;; Php mode
 (require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
 
+(require 'autopair)
+
+(add-hook 'php-mode-hook
+          '(lambda () (autopair-mode)))
+
+(add-hook 'esspresso-mode-hook
+          '(lambda () (autopair-mode)))
+
+
+;;(add-to-list 'load-path "/path/to/ack-and-a-half")
+;; (autoload 'ack-and-a-half-same "ack-and-a-half" nil t)
+;; (autoload 'ack-and-a-half "ack-and-a-half" nil t)
+;; (autoload 'ack-and-a-half-find-file-samee "ack-and-a-half" nil t)
+;; (autoload 'ack-and-a-half-find-file "ack-and-a-half" nil t)
+;; ;; Create shorter aliases
+;; (defalias 'ack 'ack-and-a-half)
+;; (defalias 'ack-same 'ack-and-a-half-same)
+;; (defalias 'ack-find-file 'ack-and-a-half-find-file)
+;; (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
+
+(autoload 'ack-same "full-ack" nil t)
+(autoload 'ack "full-ack" nil t)
+(autoload 'ack-find-same-file "full-ack" nil t)
+(autoload 'ack-find-file "full-ack" nil t)
+
+(global-set-key (kbd "C-S-s") 'ack)
+
+;;(add-to-list 'load-path (concat dotfiles-dir "/packages/emacs-tiny-tools/lisp/tiny"))
+;;(add-to-list 'load-path (concat dotfiles-dir "/packages/emacs-tiny-tools/lisp/other"))
+
+;;(require 'tinypair)
+;;     (tinypair-pair-type-select 'us)         ;; US `style'
+;;(tinypair-pair-type-select 'european)   ;; European 'style'
+
+
+;(setq skeleton-pair t)
+;(setq skeleton-pair-on-word t) ; apply skeleton trick even in front of
+                               ; a word
+;(global-set-key "[" 'skeleton-pair-insert-maybe)
+;;(global-set-key "{" 'skeleton-pair-insert-maybe) uses c-electric-brace
+;;(global-set-key "(" 'skeleton-pair-insert-maybe) uses c-electric-paren
+;'(global-set-key "\"" 'skeleton-pair-insert-maybe)
+;(global-set-key "'" 'skeleton-pair-insert-maybe)
+
+
+;; run php lint when press f6 key
+;; php lint
+(defun phplint-thisfile ()
+  (interactive)
+  (compile (format "php -l %s" (buffer-file-name))))
+
+(add-hook 'php-mode-hook
+          '(lambda ()
+             (local-set-key [f7] 'phplint-thisfile)))
+;; end of php lint
+
 ;; Visual undo tree
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
 
@@ -75,8 +131,8 @@
 
 ;; (defun toggle-ecb ()
 ;;   (interactive) (delete-other-windows) (ecb-minor-mode))
-
-;; (global-set-key [f6] 'toggle-ecb)
+;;
+;;(global-set-key [f6] 'toggle-ecb)
 
 ;; Smart Tab
 ;; https://github.com/haxney/smart-tab
@@ -213,3 +269,35 @@
 (defun slimy ()
   (interactive)
   (slime-connect "127.0.0.1" "4005"))
+
+;; (defun cake-project-root ()
+;;   "Look for project.clj file to find project root."
+;;   (let ((cwd default-directory)
+;;         (found nil)
+;;         (max 10))
+;;     (while (and (not found) (> max 0))
+;;       (if (file-exists-p (concat cwd "project.clj"))
+;;         (setq found cwd)
+;;         (setq cwd (concat cwd "../") max (- max 1))))
+;;     (and found (expand-file-name found))))
+
+;; (defmacro cake-in-project-root (body)
+;;   "Wrap BODY to make `default-directory' the project root."
+;;   (let ((dir (gensym)))
+;;     `(let ((,dir (cake-project-root)))
+;;        (if ,dir
+;;          (let ((default-directory ,dir)) ,body)
+;;          (error "No cake project root found")))))
+         
+;; (defun cake-swank ()
+;;   "Connect or reconnect to swank while reloading cake class path files with cake -r."
+;;   (interactive)
+;;   (if (slime-connected-p)
+;;       (slime-disconnect))
+;;   (let ((buffer (get-buffer-create "*cake-swank*")))
+;;     (flet ((display-buffer (buffer-or-name &optional not-this-window frame) nil))
+;;       (bury-buffer buffer)
+;;       (cake-in-project-root (shell-command "cake -r" buffer)))
+;;     (slime-connect "127.0.0.1" "4005")))
+
+;; (global-set-key [f6] 'cake-swank)

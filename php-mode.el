@@ -348,7 +348,7 @@ See `php-beginning-of-defun'."
   ;; they can not find the correct syntax in embedded PHP.
   ;;
   ;; Seems to work with narrowing so let it be on if the user prefers it.
-  ;;(setq c-electric-flag nil)
+  (setq c-electric-flag nil)
 
   (setq font-lock-maximum-decoration t
         case-fold-search t              ; PHP vars are case-sensitive
