@@ -136,13 +136,13 @@
 
 ;; Smart Tab
 ;; https://github.com/haxney/smart-tab
-(require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
-(global-smart-tab-mode 1) ;; switch on smart-tab everywhere
-(setq smart-tab-completion-functions-alist
-      '((emacs-lisp-mode . lisp-complete-symbol)
-        (text-mode . dabbrev-completion) ;; this is the "default"
-        emacs expansion function
-        (clojure-mode . slime-complete-symbol))) ;; see update below
+;; (require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
+;; (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
+;; (setq smart-tab-completion-functions-alist
+;;       '((emacs-lisp-mode . lisp-complete-symbol)
+;;         (text-mode . dabbrev-completion) ;; this is the "default"
+;;         emacs expansion function
+;;         (clojure-mode . slime-complete-symbol))) ;; see update below
 
 ;; Auto-complete
 (require 'auto-complete-config)

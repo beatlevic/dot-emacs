@@ -484,11 +484,11 @@ Otherwise return nil."
 
 (defun sr-speedbar-before-visiting-file-hook ()
   "Function that hook `speedbar-before-visiting-file-hook'."
-  (select-window (previous-window)))
+  (select-window (next-window)))
 
 (defun sr-speedbar-before-visiting-tag-hook ()
   "Function that hook `speedbar-before-visiting-tag-hook'."
-  (select-window (previous-window)))
+  (select-window (next-window)))
 
 (defun sr-speedbar-visiting-file-hook ()
   "Function that hook `speedbar-visiting-file-hook'."
