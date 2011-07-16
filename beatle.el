@@ -1,7 +1,7 @@
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 
-(add-to-list 'load-path (concat dotfiles-dir "/auto-complete-1.3.1"))
+;;(add-to-list 'load-path (concat dotfiles-dir "/auto-complete-1.3.1"))
 (add-to-list 'load-path (concat dotfiles-dir "/ac-slime"))
 
 ;; Set initial emacs window size
@@ -70,22 +70,22 @@
 
 (global-set-key (kbd "C-S-s") 'ack)
 
-;;(add-to-list 'load-path (concat dotfiles-dir "/packages/emacs-tiny-tools/lisp/tiny"))
-;;(add-to-list 'load-path (concat dotfiles-dir "/packages/emacs-tiny-tools/lisp/other"))
+(add-to-list 'load-path (concat dotfiles-dir "/packages/emacs-tiny-tools/lisp/tiny"))
+(add-to-list 'load-path (concat dotfiles-dir "/packages/emacs-tiny-tools/lisp/other"))
 
-;;(require 'tinypair)
+(require 'tinypair)
 ;;     (tinypair-pair-type-select 'us)         ;; US `style'
-;;(tinypair-pair-type-select 'european)   ;; European 'style'
+(tinypair-pair-type-select 'european)   ;; European 'style'
 
 
-;(setq skeleton-pair t)
-;(setq skeleton-pair-on-word t) ; apply skeleton trick even in front of
+(setq skeleton-pair t)
+(setq skeleton-pair-on-word t) ; apply skeleton trick even in front of
                                ; a word
-;(global-set-key "[" 'skeleton-pair-insert-maybe)
-;;(global-set-key "{" 'skeleton-pair-insert-maybe) uses c-electric-brace
-;;(global-set-key "(" 'skeleton-pair-insert-maybe) uses c-electric-paren
-;'(global-set-key "\"" 'skeleton-pair-insert-maybe)
-;(global-set-key "'" 'skeleton-pair-insert-maybe)
+(global-set-key "[" 'skeleton-pair-insert-maybe)
+(global-set-key "{" 'skeleton-pair-insert-maybe);; uses c-electric-brace
+(global-set-key "(" 'skeleton-pair-insert-maybe);; uses c-electric-paren
+;;(global-set-key "\"" 'skeleton-pair-insert-maybe)
+(global-set-key "'" 'skeleton-pair-insert-maybe)
 
 
 ;; run php lint when press f6 key
@@ -145,17 +145,17 @@
 ;;         (clojure-mode . slime-complete-symbol))) ;; see update below
 
 ;; Auto-complete
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
-(ac-config-default)
+;; (require 'auto-complete-config)
+;; (add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/ac-dict")
+;; (ac-config-default)
 ;; For this see
 ;; http://github.com/purcell/ac-slime
 ;; http://groups.google.com/group/clojure/browse_thread/
 ;; thread/09dde36a2ab572df/1ca36e456d31aa58#1ca36e456d31aa58
-(require 'ac-slime)
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(setq ac-sources (append '(ac-source-slime-simple) ac-sources))
+;; (require 'ac-slime)
+;; (add-hook 'slime-mode-hook 'set-up-slime-ac)
+;; (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+;; (setq ac-sources (append '(ac-source-slime-simple) ac-sources))
 
 ;; Textmate mode for search
 (require 'textmate)
@@ -175,7 +175,7 @@
          ("Clojure" (or (mode . clojure-mode)
                         (filename . "clojure")))
          ("Javascript" (or (mode . esspresso-mode)
-                        (filename . "js")))
+                           (filename . "js")))
          ("Org" (or (mode . org-mode)
                     (filename . "org")))
          ;;        ("Subversion" (name . "\*svn"))
@@ -232,7 +232,7 @@
 (define-key beatle-minor-mode-map (kbd "<C-S-tab>") 'unbury-buffer)
 (define-key beatle-minor-mode-map (kbd "<C-return>") 'other-window)
 (define-key beatle-minor-mode-map (kbd "<C-S-return>") 'sr-speedbar-select-window)
-;;(define-key beatle-minor-mode-map (kbd "C-c C-j") 'clojure-jump)
+(define-key beatle-minor-mode-map (kbd "C-c C-j") 'clojure-jump)
 ;;(define-key beatle-minor-mode-map (kbd "C-c C-f") 'lusty-file-explorer)
 
 (define-minor-mode beatle-minor-mode
