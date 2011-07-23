@@ -10,4 +10,5 @@ custom.el
 .DS_Store
 session*
 tramp
+places
 \#*
