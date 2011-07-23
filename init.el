@@ -25,6 +25,8 @@
 (add-to-list 'load-path dotfiles-dir)
 
 (add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit"))
+(add-to-list 'load-path (concat dotfiles-dir "/starter-kit"))
+(add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
 (setq autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq package-user-dir (concat dotfiles-dir "elpa"))
@@ -44,9 +46,6 @@
 (require 'ansi-color)
 (require 'recentf)
 
-;; backport some functionality to Emacs 22 if needed
-(require 'dominating-file)
-
 ;; Load up starter kit customizations
 
 (require 'starter-kit-defuns)
@@ -58,6 +57,8 @@
 (require 'starter-kit-perl)
 (require 'starter-kit-ruby)
 (require 'starter-kit-js)
+
+(setq ns-pop-up-frames nil)
 
 (regen-autoloads)
 (load custom-file 'noerror)
@@ -72,5 +73,41 @@
 (if (file-exists-p user-specific-config) (load user-specific-config))
 (if (file-exists-p user-specific-dir)
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
+
+;; Set initial emacs window size
+(setq default-frame-alist (append (list
+  '(width  . 180)  ; Width set to 81 characters
+  '(height . 51)) ; Height set to 60 lines
+  default-frame-alist))
+
+(setq set-fill-column 120) ; default is 70
+
+;; Basic emacs settings
+(setq inhibit-startup-message   t)   ; Don't want any startup message
+(setq initial-scratch-message nil)   ; No scratch text
+(setq make-backup-files         nil) ; Don't want any backup files
+(setq auto-save-list-file-name  nil) ; Don't want any .saves files
+(setq auto-save-default         nil) ; Don't want any auto saving
+
+;; Blackboard theme
+(color-theme-blackboard)
+(pc-selection-mode)
+
+;; White space
+(whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
+;; nuke trailing whitespaces when writing to a file
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+
+;; Mac key bindings
+(setq mac-option-key-is-meta nil)
+(setq mac-command-key-is-meta t)
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier nil)
+
+;; Backspace should not be delete
+(normal-erase-is-backspace-mode 1)
+
+;;(global-linum-mode 1)
+(setq column-number-mode t)
 
 ;;; init.el ends here
