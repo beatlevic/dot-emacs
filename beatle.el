@@ -1,5 +1,10 @@
 ;; My own additions next to all the starter-kit stuff
 
+(when (equal system-type 'darwin)
+  (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
+  (push "/opt/local/bin" exec-path)
+  (push "/usr/local/git/bin" exec-path))
+
 (require 'linum)
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
 (require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
@@ -9,6 +14,7 @@
 (require 'sr-speedbar)
 (require 'lusty-explorer)
 (require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
+(require 'rinari)
 
 (textmate-mode)
 
@@ -34,7 +40,7 @@
 (global-set-key (kbd "<C-return>") 'other-window)
 (global-set-key (kbd "<C-S-return>") 'sr-speedbar-select-window)
 (global-set-key (kbd "C-c C-j") 'clojure-jump)
-(global-set-key (kbd "M-k") 'kill-buffer)
+(global-set-key (kbd "M-k") 'kill-this-buffer)
 
 ;; IBuffer
 ;;(setq ibuffer-default-sorting-mode 'major-mode)
