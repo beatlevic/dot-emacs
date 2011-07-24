@@ -62,7 +62,7 @@
 
 (defun toggle-sr-speedbar ()
   (interactive) (sr-speedbar-toggle) (sr-speedbar-refresh))
-(global-set-key [f6] 'toggle-sr-speedbar)
+(global-set-key [f5] 'toggle-sr-speedbar)
 
 (defun phplint-thisfile ()
   (interactive)
@@ -85,7 +85,7 @@
         (revert-buffer t t t) )))
   (message "Refreshed open files."))
 
-(global-set-key [f5] 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
+(global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
 
 ;; Jump to browser url
 (defun browser-jump (base-url)
