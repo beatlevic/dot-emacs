@@ -11,4 +11,5 @@ custom.el
 session*
 tramp
 places
+.org-id-locations
 \#*
