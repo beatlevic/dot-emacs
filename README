@@ -4,4 +4,9 @@ Installed emacs with Homebrew, which includes the fullscreen patch:
 
 (sudo) brew install emacs --cocoa --srgb
 
+mv Emacs.app to /Applications
+
+git submodule init --recursive
+git submodule update --recursive
+
 All the default packages are defined and will be installed on the first run (could be you have to restart emacs for some packages).
