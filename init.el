@@ -34,8 +34,9 @@
 
 (require 'package)
 
-;; Marmalade packages archive
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
+                  ("elpa" . "http://tromey.com/elpa/")))
+  (add-to-list 'package-archives source t))
 
 (package-initialize)
 (require 'starter-kit-elpa)
