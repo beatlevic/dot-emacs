@@ -15,9 +15,6 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;; Marmalade packages archive
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-
 ;; Load path etc.
 
 (setq dotfiles-dir (file-name-directory
@@ -27,20 +24,24 @@
 
 (add-to-list 'load-path dotfiles-dir)
 
-(add-to-list 'load-path (concat dotfiles-dir "/elpa-to-submit"))
 (add-to-list 'load-path (concat dotfiles-dir "/starter-kit"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/rinari"))
- ;; packages that can also be found in ELPA or Marmalade
-(add-to-list 'load-path (concat dotfiles-dir "/vendor/packages"))
 
 (setq autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 
 (require 'package)
+
+;; Marmalade packages archive
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+
 (package-initialize)
 (require 'starter-kit-elpa)
+
+ ;; packages that can also be found in ELPA or Marmalade
+(add-to-list 'load-path (concat dotfiles-dir "/vendor/packages"))
 
 ;; These should be loaded on startup rather than autoloaded on demand
 ;; since they are likely to be used in every session
