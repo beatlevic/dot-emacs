@@ -41,8 +41,8 @@
 (package-initialize)
 (require 'starter-kit-elpa)
 
- ;; packages that can also be found in ELPA or Marmalade
-(add-to-list 'load-path (concat dotfiles-dir "/vendor/packages"))
+;; packages that can also be found in ELPA or Marmalade
+;;(add-to-list 'load-path (concat dotfiles-dir "/vendor/packages"))
 
 ;; These should be loaded on startup rather than autoloaded on demand
 ;; since they are likely to be used in every session
@@ -83,11 +83,12 @@
   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 ;; Set initial emacs window size
-(setq default-frame-alist (append (list
-  '(width  . 180)  ; Width set to 81 characters
-  '(height . 51)) ; Height set to 60 lines
-  default-frame-alist))
+;; (setq default-frame-alist (append (list
+;;   '(width  . 180)  ; Width set to 81 characters
+;;   '(height . 51)) ; Height set to 60 lines
+;;   default-frame-alist))
 
+(ns-toggle-fullscreen)
 (setq set-fill-column 120) ; default is 70
 
 ;; Basic emacs settings
@@ -117,5 +118,9 @@
 
 ;;(global-linum-mode 1)
 (setq column-number-mode t)
+
+;;(toggle-sr-speedbar)
+;;(other-window 1)
+;;(split-window-horizontally)
 
 ;;; init.el ends here

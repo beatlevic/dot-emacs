@@ -4,14 +4,34 @@
 
 (require 'cl)
 
-(defvar starter-kit-packages (list 'idle-highlight
-                                   'ruby-mode
-                                   'inf-ruby
+(defvar starter-kit-packages (list 'autopair
+                                   'clojure-mode
+                                   'clojure-test-mode
+                                   'color-theme
                                    'css-mode
-                                   'yaml-mode
+                                   'elein
                                    'find-file-in-project
+                                   'full-ack
+                                   'gist
+                                   'haml-mode
+                                   'idle-highlight
+                                   'inf-ruby
+                                   'lusty-explorer
                                    'magit
-                                   'gist)
+                                   'markdown-mode
+                                   'paredit
+                                   'php-mode
+                                   'ruby-electric
+                                   'ruby-end
+                                   'ruby-mode
+                                   'rvm
+                                   'sass-mode
+                                   'scpaste
+                                   'scss-mode
+                                   'swank-clojure
+                                   'undo-tree
+                                   'yaml-mode
+                                   'yasnippet-bundle)
   "Libraries that should be installed by default.")
 
 (defun starter-kit-elpa-install ()

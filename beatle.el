@@ -30,7 +30,7 @@
 (global-set-key "{" 'skeleton-pair-insert-maybe);; uses c-electric-brace
 (global-set-key "(" 'skeleton-pair-insert-maybe);; uses c-electric-paren
 ;;(global-set-key "\"" 'skeleton-pair-insert-maybe)
-(global-set-key "'" 'skeleton-pair-insert-maybe)
+;;(global-set-key "'" 'skeleton-pair-insert-maybe)
 
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
@@ -41,6 +41,7 @@
 (global-set-key (kbd "<C-S-return>") 'sr-speedbar-select-window)
 (global-set-key (kbd "C-c C-j") 'clojure-jump)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
+(global-set-key (kbd "S-<f6>") 'ns-toggle-fullscreen)
 
 ;; IBuffer
 ;;(setq ibuffer-default-sorting-mode 'major-mode)

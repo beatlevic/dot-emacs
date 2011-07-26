@@ -1,5 +1,6 @@
 *.dat
 *~
+elpa/*
 abbrev_defs
 loaddefs.el*
 backups/*
