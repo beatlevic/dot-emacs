@@ -43,6 +43,7 @@
      (buffers-tab ((t (:background "#0C1021" :foreground "#F8F8F8"))))
      (font-lock-builtin-face ((t (:foreground "#94bff3"))))
      (font-lock-comment-face ((t (:italic t :foreground "#AEAEAE"))))
+     (font-lock-doc-face ((t (:italic t :foreground "#AEAEAE"))))
      (font-lock-constant-face ((t (:foreground "#D8FA3C"))))
      (font-lock-doc-string-face ((t (:foreground "DarkOrange"))))
      (font-lock-function-name-face ((t (:foreground "#FF6400"))))
@@ -51,7 +52,7 @@
      (font-lock-reference-face ((t (:foreground "SlateBlue"))))
 
      (font-lock-regexp-grouping-backslash ((t (:foreground "#E9C062"))))
-     (font-lock-regexp-grouping-construct ((t (:foreground "red"))))
+     ;;(font-lock-regexp-grouping-construct ((t (:foreground "red"))))
 
      (font-lock-string-face ((t (:foreground "#61CE3C"))))
      ;;(font-lock-string-face ((t (:foreground "#8F9D6A"))))
