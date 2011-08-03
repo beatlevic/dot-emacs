@@ -11,7 +11,7 @@
                                    'css-mode
                                    'elein
                                    'find-file-in-project
-                                   'full-ack
+                                   ;;'full-ack
                                    'gist
                                    'haml-mode
                                    'idle-highlight
