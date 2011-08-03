@@ -197,7 +197,7 @@
 
 (defun toggle-sr-speedbar ()
   (interactive) (sr-speedbar-toggle) (sr-speedbar-refresh))
-(global-set-key [f5] 'toggle-sr-speedbar)
+(global-set-key [f5] 'sr-speedbar-toggle)
 
 (defun phplint-thisfile ()
   (interactive)

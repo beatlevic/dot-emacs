@@ -12,7 +12,7 @@
  '(sr-speedbar-delete-windows nil)
  '(sr-speedbar-right-side nil)
  '(sr-speedbar-skip-other-window-p nil)
- '(sr-speedbar-width-x 32))
+ '(sr-speedbar-width-x 40))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,5 +25,6 @@
  '(org-level-2 ((t (:foreground "#94bff3"))))
  '(org-level-3 ((t (:foreground "#8DA6CE"))))
  '(speedbar-button-face ((((class color) (background dark)) (:foreground "darkgrey"))))
- '(speedbar-file-face ((((class color) (background dark)) (:foreground "LightSkyBlue"))))
- '(speedbar-selected-face ((((class color) (background dark)) (:foreground "cyan" :underline t)))))
+ '(speedbar-directory-face ((((class color) (background dark)) (:foreground "darkgrey"))))
+ '(speedbar-file-face ((((class color) (background dark)) (:foreground "lightgrey"))))
+ '(speedbar-selected-face ((((class color) (background dark)) (:foreground "#F8F8F8")))))
