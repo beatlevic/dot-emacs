@@ -162,10 +162,9 @@
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
-(global-set-key (kbd "<C-tab>") 'bury-buffer)
-(global-set-key (kbd "<C-S-tab>") 'unbury-buffer)
+(global-set-key (kbd "<C-tab>") 'next-buffer)
+(global-set-key (kbd "<C-S-tab>") 'previous-buffer)
 (global-set-key (kbd "<C-return>") 'other-window)
-(global-set-key (kbd "<C-S-return>") 'sr-speedbar-select-window)
 (global-set-key (kbd "C-c C-j") 'clojure-jump)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
 (global-set-key (kbd "M-ƒ") 'ns-toggle-fullscreen)
@@ -196,7 +195,8 @@
 (setq ibuffer-show-empty-filter-groups nil)
 
 (defun toggle-sr-speedbar ()
-  (interactive) (sr-speedbar-toggle) (sr-speedbar-refresh))
+  (interactive) (if (not (sr-speedbar-exist-p)) (sr-speedbar-toggle)) (sr-speedbar-select-window))
+(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
 (global-set-key [f5] 'sr-speedbar-toggle)
 
 (defun phplint-thisfile ()
