@@ -16,12 +16,13 @@
  '(sr-speedbar-delete-windows nil)
  '(sr-speedbar-right-side nil)
  '(sr-speedbar-skip-other-window-p t)
- '(sr-speedbar-width-x 30))
+ '(sr-speedbar-width-x 28))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#21221d" :foreground "#E6E1DC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "apple" :family "Monaco"))))
  '(ecb-default-highlight-face ((((class color) (background dark)) (:background "blue"))))
  '(ecb-directory-face ((((class color) (background dark)) (:inherit ecb-default-highlight-face :background "blue"))))
  '(linum ((t (:inherit default :foreground "#6c6c6c"))))
