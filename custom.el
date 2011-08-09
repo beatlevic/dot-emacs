@@ -16,7 +16,7 @@
  '(sr-speedbar-delete-windows nil)
  '(sr-speedbar-right-side nil)
  '(sr-speedbar-skip-other-window-p t)
- '(sr-speedbar-width-x 28))
+ '(sr-speedbar-width-x 30))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

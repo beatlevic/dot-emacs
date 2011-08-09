@@ -28,6 +28,7 @@
                                    'sass-mode
                                    'scpaste
                                    'scss-mode
+                                   'smart-tab
                                    'swank-clojure
                                    'undo-tree
                                    'yaml-mode
