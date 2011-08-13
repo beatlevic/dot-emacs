@@ -239,15 +239,20 @@
 ;;(set-frame-parameter (selected-frame) 'alpha '(100 100))
 ;;(add-to-list 'default-frame-alist '(alpha 100 100))
 
-;; Smart Tab
-;; https://github.com/haxney/smart-tab
-;; (require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
-;; (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
-;; (setq smart-tab-completion-functions-alist
-;;       '((emacs-lisp-mode . lisp-complete-symbol)
-;;         (text-mode . dabbrev-completion) ;; this is the "default"
-;;         emacs expansion function
-;;         (clojure-mode . slime-complete-symbol))) ;; see update below
+(require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
+(global-smart-tab-mode 1) ;; switch on smart-tab everywhere
+(setq smart-tab-completion-functions-alist
+      '((emacs-lisp-mode . lisp-complete-symbol)
+        (text-mode . dabbrev-completion) ;; this is the "default"
+        emacs expansion function
+        (clojure-mode . slime-complete-symbol))) ;; see update below
+
+(add-to-list 'smart-tab-disabled-major-modes 'eshell-mode)
+
+(add-hook 'js-mode-hook
+          '(lambda ()
+             (turn-on-paredit)))
+
 
 ;; Auto-complete
 ;; (require 'auto-complete-config)
