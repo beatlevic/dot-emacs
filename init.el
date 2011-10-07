@@ -27,6 +27,7 @@
 (add-to-list 'load-path (concat dotfiles-dir "/starter-kit"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/rinari"))
+(add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
 
 (setq autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq package-user-dir (concat dotfiles-dir "elpa"))
@@ -65,6 +66,10 @@
 ;;(require 'starter-kit-perl)
 (require 'starter-kit-ruby)
 (require 'starter-kit-js)
+
+(require 'git-emacs)
+(require 'git-status)
+(require 'git-blame)
 
 (setq ns-pop-up-frames nil)
 
@@ -130,7 +135,8 @@
 (when (equal system-type 'darwin)
   (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
   (push "/opt/local/bin" exec-path)
-  (push "/usr/local/git/bin" exec-path))
+  (push "/usr/local/git/bin" exec-path)
+  (push "/usr/local/bin" exec-path))
 
 (require 'linum)
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
@@ -150,6 +156,15 @@
 (autoload 'ack-find-same-file "full-ack" nil t)
 (autoload 'ack-find-file "full-ack" nil t)
 
+;; (autoload 'ack-and-a-half-same "ack-and-a-half" nil t)
+;; (autoload 'ack-and-a-half "ack-and-a-half" nil t)
+;; (autoload 'ack-and-a-half-find-file-samee "ack-and-a-half" nil t)
+;; (autoload 'ack-and-a-half-find-file "ack-and-a-half" nil t)
+;; (defalias 'ack 'ack-and-a-half)
+;; (defalias 'ack-same 'ack-and-a-half-same)
+;; (defalias 'ack-find-file 'ack-and-a-half-find-file)
+;; (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
+
 (setq skeleton-pair t)
 (setq skeleton-pair-on-word t) ; apply skeleton trick even in front of a word
 
@@ -162,13 +177,29 @@
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
-(global-set-key (kbd "<C-tab>") 'next-buffer)
-(global-set-key (kbd "<C-S-tab>") 'previous-buffer)
-(global-set-key (kbd "<C-return>") 'other-window)
+;;(global-set-key (kbd "<C-tab>") 'previous-buffer)
+;;(global-set-key (kbd "<C-S-tab>") 'next-buffer)
+;;(global-set-key (kbd "<C-return>") 'other-window)
 (global-set-key (kbd "C-c C-j") 'clojure-jump)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
 (global-set-key (kbd "M-ƒ") 'ns-toggle-fullscreen)
 ;;(global-set-key (kbd "S-<f6>") nil)
+
+
+;; My minor mode to overwrite other major modes
+(defvar beatle-minor-mode-map (make-keymap) "Beatle-minor-mode keymap.")
+;; cycle through buffers with ctrl-(shift-)tab
+(define-key beatle-minor-mode-map (kbd "<C-tab>") 'previous-buffer)
+(define-key beatle-minor-mode-map (kbd "<C-S-tab>") 'next-buffer)
+(define-key beatle-minor-mode-map (kbd "<C-return>") 'other-window)
+(define-key beatle-minor-mode-map (kbd "<C-S-return>") 'sr-speedbar-select-window)
+;;(define-key beatle-minor-mode-map (kbd "C-c C-j") 'clojure-jump)
+;;(define-key beatle-minor-mode-map (kbd "C-c C-f") 'lusty-file-explorer)
+(define-minor-mode beatle-minor-mode
+  "A minor mode so that my key settings override annoying major modes."
+  t " Beatle" 'beatle-minor-mode-map)
+
+(beatle-minor-mode 1)
 
 ;; IBuffer
 ;;(setq ibuffer-default-sorting-mode 'major-mode)
@@ -177,7 +208,13 @@
          ("Clojure" (or (mode . clojure-mode)
                         (filename . "clojure")))
          ("Javascript" (or (mode . esspresso-mode)
+                           (mode . js3-mode)
+                           (mode . js-mode)
                            (filename . "js")))
+         ("Ruby" (or (mode . ruby-mode)
+                     (filename . "rb")))
+         ("PHP" (or (mode . php-mode)
+                    (filename . "php")))
          ("Org" (or (mode . org-mode)
                     (filename . "org")))
          ;;        ("Subversion" (name . "\*svn"))
@@ -253,6 +290,13 @@
           '(lambda ()
              (turn-on-paredit)))
 
+(setq hippie-expand-try-functions-list
+      '(yas/hippie-try-expand
+        try-expand-dabbrev
+        try-expand-dabbrev-all-buffers
+        try-expand-dabbrev-from-kill
+        try-complete-file-name
+        try-complete-lisp-symbol))
 
 ;; Auto-complete
 ;; (require 'auto-complete-config)
@@ -267,3 +311,11 @@
 ;; (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 ;; (setq ac-sources (append '(ac-source-slime-simple) ac-sources))
 
+(autoload 'mo-git-blame-file "mo-git-blame" nil t)
+(autoload 'mo-git-blame-current "mo-git-blame" nil t)
+
+(setq ibuffer-formats '((mark modified read-only " " (name 32 32) " "
+                              (size 6 -1 :right) " " (filename 55 55));;" " (mode 16 16 :center)
+                    	   (mark " " (name 16 -1) " " filename))
+      ibuffer-elide-long-columns t
+      ibuffer-eliding-string "..")

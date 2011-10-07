@@ -70,7 +70,8 @@ when we don't have to indent."
 
 (defcustom smart-tab-completion-functions-alist
   '((emacs-lisp-mode . lisp-complete-symbol)
-    (text-mode       . dabbrev-completion))
+    (text-mode       . dabbrev-completion)
+    (ruby-mode       . hippie-expand))
   "A-list of major modes in which to use a mode specific completion function.
 If current major mode is not found in this alist, fall back to
 `hippie-expand' or `dabbrev-expand', depending on the value of

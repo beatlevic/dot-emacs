@@ -1,12 +1,13 @@
+;;; -*- lexical-binding: t -*-
 ;;; full-ack.el --- a front-end for ack
 ;;
-;; Copyright (C) 2009-2010 Nikolaj Schumacher
+;; Copyright (C) 2009-2011 Nikolaj Schumacher
 ;;
 ;; Author: Nikolaj Schumacher <bugs * nschum de>
 ;; Version: 0.2.2
 ;; Keywords: tools, matching
 ;; URL: http://nschum.de/src/emacs/full-ack/
-;; Compatibility: GNU Emacs 22.x, GNU Emacs 23.x
+;; Compatibility: GNU Emacs 22.x, GNU Emacs 23.x, GNU Emacs 24.x
 ;;
 ;; This file is NOT part of GNU Emacs.
 ;;
@@ -46,6 +47,9 @@
 ;; current project.  It's a convenient, though slow, way of finding files.
 ;;
 ;;; Change Log:
+;;
+;;    Added `ack-again' (bound to "g" in search buffers).
+;;    Added default value for search.
 ;;
 ;; 2010-11-17 (0.2.2)
 ;;    Made changes for ack 1.92.
@@ -165,7 +169,7 @@ found in a directory, that directory is assumed to be the project root by
   :group 'full-ack
   :type '(repeat (string :tag "Regular expression")))
 
-(defcustom ack-prompt-for-directory nil
+(defcustom ack-prompt-for-directory t
   "*Determines whether `ack' asks the user for the root directory.
 If this is 'unless-guessed, the value determined by
 `ack-root-directory-functions' is used without confirmation.  If it is
@@ -224,6 +228,7 @@ nil, the directory is never confirmed."
     (haskell-mode "haskell")
     (hexl-mode "binary")
     (html-mode "html")
+    (haml-mode "haml")
     (java-mode "java")
     (javascript-mode "js")
     (jde-mode "java")
@@ -258,7 +263,9 @@ nil, the directory is never confirmed."
   "Default values for `ack-mode-type-alist', which see.")
 
 (defconst ack-mode-default-extension-alist
-  '((d-mode "d"))
+  '((d-mode "d")
+    (ruby-mode "haml")
+    (haml-mode "haml"))
   "Default values for `ack-mode-extension-alist', which see.")
 
 (defun ack-create-type (extensions)
@@ -304,8 +311,9 @@ This can be used in `ack-root-directory-functions'."
 ;;; process ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar ack-buffer-name "*ack*")
-
 (defvar ack-process nil)
+
+(defvar ack-buffer--rerun-args nil)
 
 (defun ack-count-matches ()
   "Count the matches printed by `ack' in the current buffer."
@@ -347,7 +355,7 @@ This can be used in `ack-root-directory-functions'."
   (when (processp ack-process)
     (delete-process ack-process)))
 
-(defsubst ack-option (name enabled)
+(defun ack-option (name enabled)
   (format "--%s%s" (if enabled "" "no") name))
 
 (defun ack-arguments-from-options (regexp)
@@ -374,13 +382,16 @@ This can be used in `ack-root-directory-functions'."
                                  arguments)))
   (let ((buffer (get-buffer-create ack-buffer-name))
         (inhibit-read-only t)
-        (default-directory directory))
-    (setq next-error-last-buffer buffer)
+        (default-directory directory)
+        (rerun-args (cons directory (cons regexp arguments))))
+    (setq next-error-last-buffer buffer
+          ack-buffer--rerun-args rerun-args)
     (with-current-buffer buffer
       (erase-buffer)
       (ack-mode)
       (setq buffer-read-only t
             default-directory directory)
+      (set (make-local-variable 'ack-buffer--rerun-args) rerun-args)
       (font-lock-fontify-buffer)
       (when (eq ack-display-buffer t)
         (display-buffer (current-buffer))))
@@ -420,10 +431,29 @@ This can be used in `ack-root-directory-functions'."
 (defvar ack-regexp-history nil
   "Regular expressions recently searched for with `ack'.")
 
-(defsubst ack-read (regexp)
-  (read-from-minibuffer (if regexp "ack pattern: " "ack literal search: ")
-                        nil nil nil
-                        (if regexp 'ack-regexp-history 'ack-literal-history)))
+(defun ack--read (regexp)
+  (let ((default (ack--default-for-read))
+        (type (if regexp "pattern" "literal"))
+        (history-var (if regexp 'ack-regexp-history 'ack-literal-history)))
+    (read-string (if default
+                     (format "ack %s search (default %s): " type default)
+                   (format "ack %s search: " type))
+                 (ack--initial-contents-for-read)
+                 history-var
+                 default)))
+
+(defun ack--initial-contents-for-read ()
+  (when (ack--use-region-p)
+    (buffer-substring-no-properties (region-beginning) (region-end))))
+
+(defun ack--default-for-read ()
+  (unless (ack--use-region-p)
+    (thing-at-point 'symbol)))
+
+(defun ack--use-region-p ()
+  (or (and (fboundp 'use-region-p) (use-region-p))
+      (and transient-mark-mode mark-active
+           (> (region-end) (region-beginning)))))
 
 (defun ack-read-dir ()
   (let ((dir (run-hook-with-args-until-success 'ack-root-directory-functions)))
@@ -435,13 +465,13 @@ This can be used in `ack-root-directory-functions'."
           (and buffer-file-name (file-name-directory buffer-file-name))
           default-directory))))
 
-(defsubst ack-xor (a b)
+(defun ack-xor (a b)
   (if a (not b) b))
 
 (defun ack-interactive ()
   "Return the (interactive) arguments for `ack' and `ack-same'"
   (let ((regexp (ack-xor current-prefix-arg ack-search-regexp)))
-    (list (ack-read regexp)
+    (list (ack--read regexp)
           regexp
           (ack-read-dir))))
 
@@ -486,7 +516,7 @@ DIRECTORY is the root directory.  If called interactively, it is determined by
     (require 'iswitchb)
     (with-no-warnings
       (let ((iswitchb-make-buflist-hook
-             (lambda () (setq iswitchb-temp-buflist choices))))
+             `(lambda () (setq iswitchb-temp-buflist ',choices))))
         (iswitchb-read-buffer prompt nil t)))))
 
 ;;;###autoload
@@ -505,6 +535,21 @@ DIRECTORY is the root directory.  If called interactively, it is determined by
   (find-file (expand-file-name (ack-read-file "Find file: "
                                               (ack-list-files directory))
                                directory)))
+
+;;; run again ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun ack-again ()
+  "Run the last ack search in the same directory."
+  (interactive)
+  (if ack-buffer--rerun-args
+      (let ((ack-buffer-name (ack--again-buffer-name)))
+        (apply 'ack-run ack-buffer--rerun-args))
+    (call-interactively 'ack)))
+
+(defun ack--again-buffer-name ()
+  (if (local-variable-p 'ack-buffer--rerun-args)
+      (buffer-name)
+    ack-buffer-name))
 
 ;;; text utilities ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -598,8 +643,14 @@ DIRECTORY is the root directory.  If called interactively, it is determined by
     (when buffer
       (with-current-buffer buffer
         (save-excursion
-          (goto-line (string-to-number line))
+          (ack--move-to-line (string-to-number line))
           (copy-marker (+ (point) offset -1)))))))
+
+(defun ack--move-to-line (line)
+  (save-restriction
+    (widen)
+    (goto-char (point-min))
+    (forward-line (1- line))))
 
 (defun ack-find-match (pos)
   "Jump to the match at POS."
@@ -637,6 +688,8 @@ DIRECTORY is the root directory.  If called interactively, it is determined by
     (define-key keymap "\C-m" 'ack-find-match)
     (define-key keymap "n" 'ack-next-match)
     (define-key keymap "p" 'ack-previous-match)
+    (define-key keymap "g" 'ack-again)
+    (define-key keymap "r" 'ack-again)
     keymap))
 
 (defconst ack-font-lock-regexp-color-fg-begin "\\(\33\\[1;..m\\)")

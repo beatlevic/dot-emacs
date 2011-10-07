@@ -46,7 +46,7 @@
   ;; need a binding that works in the terminal
   '(define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp))
 
-(dolist (x '(scheme emacs-lisp lisp clojure))
+(dolist (x '(scheme emacs-lisp lisp clojure ruby))
   (when window-system
     (font-lock-add-keywords
      (intern (concat (symbol-name x) "-mode"))
