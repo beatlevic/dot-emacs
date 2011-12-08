@@ -71,6 +71,8 @@
 (require 'git-status)
 (require 'git-blame)
 
+(require 'coffee-mode)
+
 (setq ns-pop-up-frames nil)
 
 (regen-autoloads)
@@ -319,3 +321,6 @@
                     	   (mark " " (name 16 -1) " " filename))
       ibuffer-elide-long-columns t
       ibuffer-eliding-string "..")
+
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
