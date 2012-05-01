@@ -73,6 +73,11 @@
 
 (require 'coffee-mode)
 
+;; Load Perspective
+;;(require 'perspective)
+;; Toggle the perspective mode
+;;(persp-mode)
+
 (setq ns-pop-up-frames nil)
 
 (regen-autoloads)
@@ -140,7 +145,7 @@
   (push "/usr/local/git/bin" exec-path)
   (push "/usr/local/bin" exec-path))
 
-(require 'linum)
+;;(require 'linum)
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
 (require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
 (require 'autopair)
@@ -179,9 +184,9 @@
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
-;;(global-set-key (kbd "<C-tab>") 'previous-buffer)
-;;(global-set-key (kbd "<C-S-tab>") 'next-buffer)
-;;(global-set-key (kbd "<C-return>") 'other-window)
+(global-set-key (kbd "<C-tab>") 'previous-buffer)
+(global-set-key (kbd "<C-S-tab>") 'next-buffer)
+(global-set-key (kbd "<C-return>") 'other-window)
 (global-set-key (kbd "C-c C-j") 'clojure-jump)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
 (global-set-key (kbd "M-ƒ") 'ns-toggle-fullscreen)
@@ -189,19 +194,19 @@
 
 
 ;; My minor mode to overwrite other major modes
-(defvar beatle-minor-mode-map (make-keymap) "Beatle-minor-mode keymap.")
+;;(defvar beatle-minor-mode-map (make-keymap) "Beatle-minor-mode keymap.")
 ;; cycle through buffers with ctrl-(shift-)tab
-(define-key beatle-minor-mode-map (kbd "<C-tab>") 'previous-buffer)
-(define-key beatle-minor-mode-map (kbd "<C-S-tab>") 'next-buffer)
-(define-key beatle-minor-mode-map (kbd "<C-return>") 'other-window)
-(define-key beatle-minor-mode-map (kbd "<C-S-return>") 'sr-speedbar-select-window)
+;;(define-key beatle-minor-mode-map (kbd "<C-tab>") 'previous-buffer)
+;;(define-key beatle-minor-mode-map (kbd "<C-S-tab>") 'next-buffer)
+;;(define-key beatle-minor-mode-map (kbd "<C-return>") 'other-window)
+;;(define-key beatle-minor-mode-map (kbd "<C-S-return>") 'sr-speedbar-select-window)
 ;;(define-key beatle-minor-mode-map (kbd "C-c C-j") 'clojure-jump)
 ;;(define-key beatle-minor-mode-map (kbd "C-c C-f") 'lusty-file-explorer)
-(define-minor-mode beatle-minor-mode
-  "A minor mode so that my key settings override annoying major modes."
-  t " Beatle" 'beatle-minor-mode-map)
+;; (define-minor-mode beatle-minor-mode
+;;   "A minor mode so that my key settings override annoying major modes."
+;;   t " Beatle" 'beatle-minor-mode-map)
 
-(beatle-minor-mode 1)
+;; (beatle-minor-mode 1)
 
 ;; IBuffer
 ;;(setq ibuffer-default-sorting-mode 'major-mode)
@@ -288,9 +293,9 @@
 
 (add-to-list 'smart-tab-disabled-major-modes 'eshell-mode)
 
-(add-hook 'js-mode-hook
-          '(lambda ()
-             (turn-on-paredit)))
+;; (add-hook 'js-mode-hook
+;;           '(lambda ()
+;;              (turn-on-paredit)))
 
 (setq hippie-expand-try-functions-list
       '(yas/hippie-try-expand

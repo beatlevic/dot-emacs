@@ -20,6 +20,7 @@
                                    'magit
                                    'markdown-mode
                                    'paredit
+                                   'perspective
                                    'php-mode
                                    'ruby-electric
                                    'ruby-end
