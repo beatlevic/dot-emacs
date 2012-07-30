@@ -1,3 +1,4 @@
+(server-start)
 ;;; init.el --- Where all the magic begins
 ;;
 ;; Part of the Emacs Starter Kit
@@ -33,6 +34,10 @@
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 
+(autoload 'js3-mode "js3" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js3-mode))
+
 (require 'package)
 
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
@@ -64,8 +69,8 @@
 (require 'starter-kit-eshell)
 (require 'starter-kit-lisp)
 ;;(require 'starter-kit-perl)
-(require 'starter-kit-ruby)
-(require 'starter-kit-js)
+;(require 'starter-kit-ruby)
+;(require 'starter-kit-js)
 
 (require 'git-emacs)
 (require 'git-status)
@@ -184,9 +189,11 @@
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
+(global-set-key (kbd "C-S-r") 'occur)
 (global-set-key (kbd "<C-tab>") 'previous-buffer)
 (global-set-key (kbd "<C-S-tab>") 'next-buffer)
 (global-set-key (kbd "<C-return>") 'other-window)
+(global-set-key (kbd "C-M-k") 'delete-window)
 (global-set-key (kbd "C-c C-j") 'clojure-jump)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
 (global-set-key (kbd "M-ƒ") 'ns-toggle-fullscreen)
@@ -304,6 +311,17 @@
         try-expand-dabbrev-from-kill
         try-complete-file-name
         try-complete-lisp-symbol))
+
+;; (yas/define-snippets 'js3-mode
+;;                      '(("for" "for (var i=0;i<${len};i++) {\n$0\n}" "for" nil nil nil nil nil)
+;;                        ("forin" "for (var ${i} in ${var}) {\n$0\n}" "forin" nil nil nil nil nil)
+;;                        ("if" "if (${cond}) $0" "if" nil nil nil nil nil)
+;;                        ("ifm" "if (${cond}) {\n$0\n}" "if" nil nil nil nil nil)
+;;                        ("else" "if (${cond}) {\n$0\n} else {\n\n}" "if else"  nil nil nil nil nil)
+;;                        ("var" "var ${variable} = ${value};" "var"  nil nil nil nil nil)
+;;                        ("f" "function(${args}) {\n$0\n}" "function" nil nil nil nil nil)
+;;                        ("l" "console.log('${message}');" "console.log"  nil nil nil nil nil))
+;;                      '(text-mode))
 
 ;; Auto-complete
 ;; (require 'auto-complete-config)
