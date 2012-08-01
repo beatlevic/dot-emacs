@@ -5,6 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(c-basic-offset (quote set-from-style))
  '(js-auto-indent-flag nil)
+ '(js2-basic-offset 2)
+ '(js2-bounce-indent-p t)
  '(js3-consistent-level-indent-inner-bracket t)
  '(js3-enter-indents-newline t)
  '(js3-highlight-external-variables nil)

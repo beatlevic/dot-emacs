@@ -16,9 +16,11 @@
                                    'haml-mode
                                    'idle-highlight
                                    'inf-ruby
+                                   'js2-mode
                                    'lusty-explorer
                                    'magit
                                    'markdown-mode
+                                   'mark-multiple
                                    'paredit
                                    'perspective
                                    'php-mode
