@@ -75,10 +75,15 @@
 
 (require 'coffee-mode)
 
+(require 'tramp)
+(setq tramp-default-method "ssh")
+
 ;; Load Perspective
 ;;(require 'perspective)
 ;; Toggle the perspective mode
 ;;(persp-mode)
+
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
 (setq ns-pop-up-frames nil)
 
@@ -218,6 +223,8 @@
       '(("home"
          ("Clojure" (or (mode . clojure-mode)
                         (filename . "clojure")))
+         ("Python" (or (mode . pyhton-mode)
+                        (filename . "py")))
          ("Javascript" (or (mode . esspresso-mode)
                            (mode . js3-mode)
                            (mode . js2-mode)
@@ -494,3 +501,19 @@
 ;;     ))
 
 ;; (ad-activate 'paredit-mode)
+
+(defun my-align-single-equals ()
+  "Align on a single equals sign (with a space either side)."
+  (interactive)
+  (align-regexp
+   (region-beginning) (region-end)
+   "\\(\\s-*\\) = " 1 0 nil))
+
+(global-set-key (kbd "C-x a") 'my-align-single-equals)
+
+(auto-fill-mode -1)
+
+(remove-hook 'text-mode-hook 'turn-on-auto-fill)
+
+(desktop-save-mode 1)
+(add-to-list 'desktop-modes-not-to-save 'dired-mode)
