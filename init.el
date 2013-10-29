@@ -493,6 +493,10 @@
 (defun turn-on-autopair-mode () (autopair-mode 1))
 (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
 
+(defun turn-on-hl-mode () (hl-line-mode 1))
+(dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-hl-mode))
+
+
 ;; (require 'paredit)
 ;; (defadvice paredit-mode (around disable-autopairs-around (arg))
 ;;   "Disable autopairs mode if paredit-mode is turned on"
@@ -519,3 +523,5 @@
 
 (desktop-save-mode 1)
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
+
+(hl-line-mode 1)
