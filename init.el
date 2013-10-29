@@ -78,6 +78,8 @@
 (require 'tramp)
 (setq tramp-default-method "ssh")
 
+(require 'powerline)
+
 ;; Load Perspective
 ;;(require 'perspective)
 ;; Toggle the perspective mode
