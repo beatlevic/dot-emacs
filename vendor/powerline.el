@@ -352,6 +352,17 @@ install the memoized function over the original function."
       (propertize " " 'display '((space :align-to (- right-fringe 11)))
                   'face plface))))
 
+(defun powerline-make-fill-full
+  (color)
+  ;; justify right by filling with spaces to right fringe, 20 should be calculated
+  (let ((plface (powerline-make-face color)))
+    (if (eq 'right (get-scroll-bar-mode))
+        (propertize " " 'display '((space :align-to (+ right-fringe 10)))
+                    'face plface)
+      (propertize " " 'display '((space :align-to (+ right-fringe 10)))
+                  'face plface))))
+
+
 (defun powerline-make-text
   (string color &optional fg localmap)
   (let ((plface (powerline-make-face color)))
@@ -474,14 +485,17 @@ install the memoized function over the original function."
                              (powerline-row            'right       powerline-color1)
                              (powerline-make-text      ":"          powerline-color1  )
                              (powerline-column         'right       powerline-color1  )
-                             (powerline-narrow         'left        powerline-color1  powerline-color2  )
+                             (powerline-narrow         'left       powerline-color1 powerline-color2  )
+                             (powerline-percent        'left       powerline-color2  )
+
+;;                             (powerline-narrow         'left        powerline-color1  powerline-color2  )
 ;;                             (powerline-vc             'center                        powerline-color2  )
-                             (powerline-make-fill                                     powerline-color2  )
+                             (powerline-make-fill-full                                     powerline-color2  )
 ;;                             (powerline-row            'right       powerline-color1  powerline-color2  )
 ;;                             (powerline-make-text      ":"          powerline-color1  )
 ;;                             (powerline-column         'right       powerline-color1  )
-                             (powerline-narrow         'right        powerline-color1  powerline-color2  )
-                             (powerline-percent        'right  nil  powerline-color1  )
+;;                             (powerline-narrow         'right        powerline-color1  powerline-color2  )
+;;                             (powerline-percent        'right  nil  powerline-color1  )
 ;;                             (powerline-make-text      "  "    nil  )
                              ))))
 
