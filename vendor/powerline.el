@@ -357,9 +357,9 @@ install the memoized function over the original function."
   ;; justify right by filling with spaces to right fringe, 20 should be calculated
   (let ((plface (powerline-make-face color)))
     (if (eq 'right (get-scroll-bar-mode))
-        (propertize " " 'display '((space :align-to (+ right-fringe 10)))
+        (propertize " " 'display '((space :align-to (+ right-fringe 1)))
                     'face plface)
-      (propertize " " 'display '((space :align-to (+ right-fringe 10)))
+      (propertize " " 'display '((space :align-to (+ right-fringe 1)))
                   'face plface))))
 
 
@@ -496,7 +496,7 @@ install the memoized function over the original function."
 ;;                             (powerline-column         'right       powerline-color1  )
 ;;                             (powerline-narrow         'right        powerline-color1  powerline-color2  )
 ;;                             (powerline-percent        'right  nil  powerline-color1  )
-;;                             (powerline-make-text      "  "    nil  )
+                             (powerline-make-text      "  "   powerline-color2 )
                              ))))
 
 
