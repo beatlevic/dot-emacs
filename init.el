@@ -30,6 +30,8 @@
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/rinari"))
 ;;(add-to-list 'load-path (concat dotfiles-dir "/vendor/js2-refactor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
+;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
+;(add-to-list 'load-path (concat dotfiles-dir "/vendor/helm"))
 
 (setq autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq package-user-dir (concat dotfiles-dir "elpa"))
@@ -79,6 +81,21 @@
 (setq tramp-default-method "ssh")
 
 (require 'powerline)
+(require 'ag)
+(setq ag-highlight-search t)
+
+;; (require 'grizzl)
+;; (require 'projectile)
+;; ;(require 'helm-config)
+
+;; (projectile-global-mode)
+;; (setq projectile-enable-caching t)
+;; (setq projectile-completion-system 'grizzl)
+;; ;; Press Command-p for fuzzy find in project
+;; (global-set-key (kbd "s-p") 'projectile-find-file)
+;; ;; Press Command-b for fuzzy switch buffer
+;; (global-set-key (kbd "s-b") 'projectile-switch-to-buffer)
+;; (setq projectile-require-project-root nil)
 
 ;; Load Perspective
 ;;(require 'perspective)

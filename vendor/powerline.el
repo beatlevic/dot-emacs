@@ -22,6 +22,7 @@
 (setq powerline-color2 "grey40")
 
 (set-face-attribute 'mode-line nil
+                    :height 120
                     :background "grey60";"#FFC66D";"#e8b463"; yellow;"#FFC66D";"#6D9CBE";"OliveDrab3"
                     :box nil)
 (set-face-attribute 'mode-line-inactive nil
@@ -249,17 +250,20 @@ install the memoized function over the original function."
                                    (if fg
                                        (format "%s" fg)
                                      "white")))))
-        (make-face cface)2
+        (make-face cface)
         (if fg
             (if (eq fg 0)
                 (set-face-attribute cface nil
+                                    :height 120
                                     :background bg
                                     :box nil)
               (set-face-attribute cface nil
+                                  :height 120
                                   :foreground fg
                                   :background bg
                                   :box nil))
           (set-face-attribute cface nil
+                            :height 120
                             :foreground "white"
                             :background bg
                             :box nil))
