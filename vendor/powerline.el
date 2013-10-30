@@ -23,6 +23,7 @@
 
 (set-face-attribute 'mode-line nil
                     :height 120
+                    :weight 'bold
                     :background "grey60";"#FFC66D";"#e8b463"; yellow;"#FFC66D";"#6D9CBE";"OliveDrab3"
                     :box nil)
 (set-face-attribute 'mode-line-inactive nil
@@ -448,7 +449,7 @@ install the memoized function over the original function."
                                                                        (define-key map [header-line down-mouse-3] (powerline-mouse 'minor 'menu mm))
                                                                        map)))
                                            mms))))
-(defpowerline row         " %4l")
+(defpowerline row         "%4l")
 (defpowerline column      "%3c")
 (defpowerline percent     "%6p")
 (defpowerline narrow      (let (real-point-min real-point-max)
