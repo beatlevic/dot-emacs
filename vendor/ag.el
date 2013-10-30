@@ -35,7 +35,7 @@
 (eval-when-compile (require 'cl)) ;; dolist, flet
 
 (defcustom ag-arguments
-  (list "--smart-case" "--nogroup" "--column" "--")
+  (list "-C 5 --smart-case" "--group" "--")
   "Default arguments passed to ag."
   :type '(repeat (string))
   :group 'ag)
@@ -127,7 +127,7 @@ If REGEXP is non-nil, treat STRING as a regular expression."
                        ag-arguments
                      (cons "--literal" ag-arguments))))
     (if ag-highlight-search
-        (setq arguments (append '("--color" "--color-match" "30;43") arguments))
+        (setq arguments (append '("--color" "--color-match" "30;43" "--color-path" "30;43") arguments))
       (setq arguments (append '("--nocolor") arguments)))
     (unless (file-exists-p default-directory)
       (error "No such directory %s" default-directory))
