@@ -15,23 +15,15 @@
                                    'gist
                                    'haml-mode
                                    'idle-highlight
-                                   'inf-ruby
-                                   'js2-mode
                                    'lusty-explorer
                                    'magit
                                    'markdown-mode
                                    'mark-multiple
                                    'paredit
-                                   'perspective
                                    'php-mode
-                                   'ruby-electric
-                                   'ruby-end
-                                   'ruby-mode
-                                   'rvm
                                    'sass-mode
                                    'scpaste
                                    'scss-mode
-                                   ;;'smart-tab
                                    'swank-clojure
                                    'undo-tree
                                    'yaml-mode

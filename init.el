@@ -45,6 +45,9 @@
 (require 'starter-kit-lisp)
 (require 'starter-kit-misc)
 
+(regen-autoloads)
+(load custom-file 'noerror)
+
 (require 'git-emacs)
 (require 'git-status)
 (require 'git-blame)
@@ -78,8 +81,12 @@
         try-complete-file-name
         try-complete-lisp-symbol))
 
-(regen-autoloads)
-(load custom-file 'noerror)
+;; require to run ack command
+(when (equal system-type 'darwin)
+  (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
+  (push "/opt/local/bin" exec-path)
+  (push "/usr/local/git/bin" exec-path)
+  (push "/usr/local/bin" exec-path))
 
 ;; Modes
 (color-theme-blackboard)
