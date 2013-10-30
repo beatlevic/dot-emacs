@@ -46,9 +46,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#21221d" :foreground "#E6E1DC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "apple" :family "Monaco"))))
- '(ecb-default-highlight-face ((((class color) (background dark)) (:background "blue"))))
- '(ecb-directory-face ((((class color) (background dark)) (:inherit ecb-default-highlight-face :background "blue"))))
- '(linum ((t (:inherit default :foreground "#6c6c6c"))))
  '(org-level-1 ((t (:inherit nil :foreground "LightSkyBlue"))))
  '(org-level-2 ((t (:foreground "#94bff3"))))
  '(org-level-3 ((t (:foreground "#8DA6CE"))))
