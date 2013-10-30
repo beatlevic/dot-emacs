@@ -1444,8 +1444,5 @@ The list is displayed in a buffer named `*Packages*'."
   '(menu-item "Manage Packages" package-list-packages
               :help "Install or uninstall additional Emacs packages"))
 
-(add-to-list 'package-archives
-             '("technomancy" . "http://repo.technomancy.us/emacs/") t)
-
 (provide 'package)
 ;;; package.el ends here
