@@ -1,4 +1,4 @@
-(server-start)
+;(server-start)
 ;;; init.el --- Where all the magic begins
 ;;
 ;; Part of the Emacs Starter Kit
@@ -80,9 +80,9 @@
 (require 'tramp)
 (setq tramp-default-method "ssh")
 
-(require 'powerline)
-(require 'ag)
-(setq ag-highlight-search t)
+;(require 'powerline)
+;(require 'ag)
+;(setq ag-highlight-search t)
 
 ;; (require 'grizzl)
 ;; (require 'projectile)
@@ -110,15 +110,15 @@
 (load custom-file 'noerror)
 
 ;; You can keep system- or user-specific customizations here
-(setq system-specific-config (concat dotfiles-dir system-name ".el")
-      user-specific-config (concat dotfiles-dir user-login-name ".el")
-      user-specific-dir (concat dotfiles-dir user-login-name))
-(add-to-list 'load-path user-specific-dir)
+;; (setq system-specific-config (concat dotfiles-dir system-name ".el")
+;;       user-specific-config (concat dotfiles-dir user-login-name ".el")
+;;       user-specific-dir (concat dotfiles-dir user-login-name))
+;; (add-to-list 'load-path user-specific-dir)
 
-(if (file-exists-p system-specific-config) (load system-specific-config))
-(if (file-exists-p user-specific-config) (load user-specific-config))
-(if (file-exists-p user-specific-dir)
-  (mapc #'load (directory-files user-specific-dir nil ".*el$")))
+;; (if (file-exists-p system-specific-config) (load system-specific-config))
+;; (if (file-exists-p user-specific-config) (load user-specific-config))
+;; (if (file-exists-p user-specific-dir)
+;;   (mapc #'load (directory-files user-specific-dir nil ".*el$")))
 
 ;; Set initial emacs window size
 ;; (setq default-frame-alist (append (list
@@ -165,11 +165,11 @@
 
 ;; My own additions next to all the starter-kit stuff
 
-(when (equal system-type 'darwin)
-  (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
-  (push "/opt/local/bin" exec-path)
-  (push "/usr/local/git/bin" exec-path)
-  (push "/usr/local/bin" exec-path))
+;; (when (equal system-type 'darwin)
+;;   (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
+;;   (push "/opt/local/bin" exec-path)
+;;   (push "/usr/local/git/bin" exec-path)
+;;   (push "/usr/local/bin" exec-path))
 
 ;;(require 'linum)
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
@@ -407,48 +407,48 @@
 ;;
 
 
-(require 'slime)
-(require 'slime-js)
+;; (require 'slime)
+;; (require 'slime-js)
 
-(setq slime-js-target-url "http://localhost:3000")
-(setq slime-js-connect-url "http://localhost:8009")
-(setq slime-js-starting-url "/")
-(setq slime-js-swank-command "swank-js")
-(setq slime-js-swank-args '())
-(setq slime-js-browser-command "open -a \"Google Chrome\"")
-(setq slime-js-browser-jacked-in-p nil)
+;; (setq slime-js-target-url "http://localhost:3000")
+;; (setq slime-js-connect-url "http://localhost:8009")
+;; (setq slime-js-starting-url "/")
+;; (setq slime-js-swank-command "swank-js")
+;; (setq slime-js-swank-args '())
+;; (setq slime-js-browser-command "open -a \"Google Chrome\"")
+;; (setq slime-js-browser-jacked-in-p nil)
 
-(add-hook 'js3-mode-hook (lambda () (slime-js-minor-mode 1)))
+;; (add-hook 'js3-mode-hook (lambda () (slime-js-minor-mode 1)))
 
-(defun slime-js-run-swank ()
-  "Runs the swank side of the equation."
-  (interactive)
-  (apply #'make-comint "swank-js"  slime-js-swank-command nil slime-js-swank-args))
+;; (defun slime-js-run-swank ()
+;;   "Runs the swank side of the equation."
+;;   (interactive)
+;;   (apply #'make-comint "swank-js"  slime-js-swank-command nil slime-js-swank-args))
 
-(defun slime-js-jack-in-node ()
-  "Start a swank-js server and connect to it, opening a repl."
-  (interactive)
-  (slime-js-run-swank)
-  (sleep-for 1)
-  (setq slime-protocol-version 'ignore)
-  (slime-connect "localhost" 4005))
+;; (defun slime-js-jack-in-node ()
+;;   "Start a swank-js server and connect to it, opening a repl."
+;;   (interactive)
+;;   (slime-js-run-swank)
+;;   (sleep-for 1)
+;;   (setq slime-protocol-version 'ignore)
+;;   (slime-connect "localhost" 4005))
 
-(defun slime-js-jack-in-browser ()
-  "Start a swank-js server, connect to it, open a repl, open a browser, connect to that."
-  (interactive)
-  (slime-js-jack-in-node)
-  (sleep-for 2)
-  (slime-js-set-target-url slime-js-target-url)
-  (shell-command (concat slime-js-browser-command " " slime-js-connect-url slime-js-starting-url))
-  (sleep-for 3)
-  (setq slime-remote-history nil)
-  (slime-js-sticky-select-remote (caadr (slime-eval '(js:list-remotes))))
-  (setq slime-js-browser-jacked-in-p t)
-  (global-set-key [f5] 'slime-js-reload))
+;; (defun slime-js-jack-in-browser ()
+;;   "Start a swank-js server, connect to it, open a repl, open a browser, connect to that."
+;;   (interactive)
+;;   (slime-js-jack-in-node)
+;;   (sleep-for 2)
+;;   (slime-js-set-target-url slime-js-target-url)
+;;   (shell-command (concat slime-js-browser-command " " slime-js-connect-url slime-js-starting-url))
+;;   (sleep-for 3)
+;;   (setq slime-remote-history nil)
+;;   (slime-js-sticky-select-remote (caadr (slime-eval '(js:list-remotes))))
+;;   (setq slime-js-browser-jacked-in-p t)
+;;   (global-set-key [f5] 'slime-js-reload))
 
-(defadvice save-buffer (after save-css-buffer activate)
-  (when (and slime-js-browser-jacked-in-p (eq major-mode 'css-mode))
-    (slime-js-refresh-css)))
+;; (defadvice save-buffer (after save-css-buffer activate)
+;;   (when (and slime-js-browser-jacked-in-p (eq major-mode 'css-mode))
+;;     (slime-js-refresh-css)))
 
 ;; (require 'js2-mode)
 ;; (require 'js2-refactor)
@@ -500,7 +500,7 @@
 ;; (when (boundp 'diminish)
 ;;   (diminish 'slime-js-minor-mode))
 
-(define-key slime-js-minor-mode-map (kbd "C-x C-e") 'slime-eval-last-expression)
+;;(define-key slime-js-minor-mode-map (kbd "C-x C-e") 'slime-eval-last-expression)
 
 (autoload 'js3-mode "js3" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
