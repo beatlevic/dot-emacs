@@ -69,7 +69,9 @@
      (gui-element ((t (:background "#D4D0C8" :foreground "black"))))
      ;;(region ((t (:background "#253B76"))))
      (region ((t (:background "#444444"))))
-     (mode-line ((t (:background "grey75" :foreground "black"))))
+     ;;(mode-line ((t (:background "grey75" :foreground "black"))))
+     (mode-line-inactive ((t (:background "#393939" :foreground "#E6E1DC"))))
+     (mode-line ((t (:background "#595959" :foreground "#E6E1DC")))) ;696969
      ;;(highlight ((t (:background "#222222"))))
      ;;(highlight ((t (:background "#272822"))))
      (highlight ((t (:background "#303030"))))
