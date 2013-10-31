@@ -1,5 +1,4 @@
-(server-start)
-
+;; Basic settings
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -18,9 +17,9 @@
 (add-to-list 'load-path (concat dotfiles-dir "/starter-kit"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
+;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
 ;(add-to-list 'load-path (concat dotfiles-dir "/vendor/rinari"))
 
-(setq autoload-file (concat dotfiles-dir "loaddefs.el"))
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 
@@ -31,6 +30,16 @@
   (add-to-list 'package-archives source t))
 
 (package-initialize)
+
+;; Fullscreen theme settings
+(autoload 'color-theme-blackboard "vendor/blackboard" "" t nil)
+(color-theme-blackboard)
+(ns-toggle-fullscreen)
+(setq set-fill-column 120) ; default is 70
+(setq ns-pop-up-frames nil)
+(load custom-file 'noerror)
+
+(server-start) ;; used by terminal command line invocation
 
 ;(require 'starter-kit-elpa) ;; only on new install
 
@@ -44,9 +53,6 @@
 (require 'starter-kit-defuns)
 (require 'starter-kit-lisp)
 (require 'starter-kit-misc)
-
-(regen-autoloads)
-(load custom-file 'noerror)
 
 (require 'git-emacs)
 (require 'git-status)
@@ -67,6 +73,7 @@
 ;(require 'rinari)
 
 (require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
+
 (setq smart-tab-completion-functions-alist
       '((emacs-lisp-mode . lisp-complete-symbol)
         (text-mode . dabbrev-completion) ;; this is the "default"
@@ -81,6 +88,8 @@
         try-complete-file-name
         try-complete-lisp-symbol))
 
+;(require 'grizzl)
+
 ;; require to run ack command
 (when (equal system-type 'darwin)
   (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
@@ -88,11 +97,28 @@
   (push "/usr/local/git/bin" exec-path)
   (push "/usr/local/bin" exec-path))
 
+;; Autoload
+(autoload 'ack-same "full-ack" nil t)
+(autoload 'ack "full-ack" nil t)
+(autoload 'ack-find-same-file "full-ack" nil t)
+(autoload 'ack-find-file "full-ack" nil t)
+
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+
+(autoload 'js3-mode "js3" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js3-mode))
+
 ;; Modes
-(color-theme-blackboard)
-(ns-toggle-fullscreen)
-(setq set-fill-column 120) ; default is 70
-(setq ns-pop-up-frames nil)
+
+;; (projectile-global-mode)
+;; (setq projectile-enable-caching t)
+;; (setq projectile-completion-system 'grizzl)
+;; ;; Press Command-p for fuzzy find in project
+;; (global-set-key (kbd "s-p") 'projectile-find-file)
+;; ;; Press Command-b for fuzzy switch buffer
+;; (global-set-key (kbd "s-b") 'projectile-switch-to-buffer)
 
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 
@@ -114,19 +140,6 @@
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
 
 (hl-line-mode 1)
-
-;; Autoload
-(autoload 'ack-same "full-ack" nil t)
-(autoload 'ack "full-ack" nil t)
-(autoload 'ack-find-same-file "full-ack" nil t)
-(autoload 'ack-find-file "full-ack" nil t)
-
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-
-(autoload 'js3-mode "js3" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js3-mode))
 
 ;; Key bindings
 (setq mac-option-key-is-meta nil)
@@ -226,3 +239,4 @@
    "\\(\\s-*\\) = " 1 0 nil))
 
 (global-set-key (kbd "C-x a") 'my-align-single-equals)
+
