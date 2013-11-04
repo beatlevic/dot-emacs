@@ -4,17 +4,49 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 (setq inhibit-startup-message   t)   ; Don't want any startup message
-(setq initial-scratch-message nil)   ; No scratch text
+(setq initial-scratch-message   nil)   ; No scratch text
 (setq make-backup-files         nil) ; Don't want any backup files
 (setq auto-save-list-file-name  nil) ; Don't want any .saves files
 (setq auto-save-default         nil) ; Don't want any auto saving
+(setq save-place                t)
+
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(ansi-color-for-comint-mode-on)
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name)))
 
+(setq visible-bell t
+      echo-keystrokes 0.1
+      font-lock-maximum-decoration t
+      inhibit-startup-message t
+      transient-mark-mode t
+      color-theme-is-global t
+      shift-select-mode nil
+      mouse-yank-at-point t
+      require-final-newline t
+      x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      truncate-partial-width-windows nil
+      uniquify-buffer-name-style 'forward
+      whitespace-style '(trailing lines space-before-tab
+                                  indentation space-after-tab)
+      whitespace-line-column 100
+      ediff-window-setup-function 'ediff-setup-windows-plain
+      xterm-mouse-mode t
+      save-place-file (concat dotfiles-dir "places"))
+
+(add-to-list 'safe-local-variable-values '(lexical-binding . t))
+(add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
+
+(setq backup-directory-alist `(("." . ,(expand-file-name (concat dotfiles-dir "backups")))))
+
 (add-to-list 'load-path dotfiles-dir)
 
-(add-to-list 'load-path (concat dotfiles-dir "/starter-kit"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
 ;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
@@ -41,27 +73,14 @@
 
 (server-start) ;; used by terminal command line invocation
 
-;(require 'starter-kit-elpa) ;; only on new install
-
 (require 'cl)
 (require 'saveplace)
 (require 'uniquify)
 (require 'ansi-color)
 (require 'recentf)
-
-(require 'starter-kit-bindings)
-(require 'starter-kit-defuns)
-(require 'starter-kit-lisp)
-(require 'starter-kit-misc)
-
 (require 'git-emacs)
 (require 'git-status)
-(require 'git-blame)
-
 (require 'coffee-mode)
-(require 'tramp)
-(setq tramp-default-method "ssh")
-
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
 (require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
 (require 'autopair)
@@ -70,9 +89,9 @@
 (require 'sr-speedbar)
 (require 'lusty-explorer)
 (require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
-;(require 'rinari)
-
 (require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
+(require 'tramp)
+(setq tramp-default-method "ssh")
 
 (setq smart-tab-completion-functions-alist
       '((emacs-lisp-mode . lisp-complete-symbol)
@@ -87,8 +106,6 @@
         try-expand-dabbrev-from-kill
         try-complete-file-name
         try-complete-lisp-symbol))
-
-;(require 'grizzl)
 
 ;; require to run ack command
 (when (equal system-type 'darwin)
@@ -110,8 +127,12 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js3-mode))
 
+;; default settings
+
+
 ;; Modes
 
+;; (require 'grizzl)
 ;; (projectile-global-mode)
 ;; (setq projectile-enable-caching t)
 ;; (setq projectile-completion-system 'grizzl)
@@ -133,13 +154,33 @@
 (textmate-mode)
 
 (auto-fill-mode -1)
+(hl-line-mode 1)
 
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (desktop-save-mode 1)
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
 
-(hl-line-mode 1)
+(auto-compression-mode t) ;; Transparently open compressed files
+(global-font-lock-mode t) ;; Enable syntax highlighting for older Emacsen that have it off
+(recentf-mode 1)
+
+;; Highlight matching parentheses when the point is on them.
+(show-paren-mode 1)
+
+(when (> emacs-major-version 21)
+  (ido-mode t)
+  (setq ido-enable-prefix nil
+        ido-enable-flex-matching t
+        ido-create-new-buffer 'always
+        ido-use-filename-at-point 'guess
+        ido-max-prospects 10))
+
+(set-default 'indent-tabs-mode nil)
+(set-default 'indicate-empty-lines nil)
+(set-default 'imenu-auto-rescan t)
+
+(delete 'try-expand-line hippie-expand-try-functions-list)
 
 ;; Key bindings
 (setq mac-option-key-is-meta nil)
@@ -157,6 +198,25 @@
 (global-set-key (kbd "C-M-k") 'delete-window)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
 (global-set-key (kbd "M-ƒ") 'ns-toggle-fullscreen)
+
+(define-key global-map (kbd "C-+") 'text-scale-increase)
+(define-key global-map (kbd "C--") 'text-scale-decrease)
+
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "\C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+
+(global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
+(global-set-key (kbd "C-x C-M-f") 'find-file-in-project)
+(global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+(global-set-key (kbd "M-`") 'file-cache-minibuffer-complete)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(windmove-default-keybindings) ;; Shift+direction
+(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
+(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+
 
 ;; IBuffer
 (setq ibuffer-saved-filter-groups
@@ -240,3 +300,73 @@
 
 (global-set-key (kbd "C-x a") 'my-align-single-equals)
 
+(font-lock-add-keywords
+   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
+          1 font-lock-warning-face t)))
+
+(defun recentf-ido-find-file ()
+  "Find a recent file using ido."
+  (interactive)
+  (let ((file (ido-completing-read "Choose recent file: " recentf-list nil t)))
+    (when file
+      (find-file file))))
+
+(defface esk-paren-face
+   '((((class color) (background dark))
+      (:foreground "grey50"))
+     (((class color) (background light))
+      (:foreground "grey55")))
+   "Face used to dim parentheses."
+   :group 'my-faces)
+
+(eval-after-load 'paredit
+  ;; need a binding that works in the terminal
+  '(define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp))
+
+(defun turn-on-paredit ()
+  (paredit-mode t))
+
+(dolist (x '(scheme emacs-lisp lisp clojure ruby))
+  (when window-system
+    (font-lock-add-keywords
+     (intern (concat (symbol-name x) "-mode"))
+     '(("(\\|)" . 'esk-paren-face))))
+  (add-hook
+   (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
+
+;; Default package installation
+
+(defvar default-packages (list 'autopair
+                               'clojure-mode
+                               'clojure-test-mode
+                               'color-theme
+                               'css-mode
+                               'elein
+                               'find-file-in-project
+                               'gist
+                               'haml-mode
+                               'idle-highlight
+                               'lusty-explorer
+                               'magit
+                               'markdown-mode
+                               'mark-multiple
+                               'paredit
+                               'php-mode
+                               'sass-mode
+                               'scpaste
+                               'scss-mode
+                               'swank-clojure
+                               'undo-tree
+                               'yaml-mode
+                               'yasnippet-bundle)
+  "Libraries that should be installed by default.")
+
+(defun default-packages-install ()
+  (interactive)
+  (dolist (package default-packages)
+    (unless (or (member package package-activated-list)
+                (functionp package))
+      (message "Installing %s" (symbol-name package))
+      (package-install package))))
+
+;(default-packages-install)
