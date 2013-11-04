@@ -310,7 +310,7 @@
 
 (defvar default-packages (list 'autopair
                                'clojure-mode
-                               'clojure-test-mode
+                               ;;'clojure-test-mode
                                'color-theme
                                'css-mode
                                'elein
@@ -341,4 +341,5 @@
       (message "Installing %s" (symbol-name package))
       (package-install package))))
 
-(default-packages-install)
+;(default-packages-install)
+
