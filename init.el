@@ -1,52 +1,13 @@
-;; Basic settings
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(setq inhibit-startup-message   t)   ; Don't want any startup message
-(setq initial-scratch-message   nil)   ; No scratch text
-(setq make-backup-files         nil) ; Don't want any backup files
-(setq auto-save-list-file-name  nil) ; Don't want any .saves files
-(setq auto-save-default         nil) ; Don't want any auto saving
-(setq save-place                t)
-
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(ansi-color-for-comint-mode-on)
-
 (setq dotfiles-dir (file-name-directory
-                    (or (buffer-file-name) load-file-name)))
-
-(setq visible-bell t
-      echo-keystrokes 0.1
-      font-lock-maximum-decoration t
-      inhibit-startup-message t
-      transient-mark-mode t
-      color-theme-is-global t
-      shift-select-mode nil
-      mouse-yank-at-point t
-      require-final-newline t
-      x-select-enable-clipboard t
-      x-select-enable-primary t
-      save-interprogram-paste-before-kill t
-      apropos-do-all t
-      truncate-partial-width-windows nil
-      uniquify-buffer-name-style 'forward
-      whitespace-style '(trailing lines space-before-tab
-                                  indentation space-after-tab)
-      whitespace-line-column 100
-      ediff-window-setup-function 'ediff-setup-windows-plain
-      xterm-mouse-mode t
-      save-place-file (concat dotfiles-dir "places"))
-
-(add-to-list 'safe-local-variable-values '(lexical-binding . t))
-(add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
+                    (or (buffer-file-name) load-file-name))) ;; .emacs.d/
 
 (setq backup-directory-alist `(("." . ,(expand-file-name (concat dotfiles-dir "backups")))))
 
 (add-to-list 'load-path dotfiles-dir)
-
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
 ;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
@@ -63,12 +24,47 @@
 
 (package-initialize)
 
+(setq inhibit-startup-message t
+      initial-scratch-message nil
+      make-backup-files nil
+      auto-save-list-file-name nil
+      auto-save-default nil
+      save-place t
+      visible-bell t
+      echo-keystrokes 0.1
+      font-lock-maximum-decoration t
+      inhibit-startup-message t
+      transient-mark-mode t
+      color-theme-is-global t
+      shift-select-mode nil
+      mouse-yank-at-point t
+      require-final-newline t
+      x-select-enable-clipboard t
+      x-select-enable-primary t
+      save-interprogram-paste-before-kill t
+      apropos-do-all t
+      truncate-partial-width-windows nil
+      uniquify-buffer-name-style 'forward
+      whitespace-style '(trailing lines space-before-tab indentation space-after-tab)
+      whitespace-line-column 100
+      ediff-window-setup-function 'ediff-setup-windows-plain
+      xterm-mouse-mode t
+      set-fill-column 120
+      ns-pop-up-frames nil
+      save-place-file (concat dotfiles-dir "places"))
+
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+(ansi-color-for-comint-mode-on)
+
+(add-to-list 'safe-local-variable-values '(lexical-binding . t))
+(add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
+
 ;; Fullscreen theme settings
 (autoload 'color-theme-blackboard "vendor/blackboard" "" t nil)
 (color-theme-blackboard)
 (ns-toggle-fullscreen)
-(setq set-fill-column 120) ; default is 70
-(setq ns-pop-up-frames nil)
 (load custom-file 'noerror)
 
 (server-start) ;; used by terminal command line invocation
@@ -127,9 +123,6 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js3-mode))
 
-;; default settings
-
-
 ;; Modes
 
 ;; (require 'grizzl)
@@ -141,32 +134,24 @@
 ;; ;; Press Command-b for fuzzy switch buffer
 ;; (global-set-key (kbd "s-b") 'projectile-switch-to-buffer)
 
-(global-smart-tab-mode 1) ;; switch on smart-tab everywhere
-
-(whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
-
 (setq column-number-mode t)
-(normal-erase-is-backspace-mode 1) ;; Backspace should not be delete
-
-(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
-
-(textmate-mode)
-
-(auto-fill-mode -1)
-(hl-line-mode 1)
-
-(remove-hook 'text-mode-hook 'turn-on-auto-fill)
-
-(desktop-save-mode 1)
-(add-to-list 'desktop-modes-not-to-save 'dired-mode)
-
+(show-paren-mode 1) ;; Highlight matching parentheses when the point is on them.
 (auto-compression-mode t) ;; Transparently open compressed files
 (global-font-lock-mode t) ;; Enable syntax highlighting for older Emacsen that have it off
 (recentf-mode 1)
+(normal-erase-is-backspace-mode 1) ;; Backspace should not be delete
+(textmate-mode)
+(auto-fill-mode -1)
+(hl-line-mode 1)
+(global-smart-tab-mode 1) ;; switch on smart-tab everywhere
+(desktop-save-mode 1)
+(whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
 
-;; Highlight matching parentheses when the point is on them.
-(show-paren-mode 1)
+(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+(remove-hook 'text-mode-hook 'turn-on-auto-fill)
+
+(add-to-list 'desktop-modes-not-to-save 'dired-mode)
+(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
 (when (> emacs-major-version 21)
   (ido-mode t)
@@ -216,7 +201,6 @@
 (windmove-default-keybindings) ;; Shift+direction
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
 (global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
-
 
 ;; IBuffer
 (setq ibuffer-saved-filter-groups
