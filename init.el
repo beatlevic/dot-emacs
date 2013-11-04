@@ -51,6 +51,7 @@
       xterm-mouse-mode t
       set-fill-column 120
       ns-pop-up-frames nil
+      frame-title-format '(buffer-file-name "%f" ("%b"))
       save-place-file (concat dotfiles-dir "places"))
 
 (set-terminal-coding-system 'utf-8)
@@ -134,6 +135,9 @@
 ;; ;; Press Command-b for fuzzy switch buffer
 ;; (global-set-key (kbd "s-b") 'projectile-switch-to-buffer)
 
+(tooltip-mode -1)
+(mouse-wheel-mode t)
+(blink-cursor-mode -1)
 (setq column-number-mode t)
 (show-paren-mode 1) ;; Highlight matching parentheses when the point is on them.
 (auto-compression-mode t) ;; Transparently open compressed files
@@ -146,7 +150,6 @@
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
-(blink-cursor-mode 0)
 
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
