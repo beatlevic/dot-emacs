@@ -146,6 +146,7 @@
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
+(blink-cursor-mode 0)
 
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -315,7 +316,7 @@
                                'css-mode
                                'elein
                                'find-file-in-project
-                               'gist
+                               ;;'gist
                                'haml-mode
                                'idle-highlight
                                'lusty-explorer
