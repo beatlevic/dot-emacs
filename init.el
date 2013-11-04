@@ -234,21 +234,20 @@
 
 (setq ibuffer-show-empty-filter-groups nil)
 
+(setq ibuffer-formats '((mark modified read-only " " (name 32 32) " "
+                              (size 6 -1 :right) " " (filename 55 55));;" " (mode 16 16 :center)
+                    	   (mark " " (name 16 -1) " " filename))
+      ibuffer-elide-long-columns t
+      ibuffer-eliding-string "..")
+
+(font-lock-add-keywords
+   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
+          1 font-lock-warning-face t)))
+
 (defun toggle-sr-speedbar ()
   (interactive) (if (not (sr-speedbar-exist-p)) (sr-speedbar-toggle)) (sr-speedbar-select-window))
 (global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
 (global-set-key [f5] 'sr-speedbar-toggle)
-
-(defun phplint-thisfile ()
-  (interactive)
-  (compile (format "php -l %s" (buffer-file-name))))
-
-(add-hook 'php-mode-hook
-          '(lambda ()
-             (local-set-key [f7] 'phplint-thisfile)))
-
-(add-hook 'php-mode-hook
-          '(lambda () (autopair-mode)))
 
 ;; Revert buffers which comes in handy after a git pull
 (defun revert-all-buffers ()
@@ -262,16 +261,9 @@
 
 (global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
 
-(setq ibuffer-formats '((mark modified read-only " " (name 32 32) " "
-                              (size 6 -1 :right) " " (filename 55 55));;" " (mode 16 16 :center)
-                    	   (mark " " (name 16 -1) " " filename))
-      ibuffer-elide-long-columns t
-      ibuffer-eliding-string "..")
-
 (defvar autopair-modes '(r-mode ruby-mode js3-mode))
 (defun turn-on-autopair-mode () (autopair-mode 1))
 (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
-
 (defun turn-on-hl-mode () (hl-line-mode 1))
 (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-hl-mode))
 
@@ -283,10 +275,6 @@
    "\\(\\s-*\\) = " 1 0 nil))
 
 (global-set-key (kbd "C-x a") 'my-align-single-equals)
-
-(font-lock-add-keywords
-   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
-          1 font-lock-warning-face t)))
 
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
@@ -353,4 +341,4 @@
       (message "Installing %s" (symbol-name package))
       (package-install package))))
 
-;(default-packages-install)
+(default-packages-install)
