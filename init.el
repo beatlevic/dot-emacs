@@ -10,7 +10,7 @@
 (add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
-;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
+(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
@@ -332,3 +332,5 @@
 
 ;(default-packages-install)
 
+(byte-recompile-directory (concat dotfiles-dir "/vendor")) ;; update .elc files when .el was changed
+(byte-recompile-directory (concat dotfiles-dir "/vendor") 0) ;; create .elc file when not present for .el
