@@ -11,7 +11,6 @@
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
 ;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
-;(add-to-list 'load-path (concat dotfiles-dir "/vendor/rinari"))
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
