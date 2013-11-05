@@ -10,7 +10,7 @@
 (add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 (add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
-(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
+;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
@@ -69,14 +69,12 @@
 
 (server-start) ;; used by terminal command line invocation
 
-(require 'rainbow-delimiters)
 (require 'cl)
 (require 'saveplace)
 (require 'uniquify)
 (require 'recentf)
 (require 'git-emacs)
 (require 'git-status)
-(require 'coffee-mode)
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
 (require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
 (require 'autopair)
@@ -116,24 +114,15 @@
 (autoload 'ack-find-same-file "full-ack" nil t)
 (autoload 'ack-find-file "full-ack" nil t)
 
-(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
-
 (autoload 'js3-mode "js3" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . js3-mode))
 
+(autoload 'coffee-mode "coffee-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
+
 ;; Modes
-
-;; (require 'grizzl)
-;; (projectile-global-mode)
-;; (setq projectile-enable-caching t)
-;; (setq projectile-completion-system 'grizzl)
-;; ;; Press Command-p for fuzzy find in project
-;; (global-set-key (kbd "s-p") 'projectile-find-file)
-;; ;; Press Command-b for fuzzy switch buffer
-;; (global-set-key (kbd "s-b") 'projectile-switch-to-buffer)
-
 (tooltip-mode -1)
 (blink-cursor-mode -1)
 (auto-fill-mode -1)
@@ -149,7 +138,6 @@
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
 
-(global-rainbow-delimiters-mode)
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
 (textmate-mode)
 
@@ -222,7 +210,7 @@
       '(("home"
          ("Clojure" (or (mode . clojure-mode)
                         (filename . "clojure")))
-         ("Python" (or (mode . pyhton-mode)
+         ("Python" (or (mode . python-mode)
                         (filename . "py")))
          ("Javascript" (or (mode . esspresso-mode)
                            (mode . js3-mode)
@@ -293,6 +281,26 @@
 (defun turn-on-paredit ()
   (paredit-mode t))
 
+(defface esk-paren-face
+   '((((class color) (background dark))
+      (:foreground "grey50"))
+     (((class color) (background light))
+      (:foreground "grey55")))
+   "Face used to dim parentheses."
+   :group 'my-faces)
+
+(dolist (x '(scheme emacs-lisp lisp clojure ruby js3))
+  (font-lock-add-keywords
+   (intern (concat (symbol-name x) "-mode")) '(("(\\|)" . 'esk-paren-face)))
+  (add-hook
+   (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
+
+;; (font-lock-add-keywords
+;;  (intern "js3-mode") '(("{\\|}" . 'esk-paren-face)))
+
+(font-lock-add-keywords
+ (intern "js3-mode") '(("\\(\(\\|\)\\|\\[\\|\\]\\|\{\\|\}\\)" . 'esk-paren-face)))
+
 (font-lock-add-keywords
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
 
@@ -330,7 +338,6 @@
       (message "Installing %s" (symbol-name package))
       (package-install package))))
 
-;(default-packages-install)
-
-(byte-recompile-directory (concat dotfiles-dir "/vendor")) ;; update .elc files when .el was changed
-(byte-recompile-directory (concat dotfiles-dir "/vendor") 0) ;; create .elc file when not present for .el
+;; (default-packages-install)
+;; (byte-recompile-directory (concat dotfiles-dir "/vendor")) ;; update .elc files when .el was changed
+;; (byte-recompile-directory (concat dotfiles-dir "/vendor") 0) ;; create .elc file when not present for .el
