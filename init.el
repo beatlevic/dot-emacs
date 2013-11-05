@@ -9,8 +9,6 @@
 
 (add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
-(add-to-list 'load-path (concat dotfiles-dir "/vendor/git-emacs"))
-;(add-to-list 'load-path (concat dotfiles-dir "/vendor/grizzl"))
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
@@ -73,8 +71,6 @@
 (require 'saveplace)
 (require 'uniquify)
 (require 'recentf)
-(require 'git-emacs)
-(require 'git-status)
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
 (require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
 (require 'autopair)
