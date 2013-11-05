@@ -277,25 +277,31 @@
 (defun turn-on-paredit ()
   (paredit-mode t))
 
-(defface esk-paren-face
-   '((((class color) (background dark))
-      (:foreground "grey50"))
-     (((class color) (background light))
-      (:foreground "grey55")))
+(defface dim-paren-face
+   '((((class color) (background dark)) (:foreground "grey50"))
+     (((class color) (background light)) (:foreground "grey55")))
    "Face used to dim parentheses."
    :group 'my-faces)
 
+(defface dim-bracket-face
+   '((((class color) (background dark)) (:foreground "grey55"))
+     (((class color) (background light)) (:foreground "grey60")))
+   "Face used to dim brackets"
+   :group 'my-faces)
+
+
 (dolist (x '(scheme emacs-lisp lisp clojure ruby js3))
   (font-lock-add-keywords
-   (intern (concat (symbol-name x) "-mode")) '(("(\\|)" . 'esk-paren-face)))
+   (intern (concat (symbol-name x) "-mode")) '(("(\\|)" . 'dim-paren-face)))
   (add-hook
    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
 
-;; (font-lock-add-keywords
-;;  (intern "js3-mode") '(("{\\|}" . 'esk-paren-face)))
+(font-lock-add-keywords
+ (intern "js3-mode") '(("\\(\{\\|\}\\)" . 'dim-paren-face)) )
 
 (font-lock-add-keywords
- (intern "js3-mode") '(("\\(\(\\|\)\\|\\[\\|\\]\\|\{\\|\}\\)" . 'esk-paren-face)))
+ ;(intern "js3-mode") '(("\\(\(\\|\)\\|\\[\\|\\]\\|\{\\|\}\\)" . 'dim-paren-face))
+ (intern "js3-mode") '(("\\(\\[\\|\\]\\)" . 'dim-bracket-face)) )
 
 (font-lock-add-keywords
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
