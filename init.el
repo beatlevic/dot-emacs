@@ -70,6 +70,7 @@
 
 (server-start) ;; used by terminal command line invocation
 
+(require 'rainbow-delimiters)
 (require 'cl)
 (require 'saveplace)
 (require 'uniquify)
@@ -149,6 +150,7 @@
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
 
+(rainbow-delimiters-mode)
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
 (textmate-mode)
 
@@ -293,20 +295,26 @@
   (paredit-mode t))
 
 (defface esk-paren-face
-  '((((class color) (background dark))
-     (:foreground "grey50"))
-    (((class color) (background light))
-     (:foreground "grey55")))
+  '((((class color) (background dark)) (:foreground "grey50"))
+    (((class color) (background light)) (:foreground "grey55")))
   "Face used to dim parentheses."
   :group 'my-faces)
 
-(dolist (x '(scheme emacs-lisp lisp clojure ruby))
-  (when window-system
-    (font-lock-add-keywords
-     (intern (concat (symbol-name x) "-mode"))
-     '(("(\\|)" . 'esk-paren-face))))
-  (add-hook
-   (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
+;; (dolist (x '(scheme emacs-lisp lisp clojure ruby js3))
+;;   (when window-system
+;;     (font-lock-add-keywords
+;;      (intern (concat (symbol-name x) "-mode"))
+;;      '(("(\\|)" . 'esk-paren-face))))
+;;   (add-hook
+;;    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
+
+;; (font-lock-add-keywords
+;;  (intern "js3-mode") '(("{\\|}" . 'esk-paren-face)))
+
+;; (font-lock-add-keywords
+;;  (intern "js3-mode") '(("\[\\|\]" . 'esk-paren-face)))
+
+
 
 (font-lock-add-keywords
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
