@@ -73,7 +73,6 @@
 (require 'cl)
 (require 'saveplace)
 (require 'uniquify)
-(require 'ansi-color)
 (require 'recentf)
 (require 'git-emacs)
 (require 'git-status)
@@ -94,7 +93,7 @@
       '((emacs-lisp-mode . lisp-complete-symbol)
         (text-mode . dabbrev-completion) ;; this is the "default"
         emacs expansion function
-        (clojure-mode . slime-complete-symbol))) ;; see update below
+        (clojure-mode . slime-complete-symbol)))
 
 (setq hippie-expand-try-functions-list
       '(yas/hippie-try-expand
@@ -104,7 +103,7 @@
         try-complete-file-name
         try-complete-lisp-symbol))
 
-;; require to run ack command
+;; required to run ack command
 (when (equal system-type 'darwin)
   (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
   (push "/opt/local/bin" exec-path)
@@ -136,20 +135,22 @@
 ;; (global-set-key (kbd "s-b") 'projectile-switch-to-buffer)
 
 (tooltip-mode -1)
-(mouse-wheel-mode t)
 (blink-cursor-mode -1)
-(setq column-number-mode t)
+(auto-fill-mode -1)
+
+(mouse-wheel-mode 1)
+(setq column-number-mode 1)
 (show-paren-mode 1) ;; Highlight matching parentheses when the point is on them.
-(auto-compression-mode t) ;; Transparently open compressed files
-(global-font-lock-mode t) ;; Enable syntax highlighting for older Emacsen that have it off
+(auto-compression-mode 1) ;; Transparently open compressed files
+(global-font-lock-mode 1) ;; Enable syntax highlighting for older Emacsen that have it off
 (recentf-mode 1)
 (normal-erase-is-backspace-mode 1) ;; Backspace should not be delete
-(textmate-mode)
-(auto-fill-mode -1)
 (hl-line-mode 1)
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
+
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
+(textmate-mode)
 
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -180,7 +181,6 @@
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
-(global-set-key (kbd "C-S-r") 'occur)
 (global-set-key (kbd "<C-tab>") 'previous-buffer)
 (global-set-key (kbd "<C-S-tab>") 'next-buffer)
 (global-set-key (kbd "<C-return>") 'other-window)
@@ -192,19 +192,29 @@
 (define-key global-map (kbd "C--") 'text-scale-decrease)
 
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "\C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
 
-(global-set-key (kbd "C-x M-f") 'ido-find-file-other-window)
-(global-set-key (kbd "C-x C-M-f") 'find-file-in-project)
 (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
-(global-set-key (kbd "M-`") 'file-cache-minibuffer-complete)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (windmove-default-keybindings) ;; Shift+direction
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
 (global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+
+(global-set-key (kbd "C-S-f") 'follow-mode)
+
+(global-set-key (kbd "C-x a") 'my-align-single-equals)
+
+(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
+(global-set-key [f5] 'sr-speedbar-toggle)
+
+(global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
+
+;; Activate occur easily inside isearch
+(define-key isearch-mode-map (kbd "C-o")
+  (lambda () (interactive)
+    (let ((case-fold-search isearch-case-fold-search))
+      (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
 ;; IBuffer
 (setq ibuffer-saved-filter-groups
@@ -244,16 +254,10 @@
       ibuffer-elide-long-columns t
       ibuffer-eliding-string "..")
 
-(font-lock-add-keywords
-   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):"
-          1 font-lock-warning-face t)))
-
+;; Util functions
 (defun toggle-sr-speedbar ()
   (interactive) (if (not (sr-speedbar-exist-p)) (sr-speedbar-toggle)) (sr-speedbar-select-window))
-(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
-(global-set-key [f5] 'sr-speedbar-toggle)
 
-;; Revert buffers which comes in handy after a git pull
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files."
   (interactive)
@@ -262,8 +266,6 @@
       (when (and (buffer-file-name) (not (buffer-modified-p)))
         (revert-buffer t t t) )))
   (message "Refreshed open files."))
-
-(global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
 
 (defvar autopair-modes '(r-mode ruby-mode js3-mode))
 (defun turn-on-autopair-mode () (autopair-mode 1))
@@ -275,10 +277,7 @@
   "Align on a single equals sign (with a space either side)."
   (interactive)
   (align-regexp
-   (region-beginning) (region-end)
-   "\\(\\s-*\\) = " 1 0 nil))
-
-(global-set-key (kbd "C-x a") 'my-align-single-equals)
+   (region-beginning) (region-end) "\\(\\s-*\\) = " 1 0 nil))
 
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
@@ -287,20 +286,19 @@
     (when file
       (find-file file))))
 
-(defface esk-paren-face
-   '((((class color) (background dark))
-      (:foreground "grey50"))
-     (((class color) (background light))
-      (:foreground "grey55")))
-   "Face used to dim parentheses."
-   :group 'my-faces)
-
 (eval-after-load 'paredit
-  ;; need a binding that works in the terminal
   '(define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp))
 
 (defun turn-on-paredit ()
   (paredit-mode t))
+
+(defface esk-paren-face
+  '((((class color) (background dark))
+     (:foreground "grey50"))
+    (((class color) (background light))
+     (:foreground "grey55")))
+  "Face used to dim parentheses."
+  :group 'my-faces)
 
 (dolist (x '(scheme emacs-lisp lisp clojure ruby))
   (when window-system
@@ -310,8 +308,10 @@
   (add-hook
    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
 
-;; Default package installation
+(font-lock-add-keywords
+   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
 
+;; Default package installation
 (defvar default-packages (list 'autopair
                                'clojure-mode
                                ;;'clojure-test-mode
