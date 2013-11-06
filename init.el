@@ -1,4 +1,4 @@
-n(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
@@ -64,6 +64,7 @@ n(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (set-frame-parameter nil 'fullscreen 'fullboth)
 ;(ns-toggle-fullscreen)
 (load custom-file 'noerror)
+;(require 'maxframe)
 
 (server-start) ;; used by terminal command line invocation
 
@@ -130,7 +131,7 @@ n(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (global-font-lock-mode 1) ;; Enable syntax highlighting for older Emacsen that have it off
 (recentf-mode 1)
 (normal-erase-is-backspace-mode 1) ;; Backspace should not be delete
-(hl-line-mode 1)
+(global-hl-line-mode 1)
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
 
@@ -254,8 +255,8 @@ n(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (defvar autopair-modes '(r-mode ruby-mode js3-mode))
 (defun turn-on-autopair-mode () (autopair-mode 1))
 (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
-(defun turn-on-hl-mode () (hl-line-mode 1))
-(dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-hl-mode))
+;; (defun turn-on-hl-mode () (hl-line-mode 1))
+;; (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-hl-mode))
 
 (defun my-align-single-equals ()
   "Align on a single equals sign (with a space either side)."
@@ -304,3 +305,6 @@ n(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
 (font-lock-add-keywords
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
+
+;(byte-recompile-directory (concat dotfiles-dir "/vendor") 0)
+;(add-to-list 'smart-tab-disabled-major-modes 'eshell-mode)
