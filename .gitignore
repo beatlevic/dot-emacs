@@ -15,3 +15,5 @@ places
 .org-id-locations
 \#*
 eshell/*
+.emacs.desktop*
+recentf
