@@ -1,6 +1,9 @@
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+n(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+(setq package-enable-at-startup nil)
+(package-initialize)
 
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name))) ;; .emacs.d/
@@ -13,13 +16,9 @@
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 (setq custom-file (concat dotfiles-dir "custom.el"))
 
-(require 'package)
-
-(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
-                  ("elpa" . "http://tromey.com/elpa/")))
-  (add-to-list 'package-archives source t))
-
-(package-initialize)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 (setq inhibit-startup-message t
       initial-scratch-message nil
@@ -62,7 +61,8 @@
 ;; Fullscreen theme settings
 (autoload 'color-theme-blackboard "vendor/blackboard" "" t nil)
 (color-theme-blackboard)
-(ns-toggle-fullscreen)
+(set-frame-parameter nil 'fullscreen 'fullboth)
+;(ns-toggle-fullscreen)
 (load custom-file 'noerror)
 
 (server-start) ;; used by terminal command line invocation
@@ -78,7 +78,7 @@
 (require 'peepopen) ;; peepopen plugin
 (require 'sr-speedbar)
 (require 'lusty-explorer)
-(require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
+;(require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
 (require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
 (require 'tramp)
 (setq tramp-default-method "ssh")
@@ -143,13 +143,12 @@
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
-(when (> emacs-major-version 21)
-  (ido-mode t)
-  (setq ido-enable-prefix nil
-        ido-enable-flex-matching t
-        ido-create-new-buffer 'always
-        ido-use-filename-at-point 'guess
-        ido-max-prospects 10))
+(ido-mode t)
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-max-prospects 10)
 
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines nil)
@@ -235,7 +234,7 @@
 
 (setq ibuffer-formats '((mark modified read-only " " (name 32 32) " "
                               (size 6 -1 :right) " " (filename 55 55));;" " (mode 16 16 :center)
-                    	   (mark " " (name 16 -1) " " filename))
+                               (mark " " (name 16 -1) " " filename))
       ibuffer-elide-long-columns t
       ibuffer-eliding-string "..")
 
@@ -305,41 +304,3 @@
 
 (font-lock-add-keywords
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
-
-;; Default package installation
-(defvar default-packages (list 'autopair
-                               'clojure-mode
-                               ;;'clojure-test-mode
-                               'color-theme
-                               'css-mode
-                               'elein
-                               'find-file-in-project
-                               ;;'gist
-                               'haml-mode
-                               'idle-highlight
-                               'lusty-explorer
-                               'magit
-                               'markdown-mode
-                               'mark-multiple
-                               'paredit
-                               'php-mode
-                               'sass-mode
-                               'scpaste
-                               'scss-mode
-                               'swank-clojure
-                               'undo-tree
-                               'yaml-mode
-                               'yasnippet-bundle)
-  "Libraries that should be installed by default.")
-
-(defun default-packages-install ()
-  (interactive)
-  (dolist (package default-packages)
-    (unless (or (member package package-activated-list)
-                (functionp package))
-      (message "Installing %s" (symbol-name package))
-      (package-install package))))
-
-;; (default-packages-install)
-;; (byte-recompile-directory (concat dotfiles-dir "/vendor")) ;; update .elc files when .el was changed
-;; (byte-recompile-directory (concat dotfiles-dir "/vendor") 0) ;; create .elc file when not present for .el

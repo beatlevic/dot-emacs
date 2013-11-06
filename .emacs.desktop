@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Wed Nov  6 01:59:55 2013
+;; Desktop file format version 206
+;; Emacs version 24.3.50.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (21113 38027 582563 0) (desktop . "206") "beatlevic@jc.local" nil nil ((((font-backend mac-ct ns) (fontsize . 0) (font . "-*-Monaco-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1") (border-width . 0) (internal-border-width . 2) (vertical-scroll-bars) (foreground-color . "#E6E1DC") (background-color . "#21221d") (line-spacing) (left-fringe . 10) (right-fringe . 11) (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (alpha) (fullscreen . fullboth) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#A7A7A7") (environment) (mouse-color . "sienna1") (border-color . "#111111") (frameset--id . "EE1D-0692-DAE2-7AA6") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . "jc.local") (explicit-name) (tool-bar-position . top) (visibility . t) (height . 56) (width . 202) (left . 0) (top . 0)) ((min-height . 4) (min-width . 10) (min-height-ignore . 2) (min-width-ignore . 6) (min-height-safe . 1) (min-width-safe . 2)) leaf (total-height . 55) (total-width . 205) (normal-height . 1.0) (normal-width . 1.0) (buffer "init.el" (selected . t) (hscroll . 0) (fringes 10 11 nil) (margins nil) (scroll-bars 15 0 t nil) (vscroll . 0) (dedicated) (point . 11021) (start . 10010))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/Users/beatlevic/.emacs.d/init.el"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/Users/beatlevic/.emacs.d/init.el"
+  "init.el"
+  'emacs-lisp-mode
+  '(textmate-mode smart-tab-mode)
+  11021
+  '(8635 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . utf-8-unix)))
+
