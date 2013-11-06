@@ -308,3 +308,5 @@
 
 ;(byte-recompile-directory (concat dotfiles-dir "/vendor") 0)
 ;(add-to-list 'smart-tab-disabled-major-modes 'eshell-mode)
+
+;(setq ns-use-native-fullscreen nil)
