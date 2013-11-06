@@ -1,3 +1,5 @@
+(setq ns-use-native-fullscreen nil)
+
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -58,13 +60,48 @@
 (add-to-list 'safe-local-variable-values '(lexical-binding . t))
 (add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
 
-;; Fullscreen theme settings
+;; Key bindings
+(setq mac-option-key-is-meta nil)
+(setq mac-command-key-is-meta t)
+(setq mac-command-modifier 'meta)
+(setq mac-option-modifier nil)
+
+(global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
+(global-set-key (kbd "C-z") 'undo)
+(global-set-key (kbd "C-S-s") 'ack)
+(global-set-key (kbd "<C-tab>") 'previous-buffer)
+(global-set-key (kbd "<C-S-tab>") 'next-buffer)
+(global-set-key (kbd "<C-return>") 'other-window)
+(global-set-key (kbd "C-M-k") 'delete-window)
+(global-set-key (kbd "M-k") 'kill-this-buffer)
+(global-set-key (kbd "M-ƒ") 'toggle-frame-fullscreen)
+
+(define-key global-map (kbd "C-+") 'text-scale-increase)
+(define-key global-map (kbd "C--") 'text-scale-decrease)
+
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+
+(global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(windmove-default-keybindings) ;; Shift+direction
+(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
+(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+
+(global-set-key (kbd "C-S-f") 'follow-mode)
+
+(global-set-key (kbd "C-x a") 'my-align-single-equals)
+
+(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
+(global-set-key [f5] 'sr-speedbar-toggle)
+
+(global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
+
 (autoload 'color-theme-blackboard "vendor/blackboard" "" t nil)
 (color-theme-blackboard)
-(set-frame-parameter nil 'fullscreen 'fullboth)
-;(ns-toggle-fullscreen)
+
 (load custom-file 'noerror)
-;(require 'maxframe)
 
 (server-start) ;; used by terminal command line invocation
 
@@ -73,7 +110,7 @@
 (require 'uniquify)
 (require 'recentf)
 (require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
-(require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
+;(require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
 (require 'autopair)
 (require 'textmate)
 (require 'peepopen) ;; peepopen plugin
@@ -156,44 +193,6 @@
 (set-default 'imenu-auto-rescan t)
 
 (delete 'try-expand-line hippie-expand-try-functions-list)
-
-;; Key bindings
-(setq mac-option-key-is-meta nil)
-(setq mac-command-key-is-meta t)
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier nil)
-
-(global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
-(global-set-key (kbd "C-z") 'undo)
-(global-set-key (kbd "C-S-s") 'ack)
-(global-set-key (kbd "<C-tab>") 'previous-buffer)
-(global-set-key (kbd "<C-S-tab>") 'next-buffer)
-(global-set-key (kbd "<C-return>") 'other-window)
-(global-set-key (kbd "C-M-k") 'delete-window)
-(global-set-key (kbd "M-k") 'kill-this-buffer)
-(global-set-key (kbd "M-ƒ") 'ns-toggle-fullscreen)
-
-(define-key global-map (kbd "C-+") 'text-scale-increase)
-(define-key global-map (kbd "C--") 'text-scale-decrease)
-
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-
-(global-set-key (kbd "C-x f") 'recentf-ido-find-file)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-(windmove-default-keybindings) ;; Shift+direction
-(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
-(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
-
-(global-set-key (kbd "C-S-f") 'follow-mode)
-
-(global-set-key (kbd "C-x a") 'my-align-single-equals)
-
-(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
-(global-set-key [f5] 'sr-speedbar-toggle)
-
-(global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
 
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
@@ -310,3 +309,5 @@
 ;(add-to-list 'smart-tab-disabled-major-modes 'eshell-mode)
 
 ;(setq ns-use-native-fullscreen nil)
+
+(add-hook 'kill-emacs-hook 'toggle-frame-fullscreen)

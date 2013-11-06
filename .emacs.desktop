@@ -2,53 +2,86 @@
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Wed Nov  6 02:50:11 2013
+;; Created Wed Nov  6 23:20:26 2013
 ;; Desktop file format version 206
 ;; Emacs version 24.3.50.1
 
 ;; Global section:
-(setq desktop-saved-frameset [frameset 1 (21113 41043 173532 0) (desktop . "206") "beatlevic@jc.local" nil nil ((((font-backend mac-ct ns) (fontsize . 0) (font . "-*-Monaco-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1") (border-width . 0) (internal-border-width . 2) (vertical-scroll-bars) (foreground-color . "#E6E1DC") (background-color . "#21221d") (line-spacing) (left-fringe . 10) (right-fringe . 11) (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (alpha) (fullscreen . fullboth) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#A7A7A7") (environment) (mouse-color . "sienna1") (border-color . "#111111") (frameset--id . "EE1D-0692-DAE2-7AA6") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . "jc.local") (explicit-name) (tool-bar-position . top) (visibility . t) (height . 56) (width . 202) (left . 0) (top . 0)) ((min-height . 4) (min-width . 20) (min-height-ignore . 2) (min-width-ignore . 12) (min-height-safe . 1) (min-width-safe . 4)) hc (total-height . 55) (total-width . 205) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (total-height . 55) (total-width . 102) (normal-height . 1.0) (normal-width . 0.5) (buffer "lusty-explorer.el" (selected . t) (hscroll . 0) (fringes 10 11 nil) (margins nil) (scroll-bars 15 0 t nil) (vscroll . 0) (dedicated) (point . 4591) (start . 3262))) (leaf (last . t) (total-height . 55) (total-width . 103) (normal-height . 1.0) (normal-width . 0.5) (buffer "*Compile-Log*" (selected) (hscroll . 0) (fringes 10 11 nil) (margins nil) (scroll-bars 15 0 t nil) (vscroll . 0) (dedicated) (point . 1) (start . 1)))))])
+(setq desktop-saved-frameset [frameset 1 (21114 49322 510957 0) (desktop . "206") "beatlevic@jc.local" nil nil ((((font-backend mac-ct ns) (fontsize . 0) (font . "-*-Monaco-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1") (border-width . 0) (internal-border-width . 2) (vertical-scroll-bars) (foreground-color . "#E6E1DC") (background-color . "#21221d") (line-spacing) (left-fringe . 10) (right-fringe . 11) (menu-bar-lines . 0) (tool-bar-lines . 0) (title) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 0) (alpha) (fullscreen . maximized) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#A7A7A7") (environment) (mouse-color . "sienna1") (border-color . "#111111") (frameset--id . "EE1D-0692-DAE2-7AA6") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . "jc.local") (explicit-name) (tool-bar-position . top) (visibility . t) (mf-restore-width . 80) (mf-restore-height . 30) (mf-restore-top . 1317) (mf-restore-left . 426) (mf-maximized . t) (height . 53) (width . 201) (left . 1) (top . 22)) ((min-height . 4) (min-width . 30) (min-height-ignore . 2) (min-width-ignore . 18) (min-height-safe . 1) (min-width-safe . 6)) hc (total-height . 52) (total-width . 204) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (total-height . 52) (total-width . 22) (normal-height . 1.0) (normal-width . 0.10948905109489049) (buffer "*SPEEDBAR*" (selected) (hscroll . 0) (fringes 10 11 nil) (margins nil) (scroll-bars 15 0 t nil) (vscroll . 0) (dedicated . t) (point . 210) (start . 1))) (leaf (total-height . 52) (total-width . 91) (normal-height . 1.0) (normal-width . 0.44525547445255476) (buffer "trend-detector.js" (selected . t) (hscroll . 0) (fringes 10 11 nil) (margins nil) (scroll-bars 15 0 t nil) (vscroll . 0) (dedicated) (point . 204) (start . 1))) (leaf (last . t) (total-height . 52) (total-width . 91) (normal-height . 1.0) (normal-width . 0.44525547445255476) (buffer "trend-detection.js" (selected) (hscroll . 0) (fringes 10 11 nil) (margins nil) (scroll-bars 15 0 t nil) (vscroll . 0) (dedicated) (point . 1) (start . 1)))))])
 (setq desktop-missing-file-warning nil)
 (setq tags-file-name nil)
 (setq tags-table-list nil)
 (setq search-ring nil)
-(setq regexp-search-ring '("high"))
+(setq regexp-search-ring '("maxfr" "plugin" "staging" "high"))
 (setq register-alist nil)
-(setq file-name-history '("~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-pkg.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-pkg.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-pkg.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-autoloads.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer.el" "~/.emacs.d/init.el" "~/.emacs.d/custom.el" "~/git/bottlenose/lib/db-keeper.js" "~/.emacs.d/vendor/" "~/git/bottlenose/lib/trend-detector.js" "/Users/beatlevic/.emacs.d/init.el"))
+(setq file-name-history '("~/git/bottlenose/apps/web/routes/trend-detection.js" "~/git/bottlenose/lib/trend-detector.js" "~/git/bottlenose/README.md" "~/.emacs.d/vendor/blackboard.el" "~/git/bottlenose/lib/bundler.js" "~/git/bottlenose/Cakefile" "~/git/bottlenose/package.json" "~/git/bottlenose/.gitignore" "~/.emacs.d/init.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-pkg.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-pkg.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-pkg.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer-autoloads.el" "~/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer.el" "~/.emacs.d/init.el" "~/.emacs.d/custom.el" "~/git/bottlenose/lib/db-keeper.js" "~/.emacs.d/vendor/" "~/git/bottlenose/lib/trend-detector.js" "/Users/beatlevic/.emacs.d/init.el"))
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
 (desktop-create-buffer 206
-  "/Users/beatlevic/.emacs.d/elpa/lusty-explorer-20130407.1256/lusty-explorer.el"
-  "lusty-explorer.el"
-  'emacs-lisp-mode
-  '(textmate-mode smart-tab-mode paredit-mode)
-  4591
-  '(4621 nil)
+  "/Users/beatlevic/git/bottlenose/lib/trend-detector.js"
+  "trend-detector.js"
+  'js3-mode
+  '(autopair-mode textmate-mode smart-tab-mode paredit-mode)
+  204
+  '(204 nil)
   nil
   nil
-  '((buffer-file-coding-system . utf-8-unix)))
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/Users/beatlevic/git/bottlenose/apps/web/routes/trend-detection.js"
+  "trend-detection.js"
+  'js3-mode
+  '(autopair-mode textmate-mode smart-tab-mode paredit-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/Users/beatlevic/git/bottlenose/package.json"
+  "package.json"
+  'js3-mode
+  '(autopair-mode textmate-mode smart-tab-mode paredit-mode)
+  101
+  '(1158 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
 
 (desktop-create-buffer 206
   "/Users/beatlevic/.emacs.d/init.el"
   "init.el"
   'emacs-lisp-mode
   '(textmate-mode smart-tab-mode paredit-mode)
-  9668
-  '(9323 nil)
+  2141
+  '(1023 nil)
   nil
   nil
   '((buffer-file-coding-system . utf-8-unix)))
 
 (desktop-create-buffer 206
-  "/Users/beatlevic/git/bottlenose/lib/db-keeper.js"
-  "db-keeper.js"
-  'js3-mode
-  '(autopair-mode textmate-mode smart-tab-mode paredit-mode)
-  398
-  '(5345 nil)
+  "/Users/beatlevic/git/bottlenose/Cakefile"
+  "Cakefile"
+  'coffee-mode
+  '(textmate-mode smart-tab-mode)
+  5064
+  '(5425 nil)
   nil
   nil
-  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
+  '((tab-width . 8) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/Users/beatlevic/git/bottlenose/.gitignore"
+  ".gitignore"
+  'fundamental-mode
+  '(textmate-mode smart-tab-mode)
+  788
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
 
 (desktop-create-buffer 206
   "/Users/beatlevic/.emacs.d/custom.el"
@@ -60,15 +93,4 @@
   nil
   nil
   '((buffer-file-coding-system . prefer-utf-8-unix)))
-
-(desktop-create-buffer 206
-  "/Users/beatlevic/git/bottlenose/lib/trend-detector.js"
-  "trend-detector.js"
-  'js3-mode
-  '(autopair-mode textmate-mode smart-tab-mode paredit-mode)
-  430
-  '(6067 nil)
-  nil
-  nil
-  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
 
