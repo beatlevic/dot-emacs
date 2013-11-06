@@ -78,7 +78,7 @@
 (require 'peepopen) ;; peepopen plugin
 (require 'sr-speedbar)
 (require 'lusty-explorer)
-(require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
+;(require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
 (require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
 (require 'tramp)
 (setq tramp-default-method "ssh")
@@ -130,7 +130,7 @@
 (global-font-lock-mode 1) ;; Enable syntax highlighting for older Emacsen that have it off
 (recentf-mode 1)
 (normal-erase-is-backspace-mode 1) ;; Backspace should not be delete
-(hl-line-mode 1)
+(global-hl-line-mode 1)
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
 
@@ -255,8 +255,6 @@
 (defvar autopair-modes '(r-mode ruby-mode js3-mode))
 (defun turn-on-autopair-mode () (autopair-mode 1))
 (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
-(defun turn-on-hl-mode () (hl-line-mode 1))
-(dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-hl-mode))
 
 (defun my-align-single-equals ()
   "Align on a single equals sign (with a space either side)."
