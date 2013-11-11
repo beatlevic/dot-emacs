@@ -62,7 +62,7 @@
 ;; Fullscreen theme settings
 (autoload 'color-theme-blackboard "vendor/blackboard" "" t nil)
 (color-theme-blackboard)
-(ns-toggle-fullscreen)
+;(ns-toggle-fullscreen)
 (load custom-file 'noerror)
 
 (server-start) ;; used by terminal command line invocation
@@ -288,18 +288,21 @@
    :group 'my-faces)
 
 
-(dolist (x '(scheme emacs-lisp lisp clojure ruby js3))
+(dolist (x '(scheme emacs-lisp lisp clojure))
   (font-lock-add-keywords
    (intern (concat (symbol-name x) "-mode")) '(("(\\|)" . 'dim-paren-face)))
   (add-hook
    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
 
-(font-lock-add-keywords
- (intern "js3-mode") '(("\\(\{\\|\}\\)" . 'dim-paren-face)) )
+;; (font-lock-add-keywords
+;;  (intern "js3-mode") '(("(\\|)" . 'dim-paren-face)) )
 
-(font-lock-add-keywords
- ;(intern "js3-mode") '(("\\(\(\\|\)\\|\\[\\|\\]\\|\{\\|\}\\)" . 'dim-paren-face))
- (intern "js3-mode") '(("\\(\\[\\|\\]\\)" . 'dim-bracket-face)) )
+;; (font-lock-add-keywords
+;;  (intern "js3-mode") '(("\\(\{\\|\}\\)" . 'dim-paren-face)) )
+
+;; (font-lock-add-keywords
+;;  ;(intern "js3-mode") '(("\\(\(\\|\)\\|\\[\\|\\]\\|\{\\|\}\\)" . 'dim-paren-face))
+;;  (intern "js3-mode") '(("\\(\\[\\|\\]\\)" . 'dim-bracket-face)) )
 
 (font-lock-add-keywords
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
@@ -341,3 +344,10 @@
 ;; (default-packages-install)
 ;; (byte-recompile-directory (concat dotfiles-dir "/vendor")) ;; update .elc files when .el was changed
 ;; (byte-recompile-directory (concat dotfiles-dir "/vendor") 0) ;; create .elc file when not present for .el
+
+(defun paredit-space-for-delimiter-p (endp delimiter)
+  (and (not (if endp (eobp) (bobp)))
+       (memq (char-syntax (if endp (char-after) (char-before)))
+             (list ?\"  ;; REMOVED ?w ?_
+                   (let ((matching (matching-paren delimiter)))
+                     (and matching (char-syntax matching)))))))
