@@ -67,7 +67,7 @@
 
 (server-start) ;; used by terminal command line invocation
 
-(require 'cl)
+;(require 'cl)
 (require 'saveplace)
 (require 'uniquify)
 (require 'recentf)
@@ -236,7 +236,6 @@
 (setq ibuffer-formats '((mark modified read-only " " (name 32 32) " "
                               (size 6 -1 :right) " " (filename 55 55));;" " (mode 16 16 :center)
                     	   (mark " " (name 16 -1) " " filename))
-      ibuffer-elide-long-columns t
       ibuffer-eliding-string "..")
 
 ;; Util functions
@@ -351,3 +350,4 @@
              (list ?\"  ;; REMOVED ?w ?_
                    (let ((matching (matching-paren delimiter)))
                      (and matching (char-syntax matching)))))))
+
