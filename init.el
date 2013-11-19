@@ -141,6 +141,7 @@
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
+(autoload 'puppet-mode "puppet-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
 (when (> emacs-major-version 21)
