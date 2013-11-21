@@ -199,6 +199,8 @@
 (global-set-key (kbd "C-x C-r") 'rename-file-and-buffer);
 (global-set-key (kbd "C-x C-m") 'move-buffer-file);
 
+(global-set-key (kbd "M-s") 'swap-windows);
+
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
   (lambda () (interactive)
@@ -392,6 +394,14 @@
 (defun swap-windows ()
  "If you have 2 windows, it swaps them."
 (interactive)
+(if (= (count-windows) 2) (swap-windows2)
+  (if (= (count-windows) 3) (progn (toggle-sr-speedbar) (swap-windows3) (other-window 1))
+    (message "You need exactly 2 or 3 windows to do this.")
+  )))
+
+(defun swap-windows2 ()
+ "If you have 2 windows, it swaps them."
+(interactive)
 (cond ((not (= (count-windows) 2)) (message "You need exactly 2 windows to do this."))
  (t
   (let* ((w1 (first (window-list)))
@@ -404,3 +414,20 @@
     (set-window-buffer w2 b1)
     (set-window-start w1 s2)
     (set-window-start w2 s1)))))
+
+(defun swap-windows3 ()
+ "If you have 3 windows, it swaps them."
+(interactive)
+(cond ((not (= (count-windows) 3)) (message "You need exactly 3 windows to do this."))
+ (t
+  (let* ((w1 (second (window-list)))
+	 (w2 (third (window-list)))
+	 (b1 (window-buffer w1))
+	 (b2 (window-buffer w2))
+	 (s1 (window-start w1))
+	 (s2 (window-start w2)))
+    (set-window-buffer w1 b2)
+    (set-window-buffer w2 b1)
+    (set-window-start w1 s2)
+    (set-window-start w2 s1)))))
+
