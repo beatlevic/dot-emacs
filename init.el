@@ -83,6 +83,16 @@
 (require 'tramp)
 (setq tramp-default-method "ssh")
 
+(require 'git-gutter-fringe)
+(setq git-gutter-fr:side 'right-fringe)
+(set-face-foreground 'git-gutter-fr:modified "#6D9CBE")
+(set-face-foreground 'git-gutter-fr:added "#A5C261")
+(set-face-foreground 'git-gutter-fr:deleted "#CC7833")
+
+(require 'ido-vertical-mode)
+(ido-mode 1)
+(ido-vertical-mode 1)
+
 (setq smart-tab-completion-functions-alist
       '((emacs-lisp-mode . lisp-complete-symbol)
         (text-mode . dabbrev-completion) ;; this is the "default"
@@ -133,6 +143,7 @@
 (global-hl-line-mode 1)
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
+(git-gutter-mode 1)
 
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
 (textmate-mode)
@@ -152,11 +163,22 @@
         ido-use-filename-at-point 'guess
         ido-max-prospects 10))
 
+
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines nil)
 (set-default 'imenu-auto-rescan t)
 
 (delete 'try-expand-line hippie-expand-try-functions-list)
+
+;; Scroll Settings
+(setq redisplay-dont-pause t
+      scroll-margin 1
+      scroll-step 1
+      scroll-conservatively 10000
+      scroll-preserve-screen-position 1)
+
+(setq mouse-wheel-follow-mouse 't)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 
 ;; Key bindings
 (setq mac-option-key-is-meta nil)
@@ -167,6 +189,7 @@
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
+(global-set-key (kbd "C-S-t") 'ack-find-file)
 (global-set-key (kbd "<C-tab>") 'previous-buffer)
 (global-set-key (kbd "<C-S-tab>") 'next-buffer)
 (global-set-key (kbd "<C-return>") 'other-window)
@@ -182,6 +205,7 @@
 
 (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "C-x C-j") 'ido-switch-buffer)
 
 (windmove-default-keybindings) ;; Shift+direction
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
@@ -200,6 +224,11 @@
 (global-set-key (kbd "C-x C-m") 'move-buffer-file);
 
 (global-set-key (kbd "M-s") 'swap-windows);
+
+(global-set-key (kbd "<f6>") 'hs-hide-level)
+(global-set-key (kbd "S-<f6>") 'hs-show-all)
+(global-set-key (kbd "C-<f6>") 'hs-show-block)
+
 
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
@@ -298,6 +327,13 @@
    (intern (concat (symbol-name x) "-mode")) '(("(\\|)" . 'dim-paren-face)))
   (add-hook
    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
+
+(add-hook 'js3-mode-hook
+          (lambda ()
+            ;; Scan the file for nested code blocks
+            (imenu-add-menubar-index)
+            ;; Activate the folding mode
+            (hs-minor-mode t)))
 
 ;; (font-lock-add-keywords
 ;;  (intern "js3-mode") '(("(\\|)" . 'dim-paren-face)) )
