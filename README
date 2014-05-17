@@ -1,12 +1,3 @@
 My .emacs.d configuration is in constant flux and probably will be different from week to week. Although I try not to spend too much time tweaking, it seems to suck me in every time...
 
-Installed emacs with Homebrew, which includes the fullscreen patch:
-
-(sudo) brew install emacs --cocoa --srgb
-
-mv Emacs.app to /Applications
-
-git submodule init --recursive
-git submodule update --recursive
-
-All the default packages are defined and will be installed on the first run (could be you have to restart emacs for some packages).
+Installed 'Emacs for Mac OS X'  http://emacsformacosx.com/
