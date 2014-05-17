@@ -7,17 +7,15 @@
 
 (setq backup-directory-alist `(("." . ,(expand-file-name (concat dotfiles-dir "backups")))))
 
-(add-to-list 'load-path dotfiles-dir)
+;(add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
-(setq custom-file (concat dotfiles-dir "custom.el"))
+(setq custom-file "~/.emacs.d/vendor/custom.el")
 
 (require 'package)
-
-(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
-                  ("elpa" . "http://tromey.com/elpa/")))
-  (add-to-list 'package-archives source t))
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 (package-initialize)
 
@@ -60,38 +58,35 @@
 (add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
 
 ;; Fullscreen theme settings
-(autoload 'color-theme-blackboard "vendor/blackboard" "" t nil)
+(require 'color-theme)
+(color-theme-initialize)
+(load-file (concat dotfiles-dir "/vendor/blackboard.el"))
 (color-theme-blackboard)
-;(ns-toggle-fullscreen)
-(load custom-file 'noerror)
+
+(setq ns-use-native-fullscreen nil)
+
+(load custom-file)
 
 (server-start) ;; used by terminal command line invocation
 
-;(require 'cl)
 (require 'saveplace)
 (require 'uniquify)
 (require 'recentf)
-(require 'undo-tree) ;http://www.dr-qubit.org/download.php?file=undo-tree/undo-tree.el
-(require 'elein) ;http://github.com/remvee/elein/raw/master/elein.el
 (require 'autopair)
-(require 'textmate)
-(require 'peepopen) ;; peepopen plugin
+;(require 'textmate)
 (require 'sr-speedbar)
+(require 'smart-tab)
 (require 'lusty-explorer)
-;(require 'php-mode) ;http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
-(require 'smart-tab) ;; make sure smart-tab.el is reachable in your load-path first
-(require 'tramp)
-(setq tramp-default-method "ssh")
-
-(require 'git-gutter-fringe)
-(setq git-gutter-fr:side 'right-fringe)
-(set-face-foreground 'git-gutter-fr:modified "#6D9CBE")
-(set-face-foreground 'git-gutter-fr:added "#A5C261")
-(set-face-foreground 'git-gutter-fr:deleted "#CC7833")
-
 (require 'ido-vertical-mode)
 (ido-mode 1)
 (ido-vertical-mode 1)
+
+;(require 'flx-ido)
+;(ido-mode 1)
+;(ido-everywhere 1)
+;(flx-ido-mode 1)
+;; disable ido faces to see flx highlights.
+;(setq ido-use-faces nil)
 
 (setq smart-tab-completion-functions-alist
       '((emacs-lisp-mode . lisp-complete-symbol)
@@ -133,6 +128,8 @@
 (blink-cursor-mode -1)
 (auto-fill-mode -1)
 
+(projectile-global-mode)
+
 (mouse-wheel-mode 1)
 (setq column-number-mode 1)
 (show-paren-mode 1) ;; Highlight matching parentheses when the point is on them.
@@ -143,10 +140,9 @@
 (global-hl-line-mode 1)
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
-(git-gutter-mode 1)
 
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
-(textmate-mode)
+;(textmate-mode)
 
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
@@ -155,14 +151,11 @@
 (autoload 'puppet-mode "puppet-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
-(when (> emacs-major-version 21)
-  (ido-mode t)
-  (setq ido-enable-prefix nil
-        ido-enable-flex-matching t
-        ido-create-new-buffer 'always
-        ido-use-filename-at-point 'guess
-        ido-max-prospects 10))
-
+(setq ido-enable-prefix nil
+      ido-enable-flex-matching t
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-max-prospects 10)
 
 (set-default 'indent-tabs-mode nil)
 (set-default 'indicate-empty-lines nil)
@@ -195,7 +188,7 @@
 (global-set-key (kbd "<C-return>") 'other-window)
 (global-set-key (kbd "C-M-k") 'delete-window)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
-(global-set-key (kbd "M-ƒ") 'ns-toggle-fullscreen)
+(global-set-key (kbd "M-ƒ") 'toggle-frame-fullscreen)
 
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
@@ -204,6 +197,7 @@
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 
 (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+(global-set-key (kbd "C-o") 'projectile-find-file)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-x C-j") 'ido-switch-buffer)
 
@@ -224,11 +218,6 @@
 (global-set-key (kbd "C-x C-m") 'move-buffer-file);
 
 (global-set-key (kbd "M-s") 'swap-windows);
-
-(global-set-key (kbd "<f6>") 'hs-hide-level)
-(global-set-key (kbd "S-<f6>") 'hs-show-all)
-(global-set-key (kbd "C-<f6>") 'hs-show-block)
-
 
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
@@ -255,8 +244,8 @@
          ("Org" (or (mode . org-mode)
                     (filename . "org")))
          ;;        ("Subversion" (name . "\*svn"))
-         ("Emacs-config" (or (filename . ".emacs.d")
-                             (filename . "emacs-config")))
+         ("Emacs" (or (filename . ".emacs.d")
+                      (filename . "emacs-config")))
          ("ERC" (mode . erc-mode))
          ("Help" (or (name . "\*Help\*")
                      (name . "\*Apropos\*")
@@ -290,12 +279,6 @@
 (defun turn-on-autopair-mode () (autopair-mode 1))
 (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
 
-(defun my-align-single-equals ()
-  "Align on a single equals sign (with a space either side)."
-  (interactive)
-  (align-regexp
-   (region-beginning) (region-end) "\\(\\s-*\\) = " 1 0 nil))
-
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)
@@ -328,70 +311,8 @@
   (add-hook
    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
 
-(add-hook 'js3-mode-hook
-          (lambda ()
-            ;; Scan the file for nested code blocks
-            (imenu-add-menubar-index)
-            ;; Activate the folding mode
-            (hs-minor-mode t)))
-
-;; (font-lock-add-keywords
-;;  (intern "js3-mode") '(("(\\|)" . 'dim-paren-face)) )
-
-;; (font-lock-add-keywords
-;;  (intern "js3-mode") '(("\\(\{\\|\}\\)" . 'dim-paren-face)) )
-
-;; (font-lock-add-keywords
-;;  ;(intern "js3-mode") '(("\\(\(\\|\)\\|\\[\\|\\]\\|\{\\|\}\\)" . 'dim-paren-face))
-;;  (intern "js3-mode") '(("\\(\\[\\|\\]\\)" . 'dim-bracket-face)) )
-
 (font-lock-add-keywords
-   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
-
-;; Default package installation
-(defvar default-packages (list 'autopair
-                               'clojure-mode
-                               ;;'clojure-test-mode
-                               'color-theme
-                               'css-mode
-                               'elein
-                               'find-file-in-project
-                               ;;'gist
-                               'haml-mode
-                               'idle-highlight
-                               'lusty-explorer
-                               'magit
-                               'markdown-mode
-                               'mark-multiple
-                               'paredit
-                               'php-mode
-                               'sass-mode
-                               'scpaste
-                               'scss-mode
-                               'swank-clojure
-                               'undo-tree
-                               'yaml-mode
-                               'yasnippet-bundle)
-  "Libraries that should be installed by default.")
-
-(defun default-packages-install ()
-  (interactive)
-  (dolist (package default-packages)
-    (unless (or (member package package-activated-list)
-                (functionp package))
-      (message "Installing %s" (symbol-name package))
-      (package-install package))))
-
-;; (default-packages-install)
-;; (byte-recompile-directory (concat dotfiles-dir "/vendor")) ;; update .elc files when .el was changed
-;; (byte-recompile-directory (concat dotfiles-dir "/vendor") 0) ;; create .elc file when not present for .el
-
-(defun paredit-space-for-delimiter-p (endp delimiter)
-  (and (not (if endp (eobp) (bobp)))
-       (memq (char-syntax (if endp (char-after) (char-before)))
-             (list ?\"  ;; REMOVED ?w ?_
-                   (let ((matching (matching-paren delimiter)))
-                     (and matching (char-syntax matching)))))))
+ nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
 
 ;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
 (defun rename-file-and-buffer (new-name)
@@ -466,4 +387,3 @@
     (set-window-buffer w2 b1)
     (set-window-start w1 s2)
     (set-window-start w2 s1)))))
-
