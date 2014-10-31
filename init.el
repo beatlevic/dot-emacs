@@ -49,6 +49,8 @@
       frame-title-format '(buffer-file-name "%f" ("%b"))
       save-place-file (concat dotfiles-dir "places"))
 
+(setq explicit-shell-file-name "/usr/local/bin/fish")
+
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
@@ -72,7 +74,7 @@
 (require 'saveplace)
 (require 'uniquify)
 (require 'recentf)
-(require 'autopair)
+
 ;(require 'textmate)
 (require 'sr-speedbar)
 (require 'smart-tab)
@@ -81,6 +83,9 @@
 (ido-mode 1)
 (ido-vertical-mode 1)
 
+(require 'yasnippet)
+(yas/global-mode 1)
+
 ;(require 'flx-ido)
 ;(ido-mode 1)
 ;(ido-everywhere 1)
@@ -88,25 +93,25 @@
 ;; disable ido faces to see flx highlights.
 ;(setq ido-use-faces nil)
 
-(setq smart-tab-completion-functions-alist
-      '((emacs-lisp-mode . lisp-complete-symbol)
-        (text-mode . dabbrev-completion) ;; this is the "default"
-        emacs expansion function
-        (clojure-mode . slime-complete-symbol)))
+;; (setq smart-tab-completion-functions-alist
+;;       '((emacs-lisp-mode . lisp-complete-symbol)
+;;         (text-mode . dabbrev-completion) ;; this is the "default"
+;;         emacs expansion function))
 
-(setq hippie-expand-try-functions-list
-      '(yas/hippie-try-expand
-        try-expand-dabbrev
-        try-expand-dabbrev-all-buffers
-        try-expand-dabbrev-from-kill
-        try-complete-file-name
-        try-complete-lisp-symbol))
+;; (setq hippie-expand-try-functions-list
+;;       '(yas/hippie-try-expand
+;;         try-expand-dabbrev
+;;         try-expand-dabbrev-all-buffers
+;;         try-expand-dabbrev-from-kill
+;;         try-complete-file-name
+;;         try-complete-lisp-symbol))
 
 ;; required to run ack command
 (when (equal system-type 'darwin)
   (setenv "PATH" (concat "/opt/local/bin:/usr/local/bin:/usr/local/git/bin/:" (getenv "PATH")))
   (push "/opt/local/bin" exec-path)
   (push "/usr/local/git/bin" exec-path)
+  (push "/usr/local/go/bin" exec-path)
   (push "/usr/local/bin" exec-path))
 
 ;; Autoload
@@ -144,6 +149,8 @@
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
 ;(textmate-mode)
 
+(electric-pair-mode 1)
+
 (add-hook 'write-file-hooks 'delete-trailing-whitespace)
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
@@ -162,6 +169,9 @@
 (set-default 'imenu-auto-rescan t)
 
 (delete 'try-expand-line hippie-expand-try-functions-list)
+
+;; Go-mode
+(setq default-tab-width 2)
 
 ;; Scroll Settings
 (setq redisplay-dont-pause t
@@ -219,6 +229,10 @@
 
 (global-set-key (kbd "M-s") 'swap-windows);
 
+;;(global-set-key (kbd "C-c C-r") 'go-run)
+(add-hook 'go-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
+
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
   (lambda () (interactive)
@@ -230,22 +244,27 @@
       '(("home"
          ("Clojure" (or (mode . clojure-mode)
                         (filename . "clojure")))
-         ("Python" (or (mode . python-mode)
-                        (filename . "py")))
+         ("Emacs" (or (filename . ".emacs.d")
+                      (filename . "emacs-config")))
          ("Javascript" (or (mode . esspresso-mode)
                            (mode . js3-mode)
                            (mode . js2-mode)
                            (mode . js-mode)
                            (filename . "js")))
-         ("Ruby" (or (mode . ruby-mode)
-                     (filename . "rb")))
+         ("Julia" (or (mode . julia-mode)
+                      (filename . "jl")))
+         ("Go" (mode . go-mode))
+         ("Org" (or (mode . org-mode)
+                     (filename . "org")))
          ("PHP" (or (mode . php-mode)
                     (filename . "php")))
-         ("Org" (or (mode . org-mode)
-                    (filename . "org")))
+         ("Python" (or (mode . python-mode)
+                       (filename . "py")))
+         ("Ruby" (or (mode . ruby-mode)
+                     (filename . "rb")))
+         ("Rust" (or (mode . rust-mode)
+                     (filename . "toml")))
          ;;        ("Subversion" (name . "\*svn"))
-         ("Emacs" (or (filename . ".emacs.d")
-                      (filename . "emacs-config")))
          ("ERC" (mode . erc-mode))
          ("Help" (or (name . "\*Help\*")
                      (name . "\*Apropos\*")
@@ -275,9 +294,9 @@
         (revert-buffer t t t) )))
   (message "Refreshed open files."))
 
-(defvar autopair-modes '(r-mode ruby-mode js3-mode))
-(defun turn-on-autopair-mode () (autopair-mode 1))
-(dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
+;; (defvar autopair-modes '(r-mode ruby-mode js3-mode go-mode))
+;; (defun turn-on-autopair-mode () (autopair-mode 1))
+;; (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
 
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
@@ -310,6 +329,16 @@
    (intern (concat (symbol-name x) "-mode")) '(("(\\|)" . 'dim-paren-face)))
   (add-hook
    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
+
+;;(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
+
+;;(setq cider-repl-pop-to-buffer-on-connect nil)
+(setq cider-popup-stacktraces nil)
+(setq cider-repl-popup-stacktraces t)
+(setq cider-auto-select-error-buffer t)
+(setq cider-repl-use-clojure-font-lock t)
+
 
 (font-lock-add-keywords
  nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
@@ -387,3 +416,5 @@
     (set-window-buffer w2 b1)
     (set-window-start w1 s2)
     (set-window-start w2 s1)))))
+
+(setq python-indent 4)
