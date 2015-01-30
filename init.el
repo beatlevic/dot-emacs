@@ -51,6 +51,14 @@
 
 (setq explicit-shell-file-name "/usr/local/bin/fish")
 
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args ""
+      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+      python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+      python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+      python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
@@ -85,6 +93,9 @@
 
 (require 'yasnippet)
 (yas/global-mode 1)
+
+;(auto-dim-other-buffers-mode 1)
+;(set-face-attribute 'auto-dim-other-buffers-face nil :background "#383836")
 
 ;(require 'flx-ido)
 ;(ido-mode 1)
@@ -418,3 +429,20 @@
     (set-window-start w2 s1)))))
 
 (setq python-indent 4)
+
+(add-to-list 'smart-tab-disabled-major-modes 'eshell-mode)
+(add-to-list 'smart-tab-disabled-major-modes 'inferior-python-mode)
+
+(when (load "flymake" t)
+  (defun flymake-pyflakes-init ()
+    (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                       'flymake-create-temp-inplace))
+           (local-file (file-relative-name
+                        temp-file
+                        (file-name-directory buffer-file-name))))
+      (list "pyflakes" (list local-file))))
+
+  (add-to-list 'flymake-allowed-file-name-masks
+               '("\\.py\\'" flymake-pyflakes-init)))
+
+(add-hook 'find-file-hook 'flymake-find-file-hook)

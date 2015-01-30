@@ -3,6 +3,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["black" "coral1" "green4" "yellow3" "DarkSlateGray3" "magenta3" "cyan3" "gray90"])
  '(c-basic-offset (quote set-from-style))
  '(js-auto-indent-flag nil)
  '(js2-basic-offset 2)
@@ -11,13 +13,24 @@
  '(js3-enter-indents-newline t)
  '(js3-highlight-external-variables nil)
  '(js3-indent-on-enter-key t)
- '(safe-local-variable-values (quote ((encoding . utf-8) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby") (whitespace-line-column . 80) (lexical-binding . t))))
+ '(safe-local-variable-values
+   (quote
+    ((encoding . utf-8)
+     (ruby-compilation-executable . "ruby")
+     (ruby-compilation-executable . "ruby1.8")
+     (ruby-compilation-executable . "ruby1.9")
+     (ruby-compilation-executable . "rbx")
+     (ruby-compilation-executable . "jruby")
+     (whitespace-line-column . 80)
+     (lexical-binding . t))))
  '(scss-compile-at-save nil)
  '(smart-tab-using-hippie-expand t)
  '(speedbar-hide-button-brackets-flag nil)
  '(speedbar-obj-do-check nil)
  '(speedbar-show-unknown-files t)
- '(speedbar-supported-extension-expressions (quote (".org" ".[ch]\\(\\+\\+\\|pp\\|c\\|h\\|xx\\)?" ".tex\\(i\\(nfo\\)?\\)?" ".el" ".emacs" ".l" ".lsp" ".p" ".java" ".js" ".f\\(90\\|77\\|or\\)?" ".ada" ".p[lm]" ".tcl" ".m" ".scm" ".pm" ".py" ".g" ".s?html" ".ma?k" "[Mm]akefile\\(\\.in\\)?" ".clj" ".rb" ".erb" ".php")))
+ '(speedbar-supported-extension-expressions
+   (quote
+    (".org" ".[ch]\\(\\+\\+\\|pp\\|c\\|h\\|xx\\)?" ".tex\\(i\\(nfo\\)?\\)?" ".el" ".emacs" ".l" ".lsp" ".p" ".java" ".js" ".f\\(90\\|77\\|or\\)?" ".ada" ".p[lm]" ".tcl" ".m" ".scm" ".pm" ".py" ".g" ".s?html" ".ma?k" "[Mm]akefile\\(\\.in\\)?" ".clj" ".rb" ".erb" ".php")))
  '(speedbar-use-images nil)
  '(speedbar-use-tool-tips-flag nil)
  '(speedbar-vc-do-check nil)
