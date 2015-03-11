@@ -162,7 +162,14 @@
 
 (electric-pair-mode 1)
 
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+;;(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+
+(defun delete-trailing-whitespace-special()
+  "Delete trailing whitespace when not in markdown mode"
+  (when (not (eq major-mode 'markdown-mode))
+    (delete-trailing-whitespace)))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace-special)
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
@@ -446,3 +453,9 @@
                '("\\.py\\'" flymake-pyflakes-init)))
 
 (add-hook 'find-file-hook 'flymake-find-file-hook)
+
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+(delete '("\\.html?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
+
+(setq ispell-program-name "aspell")
