@@ -44,7 +44,8 @@
       whitespace-line-column 100
       ediff-window-setup-function 'ediff-setup-windows-plain
       xterm-mouse-mode t
-      set-fill-column 120
+      set-fill-column 100
+      fill-column 100
       ns-pop-up-frames nil
       frame-title-format '(buffer-file-name "%f" ("%b"))
       save-place-file (concat dotfiles-dir "places"))
@@ -157,6 +158,7 @@
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
 
+
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
 ;(textmate-mode)
 
@@ -241,15 +243,24 @@
 (global-set-key [f5] 'sr-speedbar-toggle)
 
 (global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
+(global-set-key (kbd "<f6>") 'writeroom-mode) ;; M-x revert-buffer => reads buffer from file again
 
 (global-set-key (kbd "C-x C-r") 'rename-file-and-buffer);
 (global-set-key (kbd "C-x C-m") 'move-buffer-file);
 
 (global-set-key (kbd "M-s") 'swap-windows);
+(global-set-key (kbd "C-<right>") 'paredit-forward-slurp-sexp)
+(global-set-key (kbd "C-<left>") 'paredit-backward-barf-sexp)
 
 ;;(global-set-key (kbd "C-c C-r") 'go-run)
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
+
+(add-hook 'cider-mode-hook
+          (lambda () (local-set-key (kbd "M-[") #'cider-format-defun)))
+
+(add-hook 'paredit-mode-hook
+          (lambda () (local-set-key (kbd "C-<up>") #'paredit-splice-sexp)))
 
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")
@@ -459,3 +470,9 @@
 (delete '("\\.html?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
 
 (setq ispell-program-name "aspell")
+
+(setq tramp-default-method "ssh")
+(setq projectile-enable-caching t)
+(setq projectile-require-project-root nil)
+
+(setq debug-on-error t)

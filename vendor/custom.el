@@ -39,16 +39,22 @@
  '(sr-speedbar-delete-windows nil)
  '(sr-speedbar-right-side nil)
  '(sr-speedbar-skip-other-window-p t)
- '(sr-speedbar-width-x 35))
+ '(sr-speedbar-width-x 35)
+ '(writeroom-global-effects nil)
+ '(writeroom-width 120))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#21221d" :foreground "#E6E1DC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "apple" :family "Monaco"))))
+ '(default ((t (:inherit nil :stipple nil :background "#21221d" :foreground "#E6E1DC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Monaco"))))
+ '(flymake-errline ((((class color)) (:underline "black"))))
+ '(flymake-warnline ((((class color)) (:underline "yellow"))))
+ '(linum ((t (:foreground "gray30"))))
  '(org-level-1 ((t (:inherit nil :foreground "LightSkyBlue"))))
  '(org-level-2 ((t (:foreground "#94bff3"))))
  '(org-level-3 ((t (:foreground "#8DA6CE"))))
+ '(show-paren-match ((t (:background "SteelBlue4"))))
  '(speedbar-button-face ((t (:foreground "#5C5C5C"))))
  '(speedbar-directory-face ((t (:foreground "#5C5C5C"))))
  '(speedbar-file-face ((t (:foreground "#7A7A7A"))))
