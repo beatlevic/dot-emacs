@@ -50,6 +50,8 @@
       frame-title-format '(buffer-file-name "%f" ("%b"))
       save-place-file (concat dotfiles-dir "places"))
 
+(setq-default cursor-type 'bar)
+
 (setq explicit-shell-file-name "/usr/local/bin/fish")
 
 (setq python-shell-interpreter "ipython"
@@ -73,10 +75,18 @@
 (color-theme-initialize)
 (load-file (concat dotfiles-dir "/vendor/blackboard.el"))
 (color-theme-blackboard)
+(highlight-numbers-mode 1)
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/themes/")
+;; (load-theme 'monokai t)
+;;(global-linum-mode 1)
 
 (setq ns-use-native-fullscreen nil)
 
 (load custom-file)
+
+;; (if (and (fboundp 'server-running-p)
+;;          (not (server-running-p)))
+;;     (server-start))
 
 (server-start) ;; used by terminal command line invocation
 
@@ -140,6 +150,9 @@
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
 
+(add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
+
+
 ;; Modes
 (tooltip-mode -1)
 (blink-cursor-mode -1)
@@ -192,6 +205,9 @@
 
 ;; Go-mode
 (setq default-tab-width 2)
+
+(add-hook 'python-mode-hook '(lambda ()
+ (setq tab-width 2)))
 
 ;; Scroll Settings
 (setq redisplay-dont-pause t
@@ -252,6 +268,9 @@
 (global-set-key (kbd "C-<right>") 'paredit-forward-slurp-sexp)
 (global-set-key (kbd "C-<left>") 'paredit-backward-barf-sexp)
 
+(global-set-key (kbd "M-[") 'indent-rigidly-left-to-tab-stop)
+(global-set-key (kbd "M-]") 'indent-rigidly-right-to-tab-stop)
+
 ;;(global-set-key (kbd "C-c C-r") 'go-run)
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
@@ -272,7 +291,8 @@
 (setq ibuffer-saved-filter-groups
       '(("home"
          ("Clojure" (or (mode . clojure-mode)
-                        (filename . "clojure")))
+                        (filename . "clojure")
+                        (filename . "boot")))
          ("Emacs" (or (filename . ".emacs.d")
                       (filename . "emacs-config")))
          ("Javascript" (or (mode . esspresso-mode)
@@ -341,14 +361,16 @@
   (paredit-mode t))
 
 (defface dim-paren-face
-   '((((class color) (background dark)) (:foreground "grey50"))
-     (((class color) (background light)) (:foreground "grey55")))
+   ;; '((((class color) (background dark)) (:foreground "grey50"))
+  ;;   (((class color) (background light)) (:foreground "grey55")))
+  '((((class color) (background dark)) (:foreground "grey70"))
+    (((class color) (background light)) (:foreground "grey70")))
    "Face used to dim parentheses."
    :group 'my-faces)
 
 (defface dim-bracket-face
-   '((((class color) (background dark)) (:foreground "grey55"))
-     (((class color) (background light)) (:foreground "grey60")))
+   '((((class color) (background dark)) (:foreground "grey70"))
+     (((class color) (background light)) (:foreground "grey70")))
    "Face used to dim brackets"
    :group 'my-faces)
 
@@ -358,6 +380,7 @@
    (intern (concat (symbol-name x) "-mode")) '(("(\\|)" . 'dim-paren-face)))
   (add-hook
    (intern (concat (symbol-name x) "-mode-hook")) 'turn-on-paredit))
+
 
 ;;(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
@@ -476,3 +499,30 @@
 (setq projectile-require-project-root nil)
 
 (setq debug-on-error t)
+
+;; (setq deft-text-mode 'markdown-mode)
+;; (setq deft-use-filename-as-title t)
+;; (global-set-key [f7] 'deft)
+;; (global-set-key (kbd "<C-f7>") 'deft-new-file-named)
+
+(setq cider-known-endpoints '(("coen@titan" "4343")))
+(setq cider-known-endpoints '(("localhost" "4343")))
+(global-set-key (kbd "<f10>") 'magit-status)
+
+;; (defun linum-format-func (line)
+;;   (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+;;      (propertize (format (format " %%%dd" w) line) 'face 'linum)))
+;; (setq linum-format 'linum-format-func)
+;; (setq nlinum-format 'linum-format-func)
+
+(eval-after-load 'clojure-mode '(require 'clojure-mode-extra-font-locking))
+
+(defvar clojure-operators
+  '(;; Math operators
+    "=" "==" ">" ">=" "<" "<=" "+" "-" "/" "*"))
+
+(font-lock-add-keywords 'clojure-mode
+                        `((,(concat "(\\(?:\.*/\\)?"
+                                    (regexp-opt clojure-operators t)
+                                    "\\>")
+                           1 font-lock-builtin-face)))

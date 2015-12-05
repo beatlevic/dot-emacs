@@ -6,6 +6,9 @@
  '(ansi-color-names-vector
    ["black" "coral1" "green4" "yellow3" "DarkSlateGray3" "magenta3" "cyan3" "gray90"])
  '(c-basic-offset (quote set-from-style))
+ '(deft-auto-save-interval 100.0)
+ '(deft-directory "/Users/beatlevic/Dropbox/notes")
+ '(deft-use-filter-string-for-filename t)
  '(js-auto-indent-flag nil)
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p t)
@@ -13,6 +16,7 @@
  '(js3-enter-indents-newline t)
  '(js3-highlight-external-variables nil)
  '(js3-indent-on-enter-key t)
+ '(org-refile-targets (quote ((org-agenda-files :maxlevel . 6))))
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)
@@ -47,7 +51,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#21221d" :foreground "#E6E1DC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Monaco"))))
+ '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "#E6E1DC" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Monaco"))))
  '(flymake-errline ((((class color)) (:underline "black"))))
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
  '(linum ((t (:foreground "gray30"))))
