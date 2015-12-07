@@ -225,6 +225,12 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier nil)
 
+;; (global-set-key (kbd "M-x") 'helm-M-x)
+;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
+;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+;; (global-set-key (kbd "C-x C-d") 'helm-browse-project)
+
+
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
@@ -526,3 +532,5 @@
                                     (regexp-opt clojure-operators t)
                                     "\\>")
                            1 font-lock-builtin-face)))
+
+(setq-default line-spacing 1)
