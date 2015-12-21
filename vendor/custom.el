@@ -6,6 +6,10 @@
  '(ansi-color-names-vector
    ["black" "coral1" "green4" "yellow3" "DarkSlateGray3" "magenta3" "cyan3" "gray90"])
  '(c-basic-offset (quote set-from-style))
+ '(custom-safe-themes
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ '(global-linum-mode t)
  '(js-auto-indent-flag nil)
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p t)
@@ -13,6 +17,7 @@
  '(js3-enter-indents-newline t)
  '(js3-highlight-external-variables nil)
  '(js3-indent-on-enter-key t)
+ '(linum-delay t)
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 6))))
  '(safe-local-variable-values
    (quote
@@ -40,7 +45,7 @@
  '(sr-speedbar-delete-windows nil)
  '(sr-speedbar-right-side nil)
  '(sr-speedbar-skip-other-window-p t)
- '(sr-speedbar-width-x 35)
+ '(sr-speedbar-width-x 40)
  '(writeroom-global-effects nil)
  '(writeroom-width 120))
 (custom-set-faces
@@ -48,6 +53,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "gray80" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
  '(flymake-errline ((((class color)) (:underline "black"))))
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
  '(linum ((t (:foreground "gray30"))))

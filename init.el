@@ -2,6 +2,9 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+(set-face-attribute 'default nil :font "Monaco" :height 140)
+;(setq-default line-spacing 1)
+
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name))) ;; .emacs.d/
 
@@ -27,7 +30,7 @@
       save-place t
       visible-bell t
       echo-keystrokes 0.1
-      font-lock-maximum-decoration t
+      font-lock-maximum-decoration 6
       inhibit-startup-message t
       transient-mark-mode t
       color-theme-is-global t
@@ -78,15 +81,21 @@
 (highlight-numbers-mode 1)
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/themes/")
 ;; (load-theme 'monokai t)
-;;(global-linum-mode 1)
+(setq linum-delay t)
+(global-linum-mode 1)
 
+
+;; (require 'sublimity)
+;; (require 'sublimity-scroll)
+;; ;;(require 'sublimity-map)
+;; (sublimity-mode 1)
 (setq ns-use-native-fullscreen nil)
 
 (load custom-file)
 
-;; (if (and (fboundp 'server-running-p)
-;;          (not (server-running-p)))
-;;     (server-start))
+(if (and (fboundp 'server-running-p)
+         (not (server-running-p)))
+    (server-start))
 
 (server-start) ;; used by terminal command line invocation
 
@@ -104,6 +113,8 @@
 
 (require 'yasnippet)
 (yas/global-mode 1)
+
+(require 'align-cljlet)
 
 ;(auto-dim-other-buffers-mode 1)
 ;(set-face-attribute 'auto-dim-other-buffers-face nil :background "#383836")
@@ -265,7 +276,7 @@
 (global-set-key [f5] 'sr-speedbar-toggle)
 
 (global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
-(global-set-key (kbd "<f6>") 'writeroom-mode) ;; M-x revert-buffer => reads buffer from file again
+;;(global-set-key (kbd "<f6>") 'writeroom-mode) ;; M-x revert-buffer => reads buffer from file again
 
 (global-set-key (kbd "C-x C-r") 'rename-file-and-buffer);
 (global-set-key (kbd "C-x C-m") 'move-buffer-file);
@@ -276,6 +287,8 @@
 
 (global-set-key (kbd "M-[") 'indent-rigidly-left-to-tab-stop)
 (global-set-key (kbd "M-]") 'indent-rigidly-right-to-tab-stop)
+
+(global-set-key (kbd "C-M-i") 'align-cljlet)
 
 ;;(global-set-key (kbd "C-c C-r") 'go-run)
 (add-hook 'go-mode-hook
@@ -513,12 +526,12 @@
 
 (setq cider-known-endpoints '(("coen@titan" "4343")))
 (setq cider-known-endpoints '(("localhost" "4343")))
-(global-set-key (kbd "<f10>") 'magit-status)
+(global-set-key (kbd "C-x C-g") 'magit-status)
 
-;; (defun linum-format-func (line)
-;;   (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
-;;      (propertize (format (format " %%%dd" w) line) 'face 'linum)))
-;; (setq linum-format 'linum-format-func)
+(defun linum-format-func (line)
+  (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
+     (propertize (format (format " %%%dd" w) line) 'face 'linum)))
+(setq linum-format 'linum-format-func)
 ;; (setq nlinum-format 'linum-format-func)
 
 (eval-after-load 'clojure-mode '(require 'clojure-mode-extra-font-locking))
@@ -533,4 +546,4 @@
                                     "\\>")
                            1 font-lock-builtin-face)))
 
-(setq-default line-spacing 1)
+(require 'linum-off)
