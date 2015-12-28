@@ -9,7 +9,6 @@
  '(custom-safe-themes
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
- '(global-linum-mode t)
  '(js-auto-indent-flag nil)
  '(js2-basic-offset 2)
  '(js2-bounce-indent-p t)
@@ -56,6 +55,7 @@
  '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "gray80" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 140 :width normal :foundry "nil" :family "Monaco"))))
  '(flymake-errline ((((class color)) (:underline "black"))))
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
+; '(fringe ((t (:background "gray20"))))
  '(linum ((t (:foreground "gray30"))))
  '(org-level-1 ((t (:inherit nil :foreground "LightSkyBlue"))))
  '(org-level-2 ((t (:foreground "#94bff3"))))

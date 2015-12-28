@@ -2,7 +2,7 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(set-face-attribute 'default nil :font "Monaco" :height 140)
+(set-face-attribute 'default nil :font "Monaco" :height 120)
 ;(setq-default line-spacing 1)
 
 (setq dotfiles-dir (file-name-directory
@@ -81,8 +81,8 @@
 (highlight-numbers-mode 1)
 ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/themes/")
 ;; (load-theme 'monokai t)
-(setq linum-delay t)
-(global-linum-mode 1)
+;;(setq linum-delay t)
+;;(global-linum-mode 1)
 
 
 ;; (require 'sublimity)
