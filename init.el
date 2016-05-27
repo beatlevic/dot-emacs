@@ -2,19 +2,14 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(set-face-attribute 'default nil :font "Monaco" :height 120)
-;(setq-default line-spacing 1)
-
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name))) ;; .emacs.d/
 
 (setq backup-directory-alist `(("." . ,(expand-file-name (concat dotfiles-dir "backups")))))
 
-;(add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
-(setq custom-file "~/.emacs.d/vendor/custom.el")
 
 (require 'package)
 (add-to-list 'package-archives
@@ -28,7 +23,8 @@
       auto-save-list-file-name nil
       auto-save-default nil
       save-place t
-      visible-bell t
+      visible-bell nil
+      ring-bell-function 'ignore
       echo-keystrokes 0.1
       font-lock-maximum-decoration 6
       inhibit-startup-message t
@@ -79,18 +75,10 @@
 (load-file (concat dotfiles-dir "/vendor/blackboard.el"))
 (color-theme-blackboard)
 (highlight-numbers-mode 1)
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/themes/")
-;; (load-theme 'monokai t)
-;;(setq linum-delay t)
-;;(global-linum-mode 1)
 
-
-;; (require 'sublimity)
-;; (require 'sublimity-scroll)
-;; ;;(require 'sublimity-map)
-;; (sublimity-mode 1)
 (setq ns-use-native-fullscreen nil)
 
+(setq custom-file "~/.emacs.d/vendor/custom.el")
 (load custom-file)
 
 (if (and (fboundp 'server-running-p)
@@ -102,8 +90,6 @@
 (require 'saveplace)
 (require 'uniquify)
 (require 'recentf)
-
-;(require 'textmate)
 (require 'sr-speedbar)
 (require 'smart-tab)
 (require 'lusty-explorer)
@@ -115,29 +101,6 @@
 (yas/global-mode 1)
 
 (require 'align-cljlet)
-
-;(auto-dim-other-buffers-mode 1)
-;(set-face-attribute 'auto-dim-other-buffers-face nil :background "#383836")
-
-;(require 'flx-ido)
-;(ido-mode 1)
-;(ido-everywhere 1)
-;(flx-ido-mode 1)
-;; disable ido faces to see flx highlights.
-;(setq ido-use-faces nil)
-
-;; (setq smart-tab-completion-functions-alist
-;;       '((emacs-lisp-mode . lisp-complete-symbol)
-;;         (text-mode . dabbrev-completion) ;; this is the "default"
-;;         emacs expansion function))
-
-;; (setq hippie-expand-try-functions-list
-;;       '(yas/hippie-try-expand
-;;         try-expand-dabbrev
-;;         try-expand-dabbrev-all-buffers
-;;         try-expand-dabbrev-from-kill
-;;         try-complete-file-name
-;;         try-complete-lisp-symbol))
 
 ;; required to run ack command
 (when (equal system-type 'darwin)
@@ -153,9 +116,9 @@
 (autoload 'ack-find-same-file "full-ack" nil t)
 (autoload 'ack-find-file "full-ack" nil t)
 
-(autoload 'js3-mode "js3" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
-(add-to-list 'auto-mode-alist '("\\.json$" . js3-mode))
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
 
 (autoload 'coffee-mode "coffee-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
@@ -163,14 +126,12 @@
 
 (add-to-list 'auto-mode-alist '("\\.scss$" . sass-mode))
 
-
 ;; Modes
 (tooltip-mode -1)
 (blink-cursor-mode -1)
 (auto-fill-mode -1)
 
 (projectile-global-mode)
-
 (mouse-wheel-mode 1)
 (setq column-number-mode 1)
 (show-paren-mode 1) ;; Highlight matching parentheses when the point is on them.
@@ -181,14 +142,8 @@
 (global-hl-line-mode 1)
 (global-smart-tab-mode 1) ;; switch on smart-tab everywhere
 (desktop-save-mode 1)
-
-
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
-;(textmate-mode)
-
 (electric-pair-mode 1)
-
-;;(add-hook 'write-file-hooks 'delete-trailing-whitespace)
 
 (defun delete-trailing-whitespace-special()
   "Delete trailing whitespace when not in markdown mode"
@@ -199,8 +154,6 @@
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (add-to-list 'desktop-modes-not-to-save 'dired-mode)
-(autoload 'puppet-mode "puppet-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.pp$" . puppet-mode))
 
 (setq ido-enable-prefix nil
       ido-enable-flex-matching t
@@ -236,12 +189,6 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier nil)
 
-;; (global-set-key (kbd "M-x") 'helm-M-x)
-;; (global-set-key (kbd "C-x C-f") 'helm-find-files)
-;; (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-;; (global-set-key (kbd "C-x C-d") 'helm-browse-project)
-
-
 (global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
@@ -269,9 +216,7 @@
 (global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
 
 (global-set-key (kbd "C-S-f") 'follow-mode)
-
 (global-set-key (kbd "C-x a") 'my-align-single-equals)
-
 (global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
 (global-set-key [f5] 'sr-speedbar-toggle)
 
@@ -290,7 +235,6 @@
 
 (global-set-key (kbd "C-M-i") 'align-cljlet)
 
-;;(global-set-key (kbd "C-c C-r") 'go-run)
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
 
@@ -311,11 +255,11 @@
       '(("home"
          ("Clojure" (or (mode . clojure-mode)
                         (filename . "clojure")
+                        (filename . "cljs")
                         (filename . "boot")))
          ("Emacs" (or (filename . ".emacs.d")
                       (filename . "emacs-config")))
          ("Javascript" (or (mode . esspresso-mode)
-                           (mode . js3-mode)
                            (mode . js2-mode)
                            (mode . js-mode)
                            (filename . "js")))
@@ -362,10 +306,6 @@
         (revert-buffer t t t) )))
   (message "Refreshed open files."))
 
-;; (defvar autopair-modes '(r-mode ruby-mode js3-mode go-mode))
-;; (defun turn-on-autopair-mode () (autopair-mode 1))
-;; (dolist (mode autopair-modes) (add-hook (intern (concat (symbol-name mode) "-hook")) 'turn-on-autopair-mode))
-
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)
@@ -380,8 +320,6 @@
   (paredit-mode t))
 
 (defface dim-paren-face
-   ;; '((((class color) (background dark)) (:foreground "grey50"))
-  ;;   (((class color) (background light)) (:foreground "grey55")))
   '((((class color) (background dark)) (:foreground "grey70"))
     (((class color) (background light)) (:foreground "grey70")))
    "Face used to dim parentheses."
@@ -409,7 +347,6 @@
 (setq cider-repl-popup-stacktraces t)
 (setq cider-auto-select-error-buffer t)
 (setq cider-repl-use-clojure-font-lock t)
-
 
 (font-lock-add-keywords
  nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\):" 1 font-lock-warning-face t)))
@@ -506,7 +443,6 @@
                '("\\.py\\'" flymake-pyflakes-init)))
 
 (add-hook 'find-file-hook 'flymake-find-file-hook)
-
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (delete '("\\.html?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
@@ -518,15 +454,6 @@
 (setq projectile-require-project-root nil)
 
 (setq debug-on-error t)
-
-;; (setq deft-text-mode 'markdown-mode)
-;; (setq deft-use-filename-as-title t)
-;; (global-set-key [f7] 'deft)
-;; (global-set-key (kbd "<C-f7>") 'deft-new-file-named)
-
-(setq cider-known-endpoints '(("coen@titan" "4343")))
-(setq cider-known-endpoints '(("localhost" "4343")))
-(global-set-key (kbd "C-x C-g") 'magit-status)
 
 (defun linum-format-func (line)
   (let ((w (length (number-to-string (count-lines (point-min) (point-max))))))
