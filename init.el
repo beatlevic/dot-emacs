@@ -13,9 +13,55 @@
 
 (require 'package)
 (add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
+
+;; Installed packages 2016-05-27
+;; align-cljlet       20151105.2354 installed             Space align various Clojure forms
+;; async              20151123.256  installed             Asynchronous processing in Emacs
+;; auto-dim-other-...20140619.902  installed             Makes non-current buffers less prominent
+;; autopair           20140825.427  installed             Automagically pair braces and quotes like TextMate
+;; cider              20151227.1328 installed             Clojure Interactive Development Environment that Rocks
+;; clojure-mode       20151224.436  installed             Major mode for Clojure code
+;; clojure-mode-ex...20150110.505  installed             Extra font-locking for Clojure mode
+;; clojure-snippets   20150504.144  installed             Yasnippets for clojure
+;; coffee-mode        20151227.2126 installed             Major mode to edit CoffeeScript files in Emacs
+;; color-theme        20080305.34   installed             install color themes
+;; dash               20151216.1315 installed             A modern list library for Emacs
+;; dockerfile-mode    20151123.857  installed             Major mode for editing Docker's Dockerfiles
+;; epl                20150517.433  installed             Emacs Package Library
+;; f                  20151113.123  installed             Modern API for working with files and directories
+;; flymake-cursor     20130822.332  installed             displays flymake error msg in minibuffer after delay
+;; git-commit         20151111.418  installed             Edit Git commit messages
+;; haml-mode          20150508.2011 installed             Major mode for editing Haml files
+;; highlight-numbers  20150531.607  installed             Highlight numbers in source code
+;; js2-mode           20151130.405  installed             Improved JavaScript editing mode
+;; json-mode          20151116.2000 installed             Major mode for editing JSON files
+;; json-reformat      20151204.900  installed             Reformatting tool for JSON
+;; json-snatcher      20150511.2047 installed             Grabs the path to JSON values in a JSON file
+;; julia-mode         20150912.800  installed             Major mode for editing Julia source code
+;; less-css-mode      20150511.319  installed             Major mode for editing LESS CSS files (lesscss.org)
+;; linum-off          20130419.2054 installed             Provides an interface for turning line-numbering off
+;; markdown-mode      20151224.808  installed             Emacs Major mode for Markdown-formatted text files
+;; paredit            20150217.713  installed             minor mode for editing parentheses
+;; parent-mode        20150824.1600 installed             get major mode's parent modes
+;; pkg-info           20150517.443  installed             Information about packages
+;; projectile         20151227.1230 installed             Manage and navigate projects in Emacs easily
+;; protobuf-mode      20150521.2011 installed             major mode for editing protocol buffers.
+;; queue              0.1.1         installed             Queue data structure
+;; s                  20150924.406  installed             The long lost Emacs string manipulation library.
+;; sass-mode          20150508.2012 installed             Major mode for editing Sass files
+;; seq                1.11          installed             Sequence manipulation functions
+;; spinner            1.4           installed             Add spinners and progress-bars to the mode-line for ongoing operations
+;; with-editor        20151223.1341 installed             Use the Emacsclient as $EDITOR
+;; yaml-mode          20151218.354  installed             Major mode for editing YAML files
+;; yasnippet          20151227.1550 installed             Yet another snippet extension for Emacs.
+
+(require 'ensure-packages)
+
+(setq ensure-packages '(align-cljlet async auto-dim-other-buffers autopair cider clojure-mode clojure-mode-extra-font-locking clojure-snippets coffee-mode color-theme dash dockerfile-mode f flymake-cursor haml-mode highlight-numbers js2-mode json-mode json-reformat json-snatcher julia-mode less-css-mode linum-off markdown-mode paredit parent-mode protobuf-mode s sass-mode spinner yaml-mode yasnippet))
+
+(ensure-packages-install-missing)
 
 (setq inhibit-startup-message t
       initial-scratch-message nil

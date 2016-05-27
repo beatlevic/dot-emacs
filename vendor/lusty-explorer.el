@@ -593,7 +593,7 @@ does not begin with '.'."
 (defun lusty-buffer-list ()
   "Return a list of buffers ordered with those currently visible at the end."
   (let ((visible-buffers '()))
-    (flet ((add-buffer-maybe (window)
+    (cl-flet ((add-buffer-maybe (window)
              (let ((b (window-buffer window)))
                (unless (memq b visible-buffers)
                  (push b visible-buffers)))))
