@@ -59,7 +59,34 @@
 
 (require 'ensure-packages)
 
-(setq ensure-packages '(align-cljlet async auto-dim-other-buffers autopair cider clojure-mode clojure-mode-extra-font-locking coffee-mode color-theme dash dockerfile-mode f flymake-cursor haml-mode highlight-numbers js2-mode json-mode json-reformat json-snatcher julia-mode less-css-mode linum-off markdown-mode paredit parent-mode protobuf-mode s sass-mode spinner yaml-mode))
+(setq ensure-packages '(async
+                        auto-dim-other-buffers
+                        autopair
+                        cider
+                        clojure-mode
+                        clojure-mode-extra-font-locking
+                        color-theme
+                        dash
+                        dockerfile-mode
+                        f
+                        flymake-cursor
+                        haml-mode
+                        highlight-numbers
+                        js2-mode
+                        json-mode
+                        json-reformat
+                        json-snatcher
+                        julia-mode
+                        less-css-mode
+                        linum-off
+                        markdown-mode
+                        paredit
+                        parent-mode
+                        protobuf-mode
+                        s
+                        sass-mode
+                        spinner
+                        yaml-mode))
 
 (ensure-packages-install-missing)
 
@@ -190,6 +217,7 @@
 (desktop-save-mode 1)
 (whitespace-mode) ;http://www.emacswiki.org/emacs/whitespace.el
 (electric-pair-mode 1)
+;;(dumb-jump-mode)
 
 (defun delete-trailing-whitespace-special()
   "Delete trailing whitespace when not in markdown mode"
@@ -278,8 +306,6 @@
 
 (global-set-key (kbd "M-[") 'indent-rigidly-left-to-tab-stop)
 (global-set-key (kbd "M-]") 'indent-rigidly-right-to-tab-stop)
-
-(global-set-key (kbd "C-M-i") 'align-cljlet)
 
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
