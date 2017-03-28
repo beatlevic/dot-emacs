@@ -59,7 +59,8 @@
 
 (require 'ensure-packages)
 
-(setq ensure-packages '(async
+(setq ensure-packages '(align-cljlet
+                        async
                         auto-dim-other-buffers
                         autopair
                         cider
@@ -82,6 +83,7 @@
                         markdown-mode
                         paredit
                         parent-mode
+                        projectile
                         protobuf-mode
                         s
                         sass-mode
@@ -325,6 +327,10 @@
 ;; IBuffer
 (setq ibuffer-saved-filter-groups
       '(("home"
+         ("Elixir" (or (mode . elixir-mode)
+                       (filename . "ex")
+                       (filename . "exs")
+                       (filename . "eex")))
          ("Clojure" (or (mode . clojure-mode)
                         (filename . "clojure")
                         (filename . "cljs")
@@ -518,6 +524,7 @@
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (delete '("\\.html?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
+(delete '("\\.java?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
 
 (setq ispell-program-name "aspell")
 

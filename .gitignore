@@ -2,6 +2,7 @@
 url/*
 *~
 elpa/*
+elpa24/*
 abbrev_defs
 loaddefs.el*
 backups/*
