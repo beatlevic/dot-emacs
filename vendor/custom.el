@@ -28,7 +28,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 6))))
  '(package-selected-packages
    (quote
-    (sr-speedbar yaml-mode sass-mode protobuf-mode paredit markdown-mode linum-off less-css-mode julia-mode json-mode js2-mode highlight-numbers haml-mode flymake-cursor f dockerfile-mode dash color-theme clojure-mode-extra-font-locking cider autopair auto-dim-other-buffers async)))
+    (align-cljlet projectile ensime ein auto-complete alchemist buffer-move smex coffee-mode persp-mode sr-speedbar yaml-mode sass-mode protobuf-mode paredit markdown-mode linum-off less-css-mode julia-mode json-mode js2-mode highlight-numbers haml-mode flymake-cursor f dockerfile-mode dash color-theme clojure-mode-extra-font-locking cider autopair auto-dim-other-buffers async)))
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)
@@ -55,7 +55,7 @@
  '(sr-speedbar-delete-windows nil)
  '(sr-speedbar-right-side nil)
  '(sr-speedbar-skip-other-window-p t)
- '(sr-speedbar-width-x 40)
+ '(sr-speedbar-width-x 35)
  '(writeroom-global-effects nil)
  '(writeroom-width 120))
 (custom-set-faces
@@ -64,12 +64,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#272822" :foreground "gray80" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "nil" :family "Monaco"))))
+ '(custom-comment-tag ((t (:foreground "forest green"))))
  '(flymake-errline ((((class color)) (:underline "black"))))
  '(flymake-warnline ((((class color)) (:underline "yellow"))))
+ '(font-lock-function-name-face ((t (:foreground "#EDBF6B"))))
  '(linum ((t (:foreground "gray30"))))
  '(org-level-1 ((t (:inherit nil :foreground "LightSkyBlue"))))
  '(org-level-2 ((t (:foreground "#94bff3"))))
  '(org-level-3 ((t (:foreground "#8DA6CE"))))
+ '(persp-face-lighter-buffer-not-in-persp ((t (:foreground "#FFF" :weight bold))))
  '(show-paren-match ((t (:background "SteelBlue4"))))
  '(speedbar-button-face ((t (:foreground "#5C5C5C"))))
  '(speedbar-directory-face ((t (:foreground "#5C5C5C"))))

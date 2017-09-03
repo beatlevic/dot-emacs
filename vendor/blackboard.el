@@ -31,7 +31,7 @@
       (border-color . "#111111")
       (cursor-color . "#A7A7A7")
       ;;(foreground-color . "#F8F8F8")
-      (foreground-color . "gray80") ;; "#E6E1DC" ;; #C7C2BD ;; "#D6D2CE"
+      (foreground-color . "gray85") ;; "#E6E1DC" ;; #C7C2BD ;; "#D6D2CE"
       ;(foreground-color . "white")
       (mouse-color . "sienna1"))
      ;;(default ((t (:background "#0C1021" :foreground "#F8F8F8"))))
@@ -53,7 +53,7 @@
      (font-lock-constant-face ((t (:foreground "#6D9CBE"))))
      (font-lock-doc-string-face ((t (:foreground "DarkOrange"))))
      ;;(font-lock-function-name-face ((t (:foreground "#FF6400"))))
-     (font-lock-function-name-face ((t (:foreground "#EDBF6B")))) ;; "#FFC66D"
+     ;;;;(font-lock-function-name-face ((t (:foreground "#EDBF6B")))) ;; "#FFC66D"
      ;;(font-lock-keyword-face ((t (:foreground "#FBDE2D"))))
      (font-lock-keyword-face ((t (:foreground "#CC7833"))))
      (font-lock-preprocessor-face ((t (:foreground "Aquamarine"))))

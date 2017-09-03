@@ -16,6 +16,42 @@
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
 
+;; Installed packages 2017-09-03
+
+  ;; alchemist          20170402.2339 installed             Elixir tooling integration into Emacs
+  ;; align-cljlet       20160112.1301 installed             Space align various Clojure forms
+  ;; async              20170219.942  installed             Asynchronous processing in Emacs
+  ;; auto-complete      20170124.1845 installed             Auto Completion for GNU Emacs
+  ;; auto-dim-other-... 20161004.539  installed             Makes non-current buffers less prominent
+  ;; autopair           20160304.437  installed             Automagically pair braces and quotes like TextMate
+  ;; buffer-move        20160615.1103 installed             easily swap buffers
+  ;; cider              20170322.155  installed             Clojure Interactive Development Environment that Rocks
+  ;; clojure-mode-ex... 20170303.2310 installed             Extra font-locking for Clojure mode
+  ;; coffee-mode        20170324.240  installed             Major mode for CoffeeScript code
+  ;; color-theme        20080305.34   installed             install color themes
+  ;; dash               20170207.2056 installed             A modern list library for Emacs
+  ;; dockerfile-mode    20170221.1317 installed             Major mode for editing Docker's Dockerfiles
+  ;; ein                20170426.1909 installed             Emacs IPython Notebook
+  ;; ensime             20170817.2325 installed             ENhanced Scala Interaction Mode for Emacs
+  ;; f                  20161002.800  installed             Modern API for working with files and directories
+  ;; flymake-cursor     20130822.332  installed             displays flymake error msg in minibuffer after delay
+  ;; haml-mode          20170208.28   installed             Major mode for editing Haml files
+  ;; highlight-numbers  20160717.1228 installed             Highlight numbers in source code
+  ;; js2-mode           20170321.153  installed             Improved JavaScript editing mode
+  ;; json-mode          20160803.1606 installed             Major mode for editing JSON files
+  ;; julia-mode         20170210.1504 installed             Major mode for editing Julia source code
+  ;; less-css-mode      20160930.2153 installed             Major mode for editing LESS CSS files (lesscss.org)
+  ;; linum-off          20160217.1337 installed             Provides an interface for turning line-numbering off
+  ;; markdown-mode      20170317.1202 installed             Major mode for Markdown-formatted text
+  ;; paredit            20160615.1325 installed             minor mode for editing parentheses
+  ;; persp-mode         20170311.716  installed             windows/buffers sets shared among frames + save/load.
+  ;; projectile         20170827.2053 installed             Manage and navigate projects in Emacs easily
+  ;; protobuf-mode      20160805.1045 installed             major mode for editing protocol buffers.
+  ;; sass-mode          20161006.2326 installed             Major mode for editing Sass files
+  ;; smex               20151212.1409 installed             M-x interface with Ido-style fuzzy matching.
+  ;; sr-speedbar        20161025.131  installed             Same frame speedbar
+  ;; yaml-mode          20170213.1023 installed             Major mode for editing YAML files
+
 ;; Installed packages 2016-05-27
 ;; align-cljlet       20151105.2354 installed             Space align various Clojure forms
 ;; async              20151123.256  installed             Asynchronous processing in Emacs
@@ -59,7 +95,8 @@
 
 (require 'ensure-packages)
 
-(setq ensure-packages '(align-cljlet
+(setq ensure-packages '(alchemist
+                        align-cljlet
                         async
                         auto-dim-other-buffers
                         autopair
@@ -69,6 +106,7 @@
                         color-theme
                         dash
                         dockerfile-mode
+                        ensime
                         f
                         flymake-cursor
                         haml-mode
@@ -77,7 +115,6 @@
                         json-mode
                         json-reformat
                         json-snatcher
-                        julia-mode
                         less-css-mode
                         linum-off
                         markdown-mode
@@ -88,6 +125,7 @@
                         s
                         sass-mode
                         spinner
+                        sr-speedbar
                         yaml-mode))
 
 (ensure-packages-install-missing)
@@ -126,7 +164,7 @@
 
 (setq-default cursor-type 'bar)
 
-(setq explicit-shell-file-name "/usr/local/bin/fish")
+;(setq explicit-shell-file-name "/usr/local/bin/fish")
 
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args ""
@@ -171,11 +209,17 @@
 (require 'ido-vertical-mode)
 (ido-mode 1)
 (ido-vertical-mode 1)
+(auto-complete-mode 1)
 
 ;; (require 'yasnippet)
 ;; (yas/global-mode 1)
 
-(require 'align-cljlet)
+;(require 'align-cljlet)
+
+;; (with-eval-after-load "persp-mode-autoloads"
+;;   (setq wg-morph-on nil) ;; switch off animation
+;;   (setq persp-autokill-buffer-on-remove 'kill-weak)
+;;   (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
 
 ;; required to run ack command
 (when (equal system-type 'darwin)
@@ -203,7 +247,7 @@
 
 ;; Modes
 (tooltip-mode -1)
-(blink-cursor-mode -1)
+(blink-cursor-mode 1)
 (auto-fill-mode -1)
 
 (projectile-global-mode)
@@ -309,6 +353,19 @@
 (global-set-key (kbd "M-[") 'indent-rigidly-left-to-tab-stop)
 (global-set-key (kbd "M-]") 'indent-rigidly-right-to-tab-stop)
 
+;; (global-set-key (kbd "C-x C-b") #'(lambda (arg)
+;;                                   (interactive "P")
+;;                                   (with-persp-buffer-list () (ibuffer arg))))
+;; (with-eval-after-load "persp-mode"
+;;   (setq persp-interactive-completion-function #'ido-completing-read))
+
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; This is your old M-x.
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+;; (add-to-list 'speedbar-frame-parameters (cons 'persp-ignore-wconf t))
+
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
 
@@ -324,9 +381,19 @@
     (let ((case-fold-search isearch-case-fold-search))
       (occur (if isearch-regexp isearch-string (regexp-quote isearch-string))))))
 
+(global-set-key (kbd "C-x <up>")     'buf-move-up)
+(global-set-key (kbd "C-x <down>")   'buf-move-down)
+(global-set-key (kbd "C-x <left>")   'buf-move-left)
+(global-set-key (kbd "C-x <right>")  'buf-move-right)
+
 ;; IBuffer
 (setq ibuffer-saved-filter-groups
       '(("home"
+         ("Scala" (or (mode . scala-mode)
+                      (mode . ensime-mode)
+                      (mode . sbt-mode)
+                      (filename . "sbt")
+                      (filename . "scala")))
          ("Elixir" (or (mode . elixir-mode)
                        (filename . "ex")
                        (filename . "exs")
@@ -540,16 +607,25 @@
 (setq linum-format 'linum-format-func)
 ;; (setq nlinum-format 'linum-format-func)
 
-(eval-after-load 'clojure-mode '(require 'clojure-mode-extra-font-locking))
+;(eval-after-load 'clojure-mode '(require 'clojure-mode-extra-font-locking))
 
-(defvar clojure-operators
-  '(;; Math operators
-    "=" "==" ">" ">=" "<" "<=" "+" "-" "/" "*"))
+;; (defvar clojure-operators
+;;   '(;; Math operators
+;;     "=" "==" ">" ">=" "<" "<=" "+" "-" "/" "*"))
 
-(font-lock-add-keywords 'clojure-mode
-                        `((,(concat "(\\(?:\.*/\\)?"
-                                    (regexp-opt clojure-operators t)
-                                    "\\>")
-                           1 font-lock-builtin-face)))
+;; (font-lock-add-keywords 'clojure-mode
+;;                         `((,(concat "(\\(?:\.*/\\)?"
+;;                                     (regexp-opt clojure-operators t)
+;;                                     "\\>")
+;;                            1 font-lock-builtin-face)))
 
 (require 'linum-off)
+(require 'alchemist)
+
+(setq ensime-startup-notification nil)
+(setq ensime-startup-snapshot-notification nil)
+
+;; (setq ac-use-menu-map t)
+;; ;; Default settings
+;; (define-key ac-menu-map "\C-n" 'ac-next)
+;; (define-key ac-menu-map "\C-p" 'ac-previous)
