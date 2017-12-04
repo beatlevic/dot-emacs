@@ -31,7 +31,7 @@
       (border-color . "#111111")
       (cursor-color . "#A7A7A7")
       ;;(foreground-color . "#F8F8F8")
-      (foreground-color . "gray85") ;; "#E6E1DC" ;; #C7C2BD ;; "#D6D2CE"
+      (foreground-color . "gray80") ;; "#E6E1DC" ;; #C7C2BD ;; "#D6D2CE"
       ;(foreground-color . "white")
       (mouse-color . "sienna1"))
      ;;(default ((t (:background "#0C1021" :foreground "#F8F8F8"))))
@@ -70,7 +70,8 @@
      (font-lock-warning-face ((t (:bold t :foreground "Pink"))))
      (gui-element ((t (:background "#D4D0C8" :foreground "black"))))
      ;;(region ((t (:background "#253B76"))))
-     (region ((t (:background "#7A7A7A")))) ;; "#444444";; #66D9EF ;; :foreground "#272822"
+     ;;(region ((t (:background "#7A7A7A")))) ;; "#444444";; #66D9EF ;; :foreground "#272822"
+     (region ((t (:background "grey30")))) ;; "#444444";; #66D9EF ;; :foreground "#272822"
      ;;(mode-line ((t (:background "grey75" :foreground "black"))))
      (mode-line-inactive ((t (:background "#393939" :foreground "gray80" )))) ;; "#E6E1DC"
      (mode-line ((t (:background "#636363" :foreground "gray80")))) ;696969 ;; "#E6E1DC"

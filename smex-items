@@ -1,0 +1,70 @@
+
+;; ----- smex-history -----
+(
+ ensime
+ ensime-company
+ customize-group
+ package-list-packages
+ color-theme-blackboard
+ ensime-mode
+ ensime-connect
+)
+
+;; ----- smex-data -----
+(
+ (cd . 1)
+ (package-install . 3)
+ (package-delete . 1)
+ (buf-move-right . 1)
+ (describe-key . 2)
+ (package-list-packages . 14)
+ (alchemist-mode . 2)
+ (alchemist-iex-run . 1)
+ (org-toggle-item . 1)
+ (occur . 1)
+ (auto-complete-mode . 4)
+ (byte-compile-file . 1)
+ (ein:notebooklist-login . 2)
+ (ein:notebooklist-open . 1)
+ (ein:worksheet-toggle-output . 1)
+ (version . 3)
+ (package-autoremove . 2)
+ (ensime . 39)
+ (ensime-goto-impl . 1)
+ (scala-mode . 2)
+ (sbt-mode . 3)
+ (eshell-mode . 2)
+ (ansi-color-for-comint-mode-on . 1)
+ (term . 1)
+ (compilation-mode . 2)
+ (customize-face . 5)
+ (customize-group . 19)
+ (highlight-symbol-mode . 1)
+ (highlight-symbol-nav-mode . 1)
+ (dired . 1)
+ (neotree . 8)
+ (neotree-dir . 6)
+ (customize . 1)
+ (neotree-hide . 2)
+ (neotree-show . 1)
+ (neotree-toggle . 2)
+ (find-file . 1)
+ (lusty-buffer-explorer . 1)
+ (linum-mode . 2)
+ (tabbar-mode . 2)
+ (speedbar-mode . 1)
+ (sr-speedbar-close . 2)
+ (other-frame . 3)
+ (projectile-cleanup-known-projects . 1)
+ (projectile-invalidate-cache . 1)
+ (all-the-icons-install-fonts . 1)
+ (groovy-mode . 1)
+ (ensime-reload . 2)
+ (ansi-term . 2)
+ (shell . 1)
+ (eshell . 1)
+ (ensime-connect . 1)
+ (ensime-mode . 1)
+ (color-theme-blackboard . 12)
+ (ensime-company . 4)
+)

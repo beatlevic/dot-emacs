@@ -2,6 +2,10 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+(eval-after-load "enriched"
+  '(defun enriched-decode-display-prop (start end &optional param)
+     (list start end)))
+
 (setq dotfiles-dir (file-name-directory
                     (or (buffer-file-name) load-file-name))) ;; .emacs.d/
 
@@ -189,6 +193,14 @@
 (color-theme-blackboard)
 (highlight-numbers-mode 1)
 
+(require 'highlight-symbol)
+(highlight-symbol-mode 1)
+(highlight-symbol-nav-mode 1)
+(setq highlight-symbol-idle-delay 1.0
+      highlight-symbol-on-navigation-p t)
+(global-set-key [f3] 'highlight-symbol-next)
+(global-set-key [(shift f3)] 'highlight-symbol-prev)
+
 (setq ns-use-native-fullscreen nil)
 
 (setq custom-file "~/.emacs.d/vendor/custom.el")
@@ -247,7 +259,7 @@
 
 ;; Modes
 (tooltip-mode -1)
-(blink-cursor-mode 1)
+(blink-cursor-mode -1)
 (auto-fill-mode -1)
 
 (projectile-global-mode)
@@ -291,7 +303,15 @@
 (setq default-tab-width 2)
 
 (add-hook 'python-mode-hook '(lambda ()
- (setq tab-width 2)))
+                               (setq tab-width 2)))
+
+(add-hook 'scala-mode-hook
+            (lambda()
+              (highlight-symbol-mode 1)
+              (ensime-mode)))
+(add-hook 'scala-mode-hook
+          (lambda()
+            (highlight-symbol-nav-mode nil)))
 
 ;; Scroll Settings
 (setq redisplay-dont-pause t
@@ -309,7 +329,13 @@
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier nil)
 
-(global-set-key (kbd "C-x C-f") 'lusty-file-explorer)
+(defun lusty-open ()
+  (interactive)
+  (neotree-hide)
+  (lusty-file-explorer)
+  (neotree-show))
+
+(global-set-key (kbd "C-x C-f") 'lusty-open)
 (global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-S-s") 'ack)
 (global-set-key (kbd "C-S-t") 'ack-find-file)
@@ -318,7 +344,10 @@
 (global-set-key (kbd "<C-return>") 'other-window)
 (global-set-key (kbd "C-M-k") 'delete-window)
 (global-set-key (kbd "M-k") 'kill-this-buffer)
-(global-set-key (kbd "M-ƒ") 'toggle-frame-fullscreen)
+(global-set-key (kbd "M-H-f") 'toggle-frame-fullscreen)
+(global-set-key (kbd "M-`") 'other-frame)
+
+(global-set-key (kbd "<S-tab>") 'ensime-company)
 
 (define-key global-map (kbd "C-+") 'text-scale-increase)
 (define-key global-map (kbd "C--") 'text-scale-decrease)
@@ -337,8 +366,8 @@
 
 (global-set-key (kbd "C-S-f") 'follow-mode)
 (global-set-key (kbd "C-x a") 'my-align-single-equals)
-(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
-(global-set-key [f5] 'sr-speedbar-toggle)
+;(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
+(global-set-key [f8] 'sr-speedbar-toggle)
 
 (global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
 ;;(global-set-key (kbd "<f6>") 'writeroom-mode) ;; M-x revert-buffer => reads buffer from file again
@@ -361,6 +390,12 @@
 
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+; (global-set-key (kbd "M-x") 'helm-M-x)
+;;(global-set-key (kbd "C-x b") 'helm-mini)
+;(setq helm-split-window-in-side-p t)
+;(setq helm-split-window-default-side 'below)
+;(setq helm-buffer-max-length 40)
+;(setq helm-split-window-default-side 'below)
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
@@ -533,8 +568,8 @@
 (defun swap-windows ()
  "If you have 2 windows, it swaps them."
 (interactive)
-(if (= (count-windows) 2) (swap-windows2)
-  (if (= (count-windows) 3) (progn (toggle-sr-speedbar) (swap-windows3) (other-window 1))
+(if (= (count-windows) 2) (progn (swap-windows2) (other-window 1))
+  (if (= (count-windows) 3) (progn (neotree-toggle) (swap-windows2) (other-window 1) (neotree-toggle))
     (message "You need exactly 2 or 3 windows to do this.")
   )))
 
@@ -624,8 +659,85 @@
 
 (setq ensime-startup-notification nil)
 (setq ensime-startup-snapshot-notification nil)
+(setq ensime-typecheck-when-idle nil)
+
+;;(defun scala-mode-newline-comments ()
+;;  "Custom newline appropriate for `scala-mode'."
+;;  ;; shouldn't this be in a post-insert hook?
+;;  (interactive)
+;;  (newline-and-indent)
+;;  (scala-indent:insert-asterisk-on-multiline-comment))
+
+;; (bind-key "RET" 'scala-mode-newline-comments scala-mode-map)
+
+;; (setq comment-start "/* "
+;;	  comment-end " */"
+;;	  comment-style 'multi-line
+;;	  comment-empty-lines t
+;; )
 
 ;; (setq ac-use-menu-map t)
 ;; ;; Default settings
 ;; (define-key ac-menu-map "\C-n" 'ac-next)
 ;; (define-key ac-menu-map "\C-p" 'ac-previous)
+
+
+;;(speedbar-add-supported-extension ".js")
+
+;; (add-to-list 'speedbar-fetch-etags-parse-list
+;;              '("\\.js" . speedbar-parse-c-or-c++tag))
+
+;;(speedbar-add-supported-extension "\\.scala")
+
+;; (add-to-list 'speedbar-fetch-etags-parse-list
+;;              '("\\.scala" . speedbar-parse-c-or-c++tag))
+
+(require 'neotree)
+
+(setq neo-smart-open t)
+
+(defun neotree-project-dir ()
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+        (file-name (buffer-file-name)))
+    (neotree-toggle)
+    (if project-dir
+        (if (neo-global--window-exists-p)
+            (progn
+              (neotree-dir project-dir)
+              (neotree-find file-name)))
+      (message "Could not find git project root."))))
+
+(global-set-key [f5] 'neotree-project-dir)
+
+(defun refresh-neo ()
+   (interactive)
+   (neotree-project-dir)
+   (neotree-project-dir))
+
+(global-set-key (kbd "<C-H-return>") 'refresh-neo)
+
+(defun prev-window ()
+   (interactive)
+   (other-window -1))
+
+(setq mac-option-modifier 'hyper)
+(define-key global-map (kbd "<C-M-return>") 'prev-window)
+(setq projectile-switch-project-action 'neotree-projectile-action)
+
+(setq ensime-sem-high-enabled-p nil)
+(setq scala-indent:align-parameters t)
+(setq scala-indent:align-forms t)
+(setq ensime-eldoc-hints 'all)
+(setq ensime-graphical-tooltips t)
+(setq ensime-auto-generate-config t)
+
+(defun scala-mode-newline-comments ()
+  "Custom newline appropriate for `scala-mode'."
+  ;; shouldn't this be in a post-insert hook?
+  (interactive)
+  (newline-and-indent)
+  (scala-indent:insert-asterisk-on-multiline-comment))
+
+;;(bind-key "RET" 'scala-mode-newline-comments scala-mode-map)
