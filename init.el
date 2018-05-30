@@ -622,11 +622,13 @@
   (add-to-list 'flymake-allowed-file-name-masks
                '("\\.py\\'" flymake-pyflakes-init)))
 
-(add-hook 'find-file-hook 'flymake-find-file-hook)
+;;(add-hook 'find-file-hook 'flymake-find-file-hook)
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 (delete '("\\.html?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
 (delete '("\\.java?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
+(delete '("\\.xml?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
+(delete '("\\.properties?\\'" flymake-xml-init) flymake-allowed-file-name-masks)
 
 (setq ispell-program-name "aspell")
 

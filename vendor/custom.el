@@ -33,6 +33,7 @@
  '(neo-theme (quote icons))
  '(neo-toggle-window-keep-p t)
  '(neo-window-fixed-size nil)
+ '(neo-window-position (quote left))
  '(neo-window-width 45)
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 6))))
  '(package-selected-packages
