@@ -100,21 +100,16 @@
 (require 'ensure-packages)
 
 (setq ensure-packages '(alchemist
-                        align-cljlet
+                        all-the-icons ;; M-x all-the-icons-install-fonts
                         async
-                        auto-dim-other-buffers
                         autopair
                         cider
-                        clojure-mode
-                        clojure-mode-extra-font-locking
                         color-theme
-                        dash
                         dockerfile-mode
                         ensime
-                        f
-                        flymake-cursor
                         haml-mode
                         highlight-numbers
+                        highlight-symbol
                         js2-mode
                         json-mode
                         json-reformat
@@ -122,14 +117,11 @@
                         less-css-mode
                         linum-off
                         markdown-mode
+                        neotree
                         paredit
-                        parent-mode
                         projectile
                         protobuf-mode
-                        s
                         sass-mode
-                        spinner
-                        sr-speedbar
                         yaml-mode))
 
 (ensure-packages-install-missing)
@@ -168,16 +160,6 @@
 
 (setq-default cursor-type 'bar)
 
-;(setq explicit-shell-file-name "/usr/local/bin/fish")
-
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args ""
-      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-      python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-      python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
-      python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
@@ -206,10 +188,6 @@
 (setq custom-file "~/.emacs.d/vendor/custom.el")
 (load custom-file)
 
-(if (and (fboundp 'server-running-p)
-         (not (server-running-p)))
-    (server-start))
-
 (server-start) ;; used by terminal command line invocation
 
 (require 'saveplace)
@@ -225,13 +203,6 @@
 
 ;; (require 'yasnippet)
 ;; (yas/global-mode 1)
-
-;(require 'align-cljlet)
-
-;; (with-eval-after-load "persp-mode-autoloads"
-;;   (setq wg-morph-on nil) ;; switch off animation
-;;   (setq persp-autokill-buffer-on-remove 'kill-weak)
-;;   (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
 
 ;; required to run ack command
 (when (equal system-type 'darwin)
@@ -309,6 +280,7 @@
             (lambda()
               (highlight-symbol-mode 1)
               (ensime-mode)))
+
 (add-hook 'scala-mode-hook
           (lambda()
             (highlight-symbol-nav-mode nil)))
@@ -366,8 +338,6 @@
 
 (global-set-key (kbd "C-S-f") 'follow-mode)
 (global-set-key (kbd "C-x a") 'my-align-single-equals)
-;(global-set-key (kbd "<C-M-return>") 'toggle-sr-speedbar)
-(global-set-key [f8] 'sr-speedbar-toggle)
 
 (global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
 (global-set-key (kbd "C-x r") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
@@ -399,8 +369,6 @@
 ;(setq helm-split-window-default-side 'below)
 ;; This is your old M-x.
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-;; (add-to-list 'speedbar-frame-parameters (cons 'persp-ignore-wconf t))
 
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
@@ -475,9 +443,6 @@
       ibuffer-eliding-string "..")
 
 ;; Util functions
-(defun toggle-sr-speedbar ()
-  (interactive) (if (not (sr-speedbar-exist-p)) (sr-speedbar-toggle)) (sr-speedbar-select-window))
-
 (defun revert-all-buffers ()
   "Refreshes all open buffers from their respective files."
   (interactive)
@@ -683,17 +648,6 @@
 ;; ;; Default settings
 ;; (define-key ac-menu-map "\C-n" 'ac-next)
 ;; (define-key ac-menu-map "\C-p" 'ac-previous)
-
-
-;;(speedbar-add-supported-extension ".js")
-
-;; (add-to-list 'speedbar-fetch-etags-parse-list
-;;              '("\\.js" . speedbar-parse-c-or-c++tag))
-
-;;(speedbar-add-supported-extension "\\.scala")
-
-;; (add-to-list 'speedbar-fetch-etags-parse-list
-;;              '("\\.scala" . speedbar-parse-c-or-c++tag))
 
 (require 'neotree)
 
