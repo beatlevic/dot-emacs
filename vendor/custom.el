@@ -38,7 +38,7 @@
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 6))))
  '(package-selected-packages
    (quote
-    (helm groovy-mode all-the-icons all-the-icons-dired tabbar neotree highlight-symbol align-cljlet projectile ensime ein auto-complete alchemist buffer-move smex coffee-mode persp-mode sr-speedbar yaml-mode sass-mode protobuf-mode paredit markdown-mode linum-off less-css-mode julia-mode json-mode js2-mode highlight-numbers haml-mode flymake-cursor f dockerfile-mode dash color-theme clojure-mode-extra-font-locking cider autopair auto-dim-other-buffers async)))
+    (undo-tree helm groovy-mode all-the-icons all-the-icons-dired tabbar neotree highlight-symbol align-cljlet projectile ensime ein auto-complete alchemist buffer-move smex coffee-mode persp-mode sr-speedbar yaml-mode sass-mode protobuf-mode paredit markdown-mode linum-off less-css-mode julia-mode json-mode js2-mode highlight-numbers haml-mode flymake-cursor f dockerfile-mode dash color-theme clojure-mode-extra-font-locking cider autopair auto-dim-other-buffers async)))
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)

@@ -362,7 +362,7 @@
 
 (windmove-default-keybindings) ;; Shift+direction
 (global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
-(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
+(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window -1))) ;; back one
 
 (global-set-key (kbd "C-S-f") 'follow-mode)
 (global-set-key (kbd "C-x a") 'my-align-single-equals)
@@ -370,6 +370,7 @@
 (global-set-key [f8] 'sr-speedbar-toggle)
 
 (global-set-key (kbd "S-<f5>") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
+(global-set-key (kbd "C-x r") 'revert-all-buffers) ;; M-x revert-buffer => reads buffer from file again
 ;;(global-set-key (kbd "<f6>") 'writeroom-mode) ;; M-x revert-buffer => reads buffer from file again
 
 (global-set-key (kbd "C-x C-r") 'rename-file-and-buffer);
@@ -712,6 +713,7 @@
       (message "Could not find git project root."))))
 
 (global-set-key [f5] 'neotree-project-dir)
+(global-set-key (kbd "C-x t") 'neotree-project-dir)
 
 (defun refresh-neo ()
    (interactive)
@@ -719,6 +721,7 @@
    (neotree-project-dir))
 
 (global-set-key (kbd "<C-H-return>") 'refresh-neo)
+(global-set-key (kbd "C-x T") 'refresh-neo)
 
 (defun prev-window ()
    (interactive)
