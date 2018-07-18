@@ -2,127 +2,43 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-(eval-after-load "enriched"
-  '(defun enriched-decode-display-prop (start end &optional param)
-     (list start end)))
-
-(setq dotfiles-dir (file-name-directory
-                    (or (buffer-file-name) load-file-name))) ;; .emacs.d/
-
+(setq dotfiles-dir (file-name-directory (or (buffer-file-name) load-file-name))) ;; .emacs.d/
 (setq backup-directory-alist `(("." . ,(expand-file-name (concat dotfiles-dir "backups")))))
-
 (add-to-list 'load-path (concat dotfiles-dir "/vendor"))
-
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
-
-;; Installed packages 2017-09-03
-
-  ;; alchemist          20170402.2339 installed             Elixir tooling integration into Emacs
-  ;; align-cljlet       20160112.1301 installed             Space align various Clojure forms
-  ;; async              20170219.942  installed             Asynchronous processing in Emacs
-  ;; auto-complete      20170124.1845 installed             Auto Completion for GNU Emacs
-  ;; auto-dim-other-... 20161004.539  installed             Makes non-current buffers less prominent
-  ;; autopair           20160304.437  installed             Automagically pair braces and quotes like TextMate
-  ;; buffer-move        20160615.1103 installed             easily swap buffers
-  ;; cider              20170322.155  installed             Clojure Interactive Development Environment that Rocks
-  ;; clojure-mode-ex... 20170303.2310 installed             Extra font-locking for Clojure mode
-  ;; coffee-mode        20170324.240  installed             Major mode for CoffeeScript code
-  ;; color-theme        20080305.34   installed             install color themes
-  ;; dash               20170207.2056 installed             A modern list library for Emacs
-  ;; dockerfile-mode    20170221.1317 installed             Major mode for editing Docker's Dockerfiles
-  ;; ein                20170426.1909 installed             Emacs IPython Notebook
-  ;; ensime             20170817.2325 installed             ENhanced Scala Interaction Mode for Emacs
-  ;; f                  20161002.800  installed             Modern API for working with files and directories
-  ;; flymake-cursor     20130822.332  installed             displays flymake error msg in minibuffer after delay
-  ;; haml-mode          20170208.28   installed             Major mode for editing Haml files
-  ;; highlight-numbers  20160717.1228 installed             Highlight numbers in source code
-  ;; js2-mode           20170321.153  installed             Improved JavaScript editing mode
-  ;; json-mode          20160803.1606 installed             Major mode for editing JSON files
-  ;; julia-mode         20170210.1504 installed             Major mode for editing Julia source code
-  ;; less-css-mode      20160930.2153 installed             Major mode for editing LESS CSS files (lesscss.org)
-  ;; linum-off          20160217.1337 installed             Provides an interface for turning line-numbering off
-  ;; markdown-mode      20170317.1202 installed             Major mode for Markdown-formatted text
-  ;; paredit            20160615.1325 installed             minor mode for editing parentheses
-  ;; persp-mode         20170311.716  installed             windows/buffers sets shared among frames + save/load.
-  ;; projectile         20170827.2053 installed             Manage and navigate projects in Emacs easily
-  ;; protobuf-mode      20160805.1045 installed             major mode for editing protocol buffers.
-  ;; sass-mode          20161006.2326 installed             Major mode for editing Sass files
-  ;; smex               20151212.1409 installed             M-x interface with Ido-style fuzzy matching.
-  ;; sr-speedbar        20161025.131  installed             Same frame speedbar
-  ;; yaml-mode          20170213.1023 installed             Major mode for editing YAML files
-
-;; Installed packages 2016-05-27
-;; align-cljlet       20151105.2354 installed             Space align various Clojure forms
-;; async              20151123.256  installed             Asynchronous processing in Emacs
-;; auto-dim-other-...20140619.902  installed             Makes non-current buffers less prominent
-;; autopair           20140825.427  installed             Automagically pair braces and quotes like TextMate
-;; cider              20151227.1328 installed             Clojure Interactive Development Environment that Rocks
-;; clojure-mode       20151224.436  installed             Major mode for Clojure code
-;; clojure-mode-ex...20150110.505  installed             Extra font-locking for Clojure mode
-;; clojure-snippets   20150504.144  installed             Yasnippets for clojure
-;; coffee-mode        20151227.2126 installed             Major mode to edit CoffeeScript files in Emacs
-;; color-theme        20080305.34   installed             install color themes
-;; dash               20151216.1315 installed             A modern list library for Emacs
-;; dockerfile-mode    20151123.857  installed             Major mode for editing Docker's Dockerfiles
-;; epl                20150517.433  installed             Emacs Package Library
-;; f                  20151113.123  installed             Modern API for working with files and directories
-;; flymake-cursor     20130822.332  installed             displays flymake error msg in minibuffer after delay
-;; git-commit         20151111.418  installed             Edit Git commit messages
-;; haml-mode          20150508.2011 installed             Major mode for editing Haml files
-;; highlight-numbers  20150531.607  installed             Highlight numbers in source code
-;; js2-mode           20151130.405  installed             Improved JavaScript editing mode
-;; json-mode          20151116.2000 installed             Major mode for editing JSON files
-;; json-reformat      20151204.900  installed             Reformatting tool for JSON
-;; json-snatcher      20150511.2047 installed             Grabs the path to JSON values in a JSON file
-;; julia-mode         20150912.800  installed             Major mode for editing Julia source code
-;; less-css-mode      20150511.319  installed             Major mode for editing LESS CSS files (lesscss.org)
-;; linum-off          20130419.2054 installed             Provides an interface for turning line-numbering off
-;; markdown-mode      20151224.808  installed             Emacs Major mode for Markdown-formatted text files
-;; paredit            20150217.713  installed             minor mode for editing parentheses
-;; parent-mode        20150824.1600 installed             get major mode's parent modes
-;; pkg-info           20150517.443  installed             Information about packages
-;; projectile         20151227.1230 installed             Manage and navigate projects in Emacs easily
-;; protobuf-mode      20150521.2011 installed             major mode for editing protocol buffers.
-;; queue              0.1.1         installed             Queue data structure
-;; s                  20150924.406  installed             The long lost Emacs string manipulation library.
-;; sass-mode          20150508.2012 installed             Major mode for editing Sass files
-;; seq                1.11          installed             Sequence manipulation functions
-;; spinner            1.4           installed             Add spinners and progress-bars to the mode-line for ongoing operations
-;; with-editor        20151223.1341 installed             Use the Emacsclient as $EDITOR
-;; yaml-mode          20151218.354  installed             Major mode for editing YAML files
-;; yasnippet          20151227.1550 installed             Yet another snippet extension for Emacs.
 
 (require 'ensure-packages)
 
-(setq ensure-packages '(alchemist
-                        all-the-icons ;; M-x all-the-icons-install-fonts
-                        async
-                        autopair
-                        cider
-                        color-theme
-                        dockerfile-mode
-                        ensime
-                        haml-mode
-                        highlight-numbers
-                        highlight-symbol
-                        js2-mode
-                        json-mode
-                        json-reformat
-                        json-snatcher
-                        less-css-mode
-                        linum-off
-                        markdown-mode
-                        neotree
-                        paredit
-                        projectile
-                        protobuf-mode
-                        sass-mode
-                        yaml-mode))
+(setq ensure-packages
+      '(alchemist
+        all-the-icons ;; M-x all-the-icons-install-fonts
+        async
+	auto-complete
+        autopair
+        cider
+        color-theme
+        dockerfile-mode
+        ensime
+        haml-mode
+        highlight-numbers
+        highlight-symbol
+        js2-mode
+        json-mode
+        json-reformat
+        json-snatcher
+        less-css-mode
+        linum-off
+        markdown-mode
+        neotree
+        paredit
+        projectile
+        protobuf-mode
+        sass-mode
+        yaml-mode))
 
 (ensure-packages-install-missing)
 
@@ -158,15 +74,18 @@
       frame-title-format '(buffer-file-name "%f" ("%b"))
       save-place-file (concat dotfiles-dir "places"))
 
+(setq split-height-threshold 1200)
+(setq split-width-threshold 2000)
+
 (setq-default cursor-type 'bar)
 
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
-(ansi-color-for-comint-mode-on)
+;; (set-terminal-coding-system 'utf-8)
+;; (set-keyboard-coding-system 'utf-8)
+;; (prefer-coding-system 'utf-8)
+;; (ansi-color-for-comint-mode-on)
 
-(add-to-list 'safe-local-variable-values '(lexical-binding . t))
-(add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
+;; (add-to-list 'safe-local-variable-values '(lexical-binding . t))
+;; (add-to-list 'safe-local-variable-values '(whitespace-line-column . 80))
 
 ;; Fullscreen theme settings
 (require 'color-theme)
@@ -193,16 +112,12 @@
 (require 'saveplace)
 (require 'uniquify)
 (require 'recentf)
-(require 'sr-speedbar)
 (require 'smart-tab)
 (require 'lusty-explorer)
 (require 'ido-vertical-mode)
 (ido-mode 1)
 (ido-vertical-mode 1)
-(auto-complete-mode 1)
-
-;; (require 'yasnippet)
-;; (yas/global-mode 1)
+;;(auto-complete-mode 1)
 
 ;; required to run ack command
 (when (equal system-type 'darwin)
@@ -273,17 +188,11 @@
 ;; Go-mode
 (setq default-tab-width 2)
 
-(add-hook 'python-mode-hook '(lambda ()
-                               (setq tab-width 2)))
+(add-hook 'python-mode-hook '(lambda () (setq tab-width 2)))
 
-(add-hook 'scala-mode-hook
-            (lambda()
-              (highlight-symbol-mode 1)
-              (ensime-mode)))
+(add-hook 'scala-mode-hook (lambda() (highlight-symbol-mode 1) (ensime-mode)))
 
-(add-hook 'scala-mode-hook
-          (lambda()
-            (highlight-symbol-nav-mode nil)))
+(add-hook 'scala-mode-hook (lambda() (highlight-symbol-nav-mode nil)))
 
 ;; Scroll Settings
 (setq redisplay-dont-pause t
@@ -353,31 +262,9 @@
 (global-set-key (kbd "M-[") 'indent-rigidly-left-to-tab-stop)
 (global-set-key (kbd "M-]") 'indent-rigidly-right-to-tab-stop)
 
-;; (global-set-key (kbd "C-x C-b") #'(lambda (arg)
-;;                                   (interactive "P")
-;;                                   (with-persp-buffer-list () (ibuffer arg))))
-;; (with-eval-after-load "persp-mode"
-;;   (setq persp-interactive-completion-function #'ido-completing-read))
-
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-; (global-set-key (kbd "M-x") 'helm-M-x)
-;;(global-set-key (kbd "C-x b") 'helm-mini)
-;(setq helm-split-window-in-side-p t)
-;(setq helm-split-window-default-side 'below)
-;(setq helm-buffer-max-length 40)
-;(setq helm-split-window-default-side 'below)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-(add-hook 'go-mode-hook
-          (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
-
-(add-hook 'cider-mode-hook
-          (lambda () (local-set-key (kbd "M-[") #'cider-format-defun)))
-
-(add-hook 'paredit-mode-hook
-          (lambda () (local-set-key (kbd "C-<up>") #'paredit-splice-sexp)))
+(add-hook 'go-mode-hook (lambda () (local-set-key (kbd "C-c C-r") #'go-run)))
+(add-hook 'cider-mode-hook (lambda () (local-set-key (kbd "M-[") #'cider-format-defun)))
+(add-hook 'paredit-mode-hook (lambda () (local-set-key (kbd "C-<up>") #'paredit-splice-sexp)))
 
 ;; Activate occur easily inside isearch
 (define-key isearch-mode-map (kbd "C-o")

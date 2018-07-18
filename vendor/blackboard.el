@@ -33,7 +33,7 @@
       ;;(foreground-color . "#F8F8F8")
       (foreground-color . "gray80") ;; "#E6E1DC" ;; #C7C2BD ;; "#D6D2CE"
       ;(foreground-color . "white")
-      (mouse-color . "sienna1"))
+      (mouse-color . "SteelBlue3"))
      ;;(default ((t (:background "#0C1021" :foreground "#F8F8F8"))))
      ;;(default ((t (:background "#1d1919" :foreground "#F8F8F8"))))
      (default ((t (:background "#272822" :foreground "gray85")))) ;; "#272822" ;; "#E6E1DC" ;; blue "#242F3B"
