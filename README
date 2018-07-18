@@ -1,3 +1,13 @@
-My .emacs.d configuration is in constant flux and probably will be different from week to week. Although I try not to spend too much time tweaking, it seems to suck me in every time...
+# Emacs configuration
 
-Installed 'Emacs for Mac OS X'  http://emacsformacosx.com/
+My .emacs.d configuration for MacOS
+
+# Install on MacOS
+
+```
+    brew tap railwaycat/emacsmacport
+    brew install emacs-mac
+    ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications
+    brew install ack
+    git clone git@github.com:beatlevic/dot-emacs.git ~/.emacs.d
+```
