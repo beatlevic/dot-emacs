@@ -28,15 +28,16 @@
       ;;(background-color . "#232323")
       (background-mode . dark)
       ;;(border-color . "#21221d")
-      (border-color . "#111111")
+      (border-color . "grey10") ;; #111111
       (cursor-color . "#A7A7A7")
       ;;(foreground-color . "#F8F8F8")
       (foreground-color . "gray80") ;; "#E6E1DC" ;; #C7C2BD ;; "#D6D2CE"
-      ;(foreground-color . "white")
-      (mouse-color . "SteelBlue3"))
+      (mouse-color . "grey60")) ;;"SteelBlue3"
      ;;(default ((t (:background "#0C1021" :foreground "#F8F8F8"))))
      ;;(default ((t (:background "#1d1919" :foreground "#F8F8F8"))))
-     (default ((t (:background "#272822" :foreground "gray85")))) ;; "#272822" ;; "#E6E1DC" ;; blue "#242F3B"
+     ;; Bear: #1E2022
+     ;;     (default ((t (:background "#272822" :foreground "gray85")))) ;; "#272822" ;; "#E6E1DC" ;; blue "#242F3B"
+     (default ((t (:background "#1E2022" :foreground "gray85")))) ;; "#272822" ;; "#E6E1DC" ;; blue "#242F3B"
      ;(default ((t (:background "#21221d" :foreground "white"))))
      ;;(blue ((t (:foreground "blue"))))
      (bold ((t (:bold t))))
@@ -44,7 +45,8 @@
      ;;(border-glyph ((t (nil))))
      ;;(buffers-tab ((t (:background "#0C1021" :foreground "#F8F8F8"))))
      (buffers-tab ((t (:background "#0C1021" :foreground "#F8F8F8"))))
-     (fringe ((t (:background "#272822")))) ;; "#272822" ;; blue "#242F3B"
+     (fringe ((t (:background "#1E2022")))) ;; "#272822" ;; blue "#242F3B"
+     (vertical-border ((t (:background "#1E2022" :foreground "grey35"))))
      (font-lock-builtin-face ((t (:foreground "#94bff3"))))
      ;;(font-lock-comment-face ((t (:italic t :foreground "#AEAEAE"))))
      (font-lock-comment-face ((t (:italic t :foreground "#7A7A7A"))))
@@ -74,7 +76,7 @@
      (region ((t (:background "grey30")))) ;; "#444444";; #66D9EF ;; :foreground "#272822"
      ;;(mode-line ((t (:background "grey75" :foreground "black"))))
      (mode-line-inactive ((t (:background "#393939" :foreground "gray80" )))) ;; "#E6E1DC"
-     (mode-line ((t (:background "#636363" :foreground "gray80")))) ;696969 ;; "#E6E1DC"
+     (mode-line ((t (:background "#515151" :foreground "gray80")))) ;"#636363" ;696969 ;; "#E6E1DC"
      ;;(mode-line-buffer-id ((t (:foreground "#94C928" :bold t))))  ;;#FFC66D
      ;;(highlight ((t (:background "#222222"))))
      ;;(highlight ((t (:background "#272822"))))

@@ -16,11 +16,14 @@
 (setq ensure-packages
       '(alchemist
         all-the-icons ;; M-x all-the-icons-install-fonts
+        anaconda-mode
         async
 	auto-complete
         autopair
         cider
         color-theme
+        company
+        company-anaconda
         dockerfile-mode
         ensime
         haml-mode
@@ -38,6 +41,7 @@
         projectile
         protobuf-mode
         sass-mode
+        use-package
         yaml-mode))
 
 (ensure-packages-install-missing)
@@ -587,3 +591,43 @@
   (scala-indent:insert-asterisk-on-multiline-comment))
 
 ;;(bind-key "RET" 'scala-mode-newline-comments scala-mode-map)
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; (eval-after-load "company"
+;;   '(add-to-list 'company-backends 'company-anaconda))
+
+;; (add-hook 'python-mode-hook 'anaconda-mode)
+;; (add-hook 'python-mode-hook 'anaconda-eldoc-mode)
+
+(use-package anaconda-mode
+  :ensure t
+  :commands anaconda-mode
+  :diminish anaconda-mode
+  :init
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+
+(use-package company-anaconda
+  :ensure t
+  :init
+  (add-to-list 'company-backends 'company-anaconda)
+  (add-hook 'python-mode-hook 'company-mode))
+
+(use-package pyvenv
+        :ensure t
+        :init
+        (setenv "WORKON_HOME" "/Users/beatlevic/opt/miniconda3/envs")
+        (pyvenv-mode 1)
+        (pyvenv-tracking-mode 1))
+
+  ;; (defun anaconda-description (candidate)
+  ;;   (concat
+  ;;    " "
+  ;;    (car (last (split-string
+  ;;                    (aref (get-text-property 0 'struct candidate) 2)
+  ;;                    "\n"
+  ;;                    ))
+  ;;     )))
+
+  ;; (setq company-anaconda-annotation-function 'anaconda-description)
